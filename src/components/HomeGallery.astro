@@ -1,0 +1,120 @@
+---
+import img1 from '../assets/img/about_photo_1.jpg';
+import img2 from '../assets/img/about_photo_2.jpg';
+import img3 from '../assets/img/about_photo_3.jpg';
+import { Image } from 'astro:assets';
+---
+
+<section class="gallery-text wrapper">
+    <div class="gallery-text__container grid">
+        
+        <div class="gallery-text__images">
+            <Image src={img1} alt="Opis 1" />
+            <Image src={img2} alt="Opis 2" />
+            <Image src={img3} alt="Opis 3" />
+        </div>
+
+        <div class="gallery-text__content">
+            <span class="caption">O firmie</span>
+            <h2>Dlaczego Exclusive Walls to nowa definicja dekoracji ścian?</h2>
+            <p>
+                Stawiamy na bezkompromisową jakość druku UV na każdym podłożu – od surowego betonu po gładkie szkło. Nasza technologia to gwarancja ekologicznych tuszy i trwałości, której nie dają tradycyjne metody. Zyskujesz idealnie gładki obraz bez widocznych łączeń, w pełni zintegrowany z architekturą Twojego wnętrza.
+            </p>
+        </div>
+
+    </div>
+</section>
+
+<style lang="scss">
+@use "../styles/variables" as *;
+@use "../styles/mixins" as *;
+
+    .gallery-text {
+        margin-top: 9rem;
+
+        &__container {
+            // Klasa .grid w HTML robi tu 12 kolumn i gap
+            align-items: flex-start;
+        }
+
+        // --- LEWA STRONA (ZDJĘCIA) ---
+        &__images {
+            // 1. ZAJMUJEMY 8 KOLUMN GŁÓWNYCH
+            grid-column: span 8;
+
+            // 2. TWORZYMY WEWNĘTRZNY GRID DLA ZDJĘĆ
+            display: grid;
+            // Dzielimy te 8 kolumn na pół (dla dwóch górnych zdjęć)
+            grid-template-columns: 1fr 1fr; 
+            gap: 1.5rem; // Odstęp między zdjęciami (możesz użyć zmiennej)
+
+            // STYLOWANIE ZDJĘĆ
+            img {
+                width: 100%;
+                height: 100%;
+                object-fit: cover; // Żeby zdjęcia nie były rozciągnięte, tylko ładnie wykadrowane
+            }
+
+            // --- UKŁADANIE KONKRETNYCH ZDJĘĆ ---
+            
+            // Zdjęcie 1 i 2 (Górny rząd)
+            img:nth-child(1),
+            img:nth-child(2) {
+                // Ustawiamy proporcję kwadratu (1:1)
+                aspect-ratio: 1 / 1; 
+            }
+
+            // Zdjęcie 3 (Dolny rząd - szerokie)
+            img:nth-child(3) {
+                // Rozciągamy na obie kolumny wewnętrznego grida
+                grid-column: 1 / -1; 
+                
+                // Proporcja prostokąta (2:1) - będzie miało wysokość tych wyżej, ale 2x szerokość
+                aspect-ratio: 2 / 1; 
+            }
+        }
+
+        // --- PRAWA STRONA (TEKST) ---
+        &__content {
+            // Zajmujemy pozostałe 4 kolumny
+            grid-column: span 4;
+            
+            // Tu możemy użyć Flexboxa do ułożenia nagłówka i tekstu
+            display: flex;
+            flex-direction: column;
+            padding-left: 2rem; // Trochę oddechu od zdjęć
+        }
+
+        // ==========================================
+        // RESPANSYWNOŚĆ (TABLET I MOBILE)
+        // ==========================================
+    
+        // Poniżej desktopu (np. tablet)
+        @include respond-to("desktop") {
+            
+            &__container {
+            // Tutaj już nie chcemy 12 kolumn.
+            // Zmieniamy na Flex (wszystko jedno pod drugim)
+            // ALBO zostajemy przy Gridzie, ale zmieniamy spany.
+            // Zróbmy klasyczny stack:
+            display: flex;
+            flex-direction: column;
+            gap: 4rem;
+            }
+
+            &__images {
+            // Resetujemy szerokość na 100%
+            width: 100%;
+            // Grid wewnętrzny zostaje! (nadal chcemy układ 2+1 zdjęć, nawet na tablecie)
+            order: 2;// Dodajemy order: 2, żeby zdjęcia spadły na dół
+            }
+
+            &__content {
+            width: 100%;
+            padding-left: 0; // Usuwamy padding, bo tekst jest pod zdjęciami
+            order: 1; // Dodajemy order: 1, żeby tekst wskoczył na samą górę
+            }
+        }
+    }
+
+</style>

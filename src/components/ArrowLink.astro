@@ -1,0 +1,70 @@
+---
+const { href, text } = Astro.props;
+---
+
+<a href={href} class="arrow-link">
+    <span class="arrow-link__text">{text}</span>
+    <span class="material-symbols-outlined arrow-link__icon">chevron_right</span>
+</a>
+
+<style lang="scss">
+@use "../styles/variables" as *;
+@use "../styles/mixins" as *;
+
+    .arrow-link {
+        display: inline-flex;
+        align-items: center;
+        gap: 4px;
+        color: inherit;
+        text-decoration: none;
+        font-weight: 500;
+        
+        // UWAGA: Celowo NIE dajemy tu 'position: relative', 
+        // aby ::before mógł wylać się na całą kartę.
+
+        // 1. ROZCIĄGNIĘCIE KLIKALNOŚCI NA CAŁĄ KARTĘ
+        &::before {
+            content: '';
+            position: absolute;
+            inset: 0; // Rozciąga się na 100% wysokości i szerokości najbliższego rodzica 'relative'
+            z-index: 1;
+        }
+
+        // 2. STYLOWANIE TEKSTU I PODKREŚLENIA
+        &__text {
+            position: relative; // Podkreślenie będzie się trzymać tekstu
+            
+            &::after {
+                content: '';
+                position: absolute;
+                height: 1px;
+                background-color: currentColor;
+                bottom: -2px;
+                width: 0;
+                right: 0;
+                transition: width 0.3s ease-out;
+            }
+        }
+
+        // 3. ANIMACJA CHEVRONA
+        &__icon {
+            font-size: 1.25rem;
+            transition: transform 0.3s ease-out;
+        }
+
+        // --- EFEKTY HOVER ---
+        // Hover działa na link, a ponieważ ::before przykrywa kartę, 
+        // to najechanie na kartę = najechanie na link!
+        &:hover {
+            .arrow-link__text::after {
+                left: 0;
+                right: auto;
+                width: 100%;
+            }
+            
+            .arrow-link__icon {
+                transform: translateX(6px); // Gładkie odsunięcie w prawo
+            }
+        }
+    }
+</style>

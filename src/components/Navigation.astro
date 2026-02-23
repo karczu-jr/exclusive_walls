@@ -1,0 +1,247 @@
+---
+const navLinks = [
+    {label: "Home", href: "./"},
+    {label: "O nas", href: "./"},
+    {label: "Technologia", href: "./"},
+    {label: "Oferta", href: "./"},
+    {label: "Kontakt", href: "./"},
+]
+---
+
+<div aria-label="Nawigacja główna" class="nav-bar">
+    <a class="nav-bar__logo" href="./index.html">
+        <img src="/src/assets/img/Logo_EW.svg" alt="">
+    </a>
+    <nav class="nav-bar__desktop" aria-label="Nawigacja główna">
+        <ul class="nav-bar__desktop-list">
+            {navLinks.map(link => (
+                <li>
+                <a href={link.href}>{link.label}</a>
+                </li>
+            ))}
+        </ul>
+    </nav>
+
+    <button class="nav-bar__hamburger" aria-label="Otwórz menu" aria-expanded="false">
+        <span></span>
+        <span></span>
+        <span></span>
+    </button>
+
+    <nav aria-label="Nawigacja mobilna" class="nav-bar__mobile">
+        <ul class="nav-bar__mobile-list">
+            {navLinks.map(link => (
+                <li>
+                <a href={link.href}>{link.label}</a>
+                </li>
+            ))}
+        </ul>
+    </nav>
+</div>
+
+<style lang="scss">
+@use "../styles/variables" as *;
+@use "../styles/mixins" as *;
+
+    .nav-bar {
+        // --- 1. GLÓWNY LAYOUT (DESKTOP DEFAULT) ---
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin: 32px auto;
+
+        &__logo {
+            display: flex;
+            align-items: center;
+            // gap: 12px;
+            text-decoration: none;
+            color: inherit;
+
+            img {
+                height: 48px;
+                width: auto;
+            }
+
+            h3 {
+                font-family: $font-header;
+                margin: 0;
+            }
+        }
+
+        // --- 2. MENU DESKTOPOWE (WIDOCZNE DOMYŚLNIE) ---
+        &__desktop {
+            display: flex; // Domyślnie włączone
+
+            &-list {
+                list-style: none;
+                display: flex;
+                gap: 40px;
+            }
+
+            // Tutaj wklejamy animację kreski (o którą pytałeś)
+            a {
+                text-decoration: none;
+                color: $clr-white; // Używamy zmiennej
+                position: relative;
+                padding: 4px 0;
+                transition: color 0.3s ease;
+
+                &::after {
+                    content: '';
+                    position: absolute;
+                    bottom: 0;
+                    right: 0; 
+                    width: 100%;
+                    height: 1px;
+                    background-color: $clr-white; // Lub inna zmienna koloru
+                    transform: scaleX(0); // Ukryta (ściśnięta)
+                    transform-origin: bottom right;
+                    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+                }
+
+                &:hover {
+                    color: $clr-white; // Opcjonalne rozjaśnienie
+                    
+                    &::after {
+                        transform: scaleX(1); // Pokazana
+                        transform-origin: bottom left;
+                    }
+                }
+            }
+        }
+
+        // --- 3. HAMBURGER (UKRYTY DOMYŚLNIE) ---
+        &__hamburger {
+            display: none; // Ukrywamy na Desktopie!
+            
+            // Definiujemy wygląd, żeby był gotowy do pokazania na mobile
+            background: none;
+            border: none;
+            padding: 8px;
+            cursor: pointer;
+            flex-direction: column;
+            gap: 6px;
+            z-index: 110;
+
+            span {
+                display: block;
+                width: 32px;
+                height: 2px;
+                background: $clr-white;
+                transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+                transform-origin: center;
+            }
+
+            // Animacja Hamburger -> X
+            &.active {
+                span:nth-child(1) {
+                    transform: translateY(8px) rotate(45deg);
+                }
+                span:nth-child(2) {
+                    opacity: 0;
+                    transform: translateX(-10px);
+                }
+                span:nth-child(3) {
+                    transform: translateY(-8px) rotate(-45deg);
+                }
+            }
+        }
+
+        // --- 4. MENU MOBILNE (UKRYTE DOMYŚLNIE) ---
+        &__mobile {
+            display: none; // Ukrywamy na Desktopie, żeby nie przeszkadzało
+            
+            position: fixed;
+            inset: 0;
+            height: 100vh;
+            width: 100%;
+            background: $clr-black;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 100;
+            
+            transform: translateX(100%);
+            transition: transform 0.5s ease-in-out;
+
+            ul {
+                display: flex;
+                flex-direction: column;
+                gap: 2rem;
+                list-style: none;
+                padding: 0;
+                margin: 0;
+            }
+
+            a {
+                font-size: 2rem;
+                font-weight: 600;
+                color: $clr-white;
+                text-decoration: none;
+                transition: color 0.3s ease;
+            }
+
+            &.active {
+                transform: translateX(0);
+            }
+        }
+
+        // --- 5. BREAKPOINT (ZMIANA NA MOBILE) ---
+        // "Jeśli ekran jest mniejszy niż Tablet (768px)..."
+        @include respond-to("desktop") {
+            
+            // 1. Ukrywamy Desktop
+            &__desktop {
+                display: none;
+            }
+
+            // 2. Pokazujemy Hamburgera
+            &__hamburger {
+                display: flex;
+            }
+
+            // 3. Aktywujemy kontener Mobile (nadal schowany przez translate, ale obecny w DOM)
+            &__mobile {
+                display: flex;
+            }
+        }       
+    }
+</style>
+
+
+<script>
+    // Używamy funkcji, aby upewnić się, że DOM jest gotowy (ważne przy przejściach stron)
+    const initMenu = () => {
+        const toggle = document.querySelector('.nav-bar__hamburger');
+        const mobileNav = document.querySelector('.nav-bar__mobile');
+        const links = document.querySelectorAll('.nav-bar__mobile a');
+
+        if (!toggle || !mobileNav) return;
+
+        toggle.addEventListener('click', () => {
+            toggle.classList.toggle('active');
+            mobileNav.classList.toggle('active');
+            
+            // UX: Blokada przewijania strony pod menu
+            if (mobileNav.classList.contains('active')) {
+                document.body.style.overflow = 'hidden';
+            } else {
+                document.body.style.overflow = '';
+            }
+        });
+
+        // Zamykanie po kliknięciu w link (np. kotwicę)
+        links.forEach(link => {
+            link.addEventListener('click', () => {
+                toggle.classList.remove('active');
+                mobileNav.classList.remove('active');
+                document.body.style.overflow = '';
+            });
+        });
+    };
+
+    // Uruchom przy ładowaniu
+    initMenu();
+    // Jeśli używasz Astro View Transitions, odkomentuj poniższą linię:
+    // document.addEventListener('astro:after-swap', initMenu);
+</script>

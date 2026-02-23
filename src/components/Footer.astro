@@ -1,0 +1,209 @@
+---
+import SmartList from "./SmartList.astro";
+
+const linki = [
+  { text: "Home", href: "/" },
+  { text: "Technologia", href: "/" },
+  { text: "Kontakt", href: "/" }
+];
+
+const oferta = [
+  { text: "Firm", href: "/" },
+  { text: "Domu", href: "/" },
+  { text: "Hoteli i gastronomii", href: "/" },
+  { text: "Podmiotów publicznych", href: "/" }
+];
+
+const socials = [
+  { text: "Facebook", href: "/" },
+  { text: "Instagram", href: "/" }
+];
+---
+
+<footer class="footer wrapper">
+        
+
+      <nav class="footer__nav grid">
+          <a class="footer__logo" href="./index.html">
+            <img src="/src/assets/img/Logo_EW.svg" alt="">
+          </a>
+
+          <SmartList title="Oferta" items={linki} />
+          <SmartList title="Usługi druku dla" items={oferta} />
+          <SmartList title="Obserwuj nas" items={socials} />
+      </nav>
+
+    <img src="/src/assets/img/Exclusive_Walls.svg" alt="">
+    
+    <div class="footer__details">
+        <p class="text-md">Copyright &copy; Exclusive Walls All&nbsp;rights&nbsp;reserved</p>
+        <p class="text-md">Projekt i wykonanie: <a style="color: var(--text-color)" href="mailto:mateuszkarcz88@gmail.com">Mateusz Karcz</a></p>
+    </div>
+</footer>
+
+<style lang="scss">
+@use "../styles/variables" as *;
+@use "../styles/mixins" as *;
+
+.footer {
+    padding-top: 300px; 
+
+    &__nav {
+        align-items: start; // Wyrównanie do góry
+
+        // Stylujemy Logo
+        .footer__logo {
+            img { max-width: 100%; height: auto; }
+        }
+
+        // ==========================================
+        // 1. UKŁAD DESKTOP (Domyślny)
+        // ==========================================
+        
+        // LOGO: 6 kolumn, 2 rzędy wysokości (żeby przykryć L1 i L3)
+        .footer__logo {
+            grid-column: span 6;
+            grid-row: span 2; 
+        }
+
+        // UWAGA: Tu jest zmiana! Używamy :global(.smart-list)
+        
+        // LISTA 1: (3 kolumny)
+        > :global(.smart-list:nth-of-type(1)) {
+            grid-column: span 2;
+        }
+
+        // LISTA 2: (3 kolumny - idzie na koniec wiersza)
+        > :global(.smart-list:nth-of-type(2)) {
+            grid-column: span 2;
+        }
+
+        // LISTA 3: (3 kolumny - wymuszamy start pod Listą 1)
+        > :global(.smart-list:nth-of-type(3)) {
+            grid-column: span 2; 
+        }
+
+        // ==========================================
+        // 2. UKŁAD LARGE DESKTOP (< 1440px)
+        // ==========================================
+        
+
+        @include respond-to("large-desktop") {
+            // LOGO: 3 kolumn
+            .footer__logo {
+                grid-column: span 5;
+            }
+
+            // UWAGA: Tu jest zmiana! Używamy :global(.smart-list)
+            
+            // LISTA 1: (3 kolumny)
+            > :global(.smart-list:nth-of-type(1)) {
+                grid-column: span 2;
+            }
+
+            // LISTA 2: (3 kolumny - idzie na koniec wiersza)
+            > :global(.smart-list:nth-of-type(2)) {
+                grid-column: span 3;
+            }
+
+            // LISTA 3: (3 kolumny - wymuszamy start pod Listą 1)
+            > :global(.smart-list:nth-of-type(3)) {
+                grid-column: span 2; 
+            }
+        }
+
+
+        // ==========================================
+        // 3. UKŁAD TABLET (< 1024px)
+        // ==========================================
+        @include respond-to("desktop") {
+            
+            // LOGO: Połowa (6 kolumn), reset wysokości do 1 rzędu
+            .footer__logo {
+                 grid-column: span 6;
+                 grid-row: auto; 
+            }
+
+            // LISTA 1: Połowa (6 kolumn) -> ląduje obok logo
+            > :global(.smart-list:nth-of-type(1)) {
+                grid-column: span 3;
+            }
+
+            // LISTA 2: Połowa (6 kolumn) -> spada do nowego wiersza
+            > :global(.smart-list:nth-of-type(2)) {
+                grid-column: span 3;
+            }
+
+            // LISTA 3: Połowa (6 kolumn) -> ląduje obok Listy 2
+            > :global(.smart-list:nth-of-type(3)) {
+                grid-column: 7 / span 3; // Resetujemy wymuszenie z desktopu
+            }
+        }
+
+        @include respond-to("tablet") {
+            // LOGO: Połowa (6 kolumn), reset wysokości do 1 rzędu
+            .footer__logo {
+                 grid-column: span 4;
+                 grid-row: auto; 
+            }
+
+            // LISTA 1: Połowa (6 kolumn) -> ląduje obok logo
+            > :global(.smart-list:nth-of-type(1)) {
+                grid-column: span 4;
+            }
+
+            // LISTA 2: Połowa (6 kolumn) -> spada do nowego wiersza
+            > :global(.smart-list:nth-of-type(2)) {
+                grid-column: span 4;
+            }
+
+            // LISTA 3: Połowa (6 kolumn) -> ląduje obok Listy 2
+            > :global(.smart-list:nth-of-type(3)) {
+                grid-column: span 4; // Resetujemy wymuszenie z desktopu
+            }
+        }
+
+
+        // ==========================================
+        // 3. UKŁAD MOBILE (< 528px)
+        // ==========================================
+        @include respond-to("mobile") {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 3rem;
+
+            .footer__logo {
+                width: 100%;
+                max-width: 200px; 
+                text-align: center;
+            }
+            
+            // Styl dla wszystkich list na mobile
+            > :global(.smart-list) {
+                width: 100%; 
+                text-align: center;
+            }
+        }
+    } 
+
+    // Reszta stylów bez zmian...
+    > img {
+        grid-column: 1 / -1;
+        width: 100%;
+        height: auto;
+        margin-top: 8rem;
+        margin-bottom: 3rem;
+    }
+
+    &__details {
+        grid-column: 1 / -1;
+        display: flex;
+        justify-content: space-between;
+        border-top: 1px solid var(--line);
+        padding: 3rem 0;
+        
+        // ...
+    }
+}
+</style>

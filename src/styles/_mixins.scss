@@ -1,0 +1,68 @@
+@use "variables" as *;
+
+@mixin respond-to($breakpoint) {
+    @if $breakpoint == "full-hd" {
+        @media (max-width: $bp-full-hd-desktop) { @content; }
+    }
+    @else if $breakpoint == "xlarge-desktop" {
+        @media (max-width: $bp-xlarge-desktop) { @content; }
+    }
+    @else if $breakpoint == "large-desktop" {
+        @media (max-width: $bp-large-desktop) { @content; }
+    }
+    @else if $breakpoint == "desktop" {
+        @media (max-width: $bp-desktop) { @content; }
+    }
+    @else if $breakpoint == "tablet" {
+        @media (max-width: $bp-tablet) { @content; }
+    }
+    @else if $breakpoint == "mobile" {
+        @media (max-width: $bp-mobile) { @content; }
+    }
+}
+
+@mixin make-container {
+
+    width: calc(100% - $gutter-full-hd-desktop * 2);
+    max-width: $max-width-container;
+    margin-left: auto;
+    margin-right: auto;
+
+    @include respond-to("large-desktop") {
+        width: calc(100% - $gutter-large-desktop * 2)
+    }
+
+    @include respond-to("desktop") {
+        width: calc(100% - $gutter-desktop * 2)
+    }
+
+    @include respond-to("tablet") {
+        width: calc(100% - $gutter-tablet * 2)
+    }
+
+    @include respond-to("mobile") {
+        width: calc(100% - $gutter-mobile * 2)
+    }  
+}
+
+@mixin make-grid {
+    display: grid;
+
+    // 1. DESKTOP (Domyślnie): 12 kolumn
+    grid-template-columns: repeat(12, 1fr);
+    // Ustawia odstępy
+    gap: $grid-gap-full-hd-desktop; 
+
+    // 2. TABLET: Zmieniamy na 8 kolumn
+    @include respond-to("tablet") {
+        grid-template-columns: repeat(8, 1fr);
+        // Gap na tablecie często jest nieco mniejszy
+        gap: $grid-gap-tablet; 
+    }
+
+    // 3. MOBILE: Zmieniamy na 4 kolumny
+    @include respond-to("mobile") {
+        grid-template-columns: repeat(4, 1fr);
+        gap: $grid-gap-mobile;
+    }
+}

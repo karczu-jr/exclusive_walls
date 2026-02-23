@@ -1,0 +1,116 @@
+---
+import ProcessItem from './ProcessItem.astro';
+---
+
+<section class="process wrapper">
+    <div class="process__intro grid">
+        <span class="caption col-3 col-tablet-8 col-mobile-4">Realizacja</span>
+        <div class="content col-9 col-tablet-8 col-mobile-4">
+            <h2>Jak przebiega realizacja?</h2>
+            <p class="large-p">
+                Boisz się remontu, kurzu i&nbsp;wielodniowego bałaganu? Niepotrzebnie. Druk ścienny to najnowocześniejsza i&nbsp;najczystsza forma dekoracji ścian. W&nbsp;Exclusive Walls cały proces zaprojektowaliśmy tak, aby był dla Ciebie maksymalnie komfortowy. Zobacz, jak działamy:
+            </p>
+        </div>
+    </div>
+
+    <ol class="process__grid grid">
+        <ProcessItem number="01" title="Twoja wizja i wycena">
+            <p>Prześlij nam zdjęcie ściany i&nbsp;wymiary. Masz własną grafikę? Świetnie. Szukasz inspiracji? Pomożemy Ci wybrać wzór z&nbsp;bazy milionów zdjęć w&nbsp;jakości 8K. Darmową wycenę otrzymasz od nas w&nbsp;24&nbsp;godziny.</p>
+        </ProcessItem>
+
+        <ProcessItem number="02" title="Przygotowanie powierzchni">
+            <p>Nie musisz specjalnie przygotowywać ściany. Drukujemy na:
+                <ul>
+                    <li>standardowych tynkach i&nbsp;gładziach,</li>
+                    <li>surowym betonie i&nbsp;cegle,</li>
+                    <li>szkle, drewnie i&nbsp;metalu,</li>
+                    <li>elewacji zewnętrznej.</li>
+                </ul>
+            </p>
+        </ProcessItem>
+        
+        <ProcessItem number="03" title="Realizacja czyli magia druku"> 
+            <p>Nasz ekipa robot przyjeżdża do Ciebie. Ustawiamy maszynę i&nbsp;rozpoczynamy druk. Laserowe czujniki dopasowują głowicę do nierówności ściany, gwarantując idealną ostrość. Ty pijesz kawę, a my tworzymy dzieło sztuki.</p>
+        </ProcessItem> 
+
+        <ProcessItem number="04" title="Gotowe">
+            <p>Dzięki utwardzaniu światłem UV, grafika jest sucha i&nbsp;odporna na dotyk natychmiast po nałożeniu. Możesz dotykać ściany i&nbsp;cieszyć się nowym wnętrzem od razu po naszym wyjściu.</p>
+        </ProcessItem>
+    </ol>
+</section>
+
+<style lang="scss">
+@use "../styles/variables" as *;
+@use "../styles/mixins" as *;
+
+.process {
+    margin-bottom: 8rem;
+
+    &__intro {
+        margin-bottom: 5rem;
+
+        // .caption {
+        //     grid-column: span 3;
+        // }
+
+        // .content {
+        //     grid-column: span 9;
+        // }
+
+        h2 {
+            margin-bottom: 1rem;
+        }
+    }
+
+    &__grid {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        
+        ul {
+            list-style: disc;
+            
+            li::marker {
+                // Zmieniamy kolor samej kropki.
+                color: var(--text-color);
+            }
+        }
+
+        // ==========================================
+        // 1. DESKTOP (12 kolumn -> 4 kroki po 3 kolumny)
+        // ==========================================
+        > :global(.process-item) {
+            grid-column: span 3; 
+        }
+
+        > :global(.process-item:nth-of-type(2)) {
+            ul {
+                margin-left: 1.5rem;
+            }
+        }
+
+        // ==========================================
+        // 2. TABLET (8 kolumn -> 2 kroki w rzędzie po 4 kolumny)
+        // ==========================================
+        @include respond-to("tablet") {
+            // Dodajemy gap w pionie, żeby kroki ładnie się odsunęły, gdy spadną do 2 rzędu
+            row-gap: 3rem;
+
+            > :global(.process-item) {
+                grid-column: span 4; 
+            }
+        }
+
+        // ==========================================
+        // 3. MOBILE (4 kolumny -> 1 krok w rzędzie)
+        // ==========================================
+        @include respond-to("mobile") {
+            row-gap: 2.5rem;
+
+            > :global(.process-item) {
+                grid-column: span 4; 
+            }
+        }
+    }
+}
+</style>

@@ -1,0 +1,53 @@
+---
+const { number, title } = Astro.props;
+---
+
+<li class="process-item">
+    <span class="process-item__number">{number}</span>
+    
+    <h3 class="process-item__title">{title}</h3>
+    <div class="process-item__content">
+        <slot /> 
+    </div>
+</li>
+
+<style lang="scss">
+    .process-item {
+        display: flex;
+        flex-direction: column;
+        
+        &__number {
+            font-size: 4rem;
+            font-weight: 600;
+            line-height: 1;
+            margin-bottom: 0.25rem;
+        }
+
+        &__title {
+            padding-top: 0.5rem;
+            border-top: 1px solid var(--line);
+        }
+
+        &__content {
+            color: var(--text-muted);
+            margin-top: 0.5rem;
+
+            // Stylowanie ewentualnych list, które tam wrzucimy
+            ul {
+                margin-top: 0.5rem;
+                padding-left: 1.5rem; // Wcięcie dla bulletów
+                display: flex;
+                flex-direction: column;
+                gap: 0.25rem; // Odstęp między elementami listy
+                
+                // Żeby upewnić się, że bullety są kropkami
+                list-style-type: disc; 
+            }
+
+            // Odstęp dla paragrafu przed listą
+            p {
+                margin: 0 0 0.5rem 0;
+            }
+        }
+    }
+</style>

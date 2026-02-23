@@ -1,0 +1,54 @@
+// Kolory jako zmienne SCSS (ułatwiają pisanie)
+$clr-white: #ffffff;
+$clr-black: #000000;
+$clr-grey:  #999999;
+
+// Mapowanie ról (Semantic Colors)
+// $bg-main: $clr-black;
+// $text-main: $clr-white;
+// $text-muted: $clr-grey;
+
+// Fonty
+$font-header: 'Judson', Times, serif;
+$font-body: 'Switzer', Arial, Helvetica, sans-serif;
+$font-inter: "Inter",sans-serif;
+
+// Zmienne wielkości fontów (Desktop)
+$fs-sm:   0.875rem; // 14px
+$fs-base: 1rem;     // 16px (to zazwyczaj Twój standard)
+$fs-md:   1.25rem;  // 20px
+$fs-lg:   1.5rem;   // 24px
+$fs-xl:  2rem;     // 32px
+
+// Breakpointy
+$bp-mobile: 528px;
+$bp-tablet: 768px;
+$bp-desktop: 1024px;
+$bp-large-desktop: 1440px;
+$bp-xlarge-desktop: 1540px;
+$bp-full-hd-desktop: 1920px;
+
+// Marginesy boczne
+$gutter-mobile: 16px;
+$gutter-tablet: 24px;
+$gutter-desktop: 32px;
+$gutter-large-desktop: 40px;
+$gutter-full-hd-desktop:80px;
+
+// System Grid - ilość kolumn dla urządzeń
+$columns-full-hd-desktop: 12;
+$columns-large-desktop: 12;
+$columns-desktop: 12;
+$columns-tablet: 8;
+$columns-mobile: 4;
+
+// Odstępy w Gridzie
+$grid-gap-mobile: 16px;
+$grid-gap-tablet: 24px;
+$grid-gap-desktop: 32px;
+$grid-gap-large-desktop: 40px;
+$grid-gap-full-hd-desktop:48px;
+
+$max-width-container: 1920px;
+
+

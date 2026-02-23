@@ -1,0 +1,48 @@
+---
+const { title, items } = Astro.props;
+
+// LOGIKA TWORZENIA CZYTELNEGO ID
+// 1. .toLowerCase() -> zamienia na małe litery ("Nasze Usługi" -> "nasze usługi")
+// 2. .trim() -> usuwa spacje na początku i końcu
+// 3. .replace(/\s+/g, '-') -> zamienia wszystkie spacje w środku na myślniki
+
+const cleanTitle = title.toLowerCase().trim().replace(/\s+/g, '-');
+
+// Tworzymy finalne ID
+const listId = `list-label-${cleanTitle}`;
+---
+
+<div class="smart-list">
+    <p class="caption" id={listId}>{title}</p>
+    <ul aria-labelledby={listId}>
+    {items.map((item) => (
+        <li>
+        <a href={item.href}>
+            {item.text}
+        </a>
+        </li>
+    ))}
+    </ul>
+</div>
+
+<style lang="scss">
+@use "../styles/variables" as *;
+@use "../styles/mixins" as *;
+
+    .smart-list {
+        // width: 180px;
+    
+        ul {
+            list-style-type: none;
+
+            li {
+                margin-top: 1rem;
+
+                a {
+                    font-size: $fs-base;
+                }
+            }
+        }
+    }
+  /* Style */
+</style>

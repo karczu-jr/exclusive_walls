@@ -1,0 +1,72 @@
+---
+// Importujemy nasz nowy podkomponent
+import OfferItem from './OfferItem.astro';
+---
+
+<section class="offer wrapper">
+    <h2>Dla kogo tworzymy?</h2>
+    <div class="offer__grid grid">
+        <OfferItem 
+            title="Firm"
+            description="Nowoczesne murale i logotypy 8K. Szybka metamorfoza biura bez przerywania pracy." 
+            imageSrc="/src/assets/img/unnamed.jpg"
+            linkHref="/oferta/firmy"
+        />
+        <OfferItem 
+            title="Domu"
+            description="Odmień swoje wnętrze fotorealistyczną grafiką 8K. Ekologiczny, bezwonny druk bezpieczny dla dzieci." 
+            imageSrc="/src/assets/img/about_photo_1.jpg"
+            linkHref="/oferta/firmy"
+        />
+        <OfferItem 
+            title="Hoteli i gastronomii"
+            description="Podnieś standard obiektu. Trwałe, odporne na wilgoć murale premium dla hoteli i restauracji." 
+            imageSrc="/src/assets/img/about_photo_1.jpg"
+            linkHref="/oferta/firmy"
+        />
+        <OfferItem 
+            title="Podmiotów publicznych"
+            description="Przyjazne i higieniczne wnętrza. Certyfikowany druk ścienny, w pełni odporny na dezynfekcję." 
+            imageSrc="/src/assets/img/about_photo_1.jpg"
+            linkHref="/oferta/firmy"
+        />
+    </div>
+</section>
+
+<style lang="scss">
+@use "../styles/variables" as *;
+@use "../styles/mixins" as *;
+
+.offer {
+    margin-bottom: 5rem;
+
+    &__grid {
+        // Domyślnie Grid z Twojej globalnej klasy robi tu 12 kolumn
+        // Aby ułożyć 4 karty obok siebie na desktopie:
+        > :global(.offer-item) {
+            grid-column: span 3; // 12 / 4 karty = 3 kolumny na kartę
+        }
+
+        // --- Tablet (np. 8 kolumn w nowym systemie) ---
+        @include respond-to("desktop") {
+            > :global(.offer-item) {
+                grid-column: span 6; // 8 / 2 karty w rzędzie = 4 kolumny na kartę
+            }
+        }
+
+        // --- Tablet (np. 4 kolumny w nowym systemie) ---
+        @include respond-to("tablet") {
+            > :global(.offer-item) {
+                grid-column: span 4; // Karta zajmuje 4 kolumny (50% szerokości) / 2 karty w rzędzie = 4 kolumny na kartę
+            }
+        }
+
+        // --- Mobile (np. 4 kolumny w nowym systemie) ---
+        @include respond-to("mobile") {
+            > :global(.offer-item) {
+                grid-column: span 4; // Karta zajmuje wszystkie 4 kolumny (100% szerokości)
+            }
+        }
+    }
+}
+</style>

@@ -1,0 +1,124 @@
+---
+import Navigation from "./Navigation.astro";
+---
+
+<header class="wrapper">
+    <Navigation />
+    <h1><span><img src="/src/assets/img/header.jpg" alt=""></span>Druk ścienny dla firm i&nbsp;domów - Nowoczesna dekoracja wnętrz dla wymagających</h1>
+    <div class="grid">
+        <p class="large-p">Odkryj nową erę dekoracji wnętrz dzięki pionowemu drukowi cyfrowemu. Ta&nbsp;technologia pozwala nanieść dowolną grafikę bezpośrednio na Twoją ścianę z&nbsp;fotograficzną precyzją 8K. Tworzymy trwałe, odporne na UV i&nbsp;zmywanie realizacje, które zmieniają charakter biur i&nbsp;apartamentów w jeden dzień. Czysto, szybko i&nbsp;bez remontu.</p>
+    </div>
+</header>
+
+<style lang="scss">
+@use "../styles/variables" as *;
+@use "../styles/mixins" as *;
+
+header {
+    margin-bottom: 5rem;
+
+    h1 {
+        font-family: "Inter",sans-serif;
+        font-weight: 500;
+        font-size: 7rem;
+        letter-spacing: -.05em;
+        line-height: 1;
+
+        
+        // font-family: $font-body;
+        // font-weight: 500;
+        // font-size: 8rem;
+        // letter-spacing: -.05rem;
+        // line-height: 1.1;
+
+        span {
+            margin-right: 24px;
+            display: inline-block; // Ważne, żeby margin działał poprawnie
+
+            img {
+                width: 240px;
+                height: auto;
+                display: block; // Usuwa "dolny odstęp" pod obrazkami
+                object-fit: cover; // Zabezpieczenie na przyszłość
+            }
+        }
+    }
+
+    .grid {
+        margin-top: 5rem;
+
+        p {
+            grid-column: span 7;
+        }
+    }
+
+    @include respond-to("xlarge-desktop") {
+        h1 {
+            font-size: 6rem;
+
+        }
+    }
+
+    @include respond-to("large-desktop") {
+        h1 {
+            font-size: 5rem;
+        }
+
+        .grid {
+            margin-top: 64px;
+
+            p {
+            grid-column: span 9;
+        }
+        }
+    }
+
+    @include respond-to("desktop") {
+        h1 {
+            font-size: 4rem;
+        }
+
+        .grid {
+            margin-top: 56px;
+
+            p {
+            grid-column: span 12;
+        }
+        }
+        
+    }
+
+    @include respond-to("tablet") {
+        h1 {
+            font-size: 3rem;
+            line-height: 120%;
+            display: flex;
+            flex-direction: column;
+
+            span {
+                margin-right: 0px;
+                margin-bottom: 16px;
+
+                img {
+                    width: max-content;
+                    height: auto;
+                    aspect-ratio: 1 / 1.5;
+                }
+            }
+        }
+
+        // p {
+        //     width: 50%;
+        //     margin-top: 40px;
+        // }
+    }
+
+    @include respond-to("mobile") {
+        p {
+            width: 100%;
+            margin-top: 24px;
+        }
+    }
+}
+
+</style>
