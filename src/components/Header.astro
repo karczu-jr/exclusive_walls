@@ -6,7 +6,7 @@ import Navigation from "./Navigation.astro";
     <Navigation />
     <h1><span><img src="/src/assets/img/header.jpg" alt=""></span>Druk ścienny dla firm i&nbsp;domów - Nowoczesna dekoracja wnętrz dla wymagających</h1>
     <div class="grid">
-        <p class="large-p">Odkryj nową erę dekoracji wnętrz dzięki pionowemu drukowi cyfrowemu. Ta&nbsp;technologia pozwala nanieść dowolną grafikę bezpośrednio na Twoją ścianę z&nbsp;fotograficzną precyzją 8K. Tworzymy trwałe, odporne na UV i&nbsp;zmywanie realizacje, które zmieniają charakter biur i&nbsp;apartamentów w jeden dzień. Czysto, szybko i&nbsp;bez remontu.</p>
+        <p class="large-p col-7 col-large-desktop-9 col-desktop-12">Odkryj nową erę dekoracji wnętrz dzięki pionowemu drukowi cyfrowemu. Ta&nbsp;technologia pozwala nanieść dowolną grafikę bezpośrednio na Twoją ścianę z&nbsp;fotograficzną precyzją 8K. Tworzymy trwałe, odporne na UV i&nbsp;zmywanie realizacje, które zmieniają charakter biur i&nbsp;apartamentów w jeden dzień. Czysto, szybko i&nbsp;bez remontu.</p>
     </div>
 </header>
 
@@ -46,10 +46,6 @@ header {
 
     .grid {
         margin-top: 5rem;
-
-        p {
-            grid-column: span 7;
-        }
     }
 
     @include respond-to("xlarge-desktop") {
@@ -66,10 +62,6 @@ header {
 
         .grid {
             margin-top: 64px;
-
-            p {
-            grid-column: span 9;
-        }
         }
     }
 
@@ -80,10 +72,6 @@ header {
 
         .grid {
             margin-top: 56px;
-
-            p {
-            grid-column: span 12;
-        }
         }
         
     }

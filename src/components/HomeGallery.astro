@@ -8,13 +8,13 @@ import { Image } from 'astro:assets';
 <section class="gallery-text wrapper">
     <div class="gallery-text__container grid">
         
-        <div class="gallery-text__images">
+        <div class="gallery-text__images col-8">
             <Image src={img1} alt="Opis 1" />
             <Image src={img2} alt="Opis 2" />
             <Image src={img3} alt="Opis 3" />
         </div>
 
-        <div class="gallery-text__content">
+        <div class="gallery-text__content col-4">
             <span class="caption">O firmie</span>
             <h2>Dlaczego Exclusive Walls to nowa definicja dekoracji ścian?</h2>
             <p>
@@ -39,9 +39,6 @@ import { Image } from 'astro:assets';
 
         // --- LEWA STRONA (ZDJĘCIA) ---
         &__images {
-            // 1. ZAJMUJEMY 8 KOLUMN GŁÓWNYCH
-            grid-column: span 8;
-
             // 2. TWORZYMY WEWNĘTRZNY GRID DLA ZDJĘĆ
             display: grid;
             // Dzielimy te 8 kolumn na pół (dla dwóch górnych zdjęć)
@@ -76,13 +73,16 @@ import { Image } from 'astro:assets';
 
         // --- PRAWA STRONA (TEKST) ---
         &__content {
-            // Zajmujemy pozostałe 4 kolumny
-            grid-column: span 4;
-            
             // Tu możemy użyć Flexboxa do ułożenia nagłówka i tekstu
             display: flex;
             flex-direction: column;
             padding-left: 2rem; // Trochę oddechu od zdjęć
+        }
+
+        @include respond-to("large-desktop") {
+            &__content {
+                padding-left: 0;
+            }
         }
 
         // ==========================================
@@ -106,13 +106,12 @@ import { Image } from 'astro:assets';
             // Resetujemy szerokość na 100%
             width: 100%;
             // Grid wewnętrzny zostaje! (nadal chcemy układ 2+1 zdjęć, nawet na tablecie)
-            order: 2;// Dodajemy order: 2, żeby zdjęcia spadły na dół
+            order: 2;// Order: 2, żeby zdjęcia spadły na dół
             }
 
             &__content {
             width: 100%;
-            padding-left: 0; // Usuwamy padding, bo tekst jest pod zdjęciami
-            order: 1; // Dodajemy order: 1, żeby tekst wskoczył na samą górę
+            order: 1; // Order: 1, żeby tekst wskoczył na samą górę
             }
         }
     }

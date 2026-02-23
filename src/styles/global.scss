@@ -190,16 +190,39 @@ a {
 }
 
 // ==========================================
-// 1. DESKTOP (Generuje klasy od .col-1 do .col-12)
+// 1. KLASY BAZOWE (Domyślnie Full HD i powyżej)
+// Generuje klasy: .col-1 do .col-12
 // ==========================================
-@for $i from 1 through $columns-desktop {
+@for $i from 1 through $columns-full-hd-desktop {
     .col-#{$i} {
         grid-column: span $i;
     }
 }
 
 // ==========================================
-// 2. TABLET (Generuje klasy od .col-tablet-1 do .col-tablet-8)
+// 2. LARGE DESKTOP (max-width: 1440px)
+// ==========================================
+@include respond-to("large-desktop") {
+    @for $i from 1 through $columns-large-desktop {
+        .col-large-desktop-#{$i} {
+            grid-column: span $i;
+        }
+    }
+}
+
+// ==========================================
+// 3. DESKTOP (max-width: 1024px)
+// ==========================================
+@include respond-to("desktop") {
+    @for $i from 1 through $columns-desktop {
+        .col-desktop-#{$i} {
+            grid-column: span $i;
+        }
+    }
+}
+
+// ==========================================
+// 4. TABLET (max-width: 768px)
 // ==========================================
 @include respond-to("tablet") {
     @for $i from 1 through $columns-tablet {
@@ -210,7 +233,7 @@ a {
 }
 
 // ==========================================
-// 3. MOBILE (Generuje klasy od .col-mobile-1 do .col-mobile-4)
+// 5. MOBILE (max-width: 528px)
 // ==========================================
 @include respond-to("mobile") {
     @for $i from 1 through $columns-mobile {
