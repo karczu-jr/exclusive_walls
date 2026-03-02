@@ -1,0 +1,51 @@
+---
+import SectionIntro from './SectionIntro.astro';
+import StepItem from './StepItem.astro';
+---
+
+<section class="steps wrapper-small" data-aos="fade-up">
+    <SectionIntro
+        caption="O firmie"
+        title="Dlaczego Exclusive Walls to nowa definicja dekoracji ścian?"
+        class="col-4 col-desktop-12 col-tablet-8 p-left-2 p-left-l-dekstop-0 gallery__intro">
+        <p>Stawiamy na bezkompromisową jakość druku UV na każdym podłożu – od surowego betonu po gładkie szkło. Nasza technologia to gwarancja ekologicznych tuszy i trwałości, której nie dają tradycyjne metody. Zyskujesz idealnie gładki obraz bez widocznych łączeń, w pełni zintegrowany z architekturą Twojego wnętrza.</p>
+    </SectionIntro>
+
+    <ol class="steps__list">
+        <StepItem
+            stepNumber="01"
+            title="Voucher na druk ścienny za punkty z Twojej kafeterii benefitowej">
+            <p>
+                Teraz środki od pracodawcy możesz wydać na unikalny design. Wymień swoje punkty w kafeterii na voucher do Exclusive Walls – dokładnie tak samo, jak kupujesz bony do marketów czy karty sportowe. Wykorzystaj go, by sfinansować wymarzony druk na ścianie w swoim domu lub biurze.
+            </p>
+        </StepItem>
+        
+        <StepItem
+            stepNumber="02"
+            title="Jak zrealizować bon? Prześlij nam dane do wyceny">
+            <p>
+                Masz już kod? Napisz do nas lub zadzwoń. Podaj adres realizacji, wymiary ściany oraz pomysł na grafikę (np. logo lub motyw do sypialni). Daj znać, czy masz już wzór, czy potrzebujesz inspiracji. Na tej podstawie przygotujemy wycenę, którą opłacisz swoim voucherem. To proste!
+            </p>
+        </StepItem>
+
+        <StepItem
+            stepNumber="03"
+            title="Płać kodem z kafeterii i ciesz się nowym wnętrzem w jeden dzień">
+            <p>
+                Po akceptacji wyceny rozliczasz się za pomocą swojego kodu – bez zbędnych formalności. Ustalimy termin, a druk wykonamy w kilka godzin, bez brudu i remontu. Na każde zgłoszenie odpowiadamy najszybciej jak to możliwe, zazwyczaj już w kolejnym dniu roboczym. Czysto, szybko i konkretnie!
+            </p>
+        </StepItem>     
+    </ol>
+</section>
+
+<!-- <style lang="scss">
+@use "../styles/variables" as *;
+@use "../styles/mixins" as *;
+
+.steps {
+    &__list{
+        list-style: none;
+    }
+}
+
+</style> -->

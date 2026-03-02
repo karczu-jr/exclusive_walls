@@ -1,0 +1,86 @@
+---
+import img1 from '../assets/img/about_photo_1.jpg';
+import { Image } from 'astro:assets';
+
+import SectionIntro from './SectionIntro.astro';
+import ArrowLink from './ArrowLink.astro';
+
+const { class: className, ...rest } = Astro.props;
+---
+
+<section class:list={["image-text", "wrapper", "base-section", className]} {...rest}>
+    <div class="image-text__container grid">
+        
+        <div class="image-text__image col-8 col-desktop-12">
+            <Image src={img1} alt="Druk ścienny UV" />
+        </div>
+
+        <SectionIntro
+            caption="Realizacja"
+            title="Zobacz, jak działamy krok po kroku"
+            class="col-4 col-desktop-12 col-tablet-8 p-left-2 p-left-l-dekstop-0 image-text__intro"
+        >
+            <p>Zapomnij o bałaganie i uciążliwym remoncie. Druk ścienny to najczystsza forma dekoracji, którą realizujemy w kilku prostych krokach:</p>
+            <ol>
+                <li><span>1</span>Wizja i darmowa wycena w 24h</li>
+                <li><span>2</span>Brak żmudnych przygotowań powierzchni</li>
+                <li><span>3</span>Precyzyjny druk UV i magia technologii</li>
+                <li><span>4</span>Gotowy i trwały efekt natychmiast</li>
+                
+            </ol>
+
+            <ArrowLink
+                linkHref="/benefit" 
+                text="Dowiedz się więcej"
+            />
+        </SectionIntro>
+
+    </div>
+</section>
+
+<style lang="scss">
+@use "../styles/variables" as *;
+@use "../styles/mixins" as *;
+
+    .image-text {
+
+        &__container {
+            // Wyrównanie do środka w pionie zazwyczaj wygląda lepiej 
+            // przy pojedynczym zdjęciu 16:9 i mniejszej ilości tekstu.
+            // Jeśli wolisz wyrównanie do góry, zmień na: align-items: flex-start;
+            align-items: flex-start;
+        }
+
+        // --- LEWA STRONA (ZDJĘCIE) ---
+        &__image {
+            width: 100%;
+            
+            img {
+                width: 100%;
+                height: auto;
+                aspect-ratio: 1.5 / 1; // Sztywne proporcje filmowe
+                object-fit: cover; // Zapobiega rozciąganiu zdjęcia
+                display: block; // Usuwa pustą przestrzeń pod obrazkiem
+                // ZERO BORDER-RADIUS - tak jak prosiłeś!
+            }
+        }
+
+        // --- PRAWA STRONA (TEKST) ---
+        &__intro {
+            display: flex;
+            flex-direction: column;
+        }
+
+        // ==========================================
+        // RESPANSYWNOŚĆ (TABLET I MOBILE)
+        // ==========================================
+    
+        @include respond-to("desktop") {
+            &__container {
+                display: flex;
+                flex-direction: column;
+                gap: 4rem; // Odstęp między zdjęciem a tekstem w ułożeniu pionowym
+            }
+        }
+    }
+</style>

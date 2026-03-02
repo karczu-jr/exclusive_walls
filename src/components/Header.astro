@@ -1,10 +1,14 @@
 ---
+import img from '../assets/img/header.jpg';
+import { Image } from 'astro:assets';
+
 import Navigation from "./Navigation.astro";
 ---
 
-<header class="wrapper">
+<header data-aos="fade-in" class="wrapper">
     <Navigation />
-    <h1><span><img src="/src/assets/img/header.jpg" alt=""></span>Druk ścienny dla firm i&nbsp;domów - Nowoczesna dekoracja wnętrz dla wymagających</h1>
+    <!-- <h1><span><img src="/img/header.jpg"></span>Druk ścienny dla firm i&nbsp;domów - nowoczesna dekoracja wnętrz dla wymagających</h1> -->
+    <h1><span><Image src={img} alt="" loading="eager" /></span>Druk ścienny dla firm i&nbsp;domów - nowoczesna dekoracja wnętrz dla wymagających</h1>
     <div class="grid">
         <p class="large-p col-7 col-large-desktop-9 col-desktop-12">Odkryj nową erę dekoracji wnętrz dzięki pionowemu drukowi cyfrowemu. Ta&nbsp;technologia pozwala nanieść dowolną grafikę bezpośrednio na Twoją ścianę z&nbsp;fotograficzną precyzją 8K. Tworzymy trwałe, odporne na UV i&nbsp;zmywanie realizacje, które zmieniają charakter biur i&nbsp;apartamentów w jeden dzień. Czysto, szybko i&nbsp;bez remontu.</p>
     </div>
@@ -34,6 +38,7 @@ header {
         span {
             margin-right: 24px;
             display: inline-block; // Ważne, żeby margin działał poprawnie
+            width: 240px;
 
             img {
                 width: 240px;

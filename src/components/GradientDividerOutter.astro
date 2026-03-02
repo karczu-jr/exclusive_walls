@@ -1,0 +1,32 @@
+---
+// GradientDivider.astro
+---
+
+<div class="gradient-divider-outter" aria-hidden="true"></div>
+
+<style lang="scss">
+.gradient-divider-outter {
+    width: 100%; // Zajmuje całą dostępną szerokość ekranu
+    height: 300px; // Przykładowa wysokość gradientu - dostosuj do siebie
+    
+    // Przykładowy gradient (zmień kolory na swoje zmienne)
+    background: linear-gradient(
+        to bottom, 
+        var(--bg-color-2) 0%,
+        transparent 100%
+    );
+    
+    // To kluczowy element: wciąga gradient pod sekcję powyżej
+    margin-top: -150px; 
+    
+    // Zapobiega przesunięciu sekcji poniżej w dół
+    margin-bottom: -150px; 
+
+    // Z-index i pozycjonowanie, aby upewnić się, że gradient jest "z tyłu"
+    position: relative;
+    z-index: -1; 
+    
+    // Upewniamy się, że użytkownik może "klikać przez" ten gradient
+    pointer-events: none; 
+}
+</style>

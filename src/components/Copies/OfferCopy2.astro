@@ -1,0 +1,72 @@
+---
+import SectionIntro from './SectionIntro.astro';
+import OfferItem from './OfferItem.astro';
+---
+<section class="offer wrapper">
+    <div class="offer__grid grid">
+        <SectionIntro
+            caption="Oferta"
+            title="Dla kogo tworzymy?"
+            class="col-4 col-desktop-12 col-tablet-8 p-right-2 p-right-l-dekstop-0">
+            <p>Tworzymy dla tych, którzy cenią bezkompromisową jakośći szybką realizację bez remontu. Budujemy prestiż firm i unikalny klimat domów. Wybierz swoją przestrzeń.</p>
+        </SectionIntro>
+        <OfferItem
+            imageSrc="/src/assets/img/company.jpg"
+            linkHref="/oferta/firmy"
+            linkText="Biznes"
+        />
+        <OfferItem 
+            imageSrc="/src/assets/img/home.jpg"
+            linkHref="/oferta/firmy"
+            linkText="Dom"
+        />
+    </div>
+</section>
+
+<style lang="scss">
+@use "../styles/variables" as *;
+@use "../styles/mixins" as *;
+
+.offer {
+    &__grid {
+        align-items: start;
+
+        // ==========================================
+        // 1. DESKTOP (12 kolumn)
+        // ==========================================
+        
+        > :global(.offer-item) {
+            grid-column: span 4;
+        }
+
+
+        // ==========================================
+        // 2. TABLET (8 kolumn)
+        // ==========================================
+        @include respond-to("desktop") {
+
+            // Karty pod tekstem (po połowie szerokości)
+            > :global(.offer-item) {
+                grid-column: span 6; 
+            }
+        }
+
+
+        // ==========================================
+        // 3. MOBILE (4 kolumny)
+        // ==========================================
+        @include respond-to("tablet") {
+
+            // Karty na 100%
+            > :global(.offer-item) {
+                grid-column: span 8;
+                height: auto;
+            }
+
+            > :global(.offer-item:nth-of-type(2)) {
+                margin-top: 1.5rem; // Odsunięcie od poprzedniej karty na zewnątrz
+            }
+        }
+    }
+}
+</style>

@@ -21,6 +21,8 @@
     }
 }
 
+
+
 @mixin make-container {
 
     width: calc(100% - $gutter-full-hd-desktop * 2);
@@ -31,6 +33,26 @@
     @include respond-to("large-desktop") {
         width: calc(100% - $gutter-large-desktop * 2)
     }
+
+    @include respond-to("desktop") {
+        width: calc(100% - $gutter-desktop * 2)
+    }
+
+    @include respond-to("tablet") {
+        width: calc(100% - $gutter-tablet * 2)
+    }
+
+    @include respond-to("mobile") {
+        width: calc(100% - $gutter-mobile * 2)
+    }  
+}
+
+@mixin make-container-small {
+
+    width: calc(100% - $gutter-large-desktop * 2);
+    max-width: $max-width-container-small;
+    margin-left: auto;
+    margin-right: auto;
 
     @include respond-to("desktop") {
         width: calc(100% - $gutter-desktop * 2)

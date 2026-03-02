@@ -2,6 +2,7 @@
 $clr-white: #ffffff;
 $clr-black: #000000;
 $clr-grey:  #999999;
+$clr-grey-light: #252525;
 
 // Mapowanie ról (Semantic Colors)
 // $bg-main: $clr-black;
@@ -25,7 +26,7 @@ $bp-mobile: 528px;
 $bp-tablet: 768px;
 $bp-desktop: 1024px;
 $bp-large-desktop: 1440px;
-$bp-xlarge-desktop: 1540px;
+$bp-xlarge-desktop: 1680px;
 $bp-full-hd-desktop: 1920px;
 
 // Marginesy boczne
@@ -50,5 +51,6 @@ $grid-gap-large-desktop: 40px;
 $grid-gap-full-hd-desktop:48px;
 
 $max-width-container: 1920px;
+$max-width-container-small: 1024px;
 
 

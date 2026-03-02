@@ -1,0 +1,96 @@
+---
+// Importujemy nasz nowy podkomponent
+import OfferItem from './OfferItem.astro';
+---
+
+<section class="offer wrapper">
+    <div class="offer__grid grid">
+        <div class="offer-text__content">
+            <span class="caption">Oferta</span>
+            <h2>Dla kogo tworzymy?</h2>
+            <p>
+                Tworzymy dla tych, którzy cenią bezkompromisową jakośći&nbsp;szybką realizację bez remontu. Budujemy prestiż firm i&nbsp;unikalny klimat domów. Wybierz swoją przestrzeń.
+                <!-- Tworzymy dla tych, którzy cenią bezkompromisową jakość, czas i&nbsp;czystość realizacji bez uciążliwego remontu. Niezależnie od tego, czy chcesz zbudować prestiżowy wizerunek swojej firmy, czy marzysz o&nbsp;unikalnym klimacie w&nbsp;salonie – nasza technologia UV 8K sprosta Twoim oczekiwaniom. Wybierz przestrzeń, którą chcesz odmienić. -->
+            </p>
+        </div>
+        <OfferItem
+            imageSrc="/src/assets/img/company.jpg"
+            linkHref="/oferta/firmy"
+            linkText="Biznes"
+        />
+        <OfferItem 
+            imageSrc="/src/assets/img/home.jpg"
+            linkHref="/oferta/firmy"
+            linkText="Dom"
+        />
+    </div>
+</section>
+
+<style lang="scss">
+@use "../styles/variables" as *;
+@use "../styles/mixins" as *;
+
+.offer {
+    &__grid {
+        align-items: start;
+
+        // ==========================================
+        // 1. DESKTOP (12 kolumn)
+        // ==========================================
+        
+        // Tekst (lewa strona) -> 4 kolumny
+        .offer-text__content {
+            grid-column: span 4;
+            display: flex;
+            flex-direction: column;
+            padding-right: 2rem;
+        }
+
+        // Karty (środek i prawa strona) -> po 4 kolumny
+        // Używamy :global, żeby przebić się przez izolację plików Astro!
+        > :global(.offer-item) {
+            grid-column: span 4;
+        }
+
+
+        // ==========================================
+        // 2. TABLET (8 kolumn)
+        // ==========================================
+        @include respond-to("desktop") {
+            
+            // Tekst na całą szerokość góry
+            .offer-text__content {
+                grid-column: span 12;
+            }
+
+            // Karty pod tekstem (po połowie szerokości)
+            > :global(.offer-item) {
+                grid-column: span 6; 
+            }
+        }
+
+
+        // ==========================================
+        // 3. MOBILE (4 kolumny)
+        // ==========================================
+        @include respond-to("tablet") {
+            
+            // Tekst na 100%
+            .offer-text__content {
+                grid-column: span 8; 
+                margin-bottom: 1rem;
+            }
+
+            // Karty na 100%
+            > :global(.offer-item) {
+                grid-column: span 8;
+                height: auto;
+            }
+
+            > :global(.offer-item:nth-of-type(2)) {
+                margin-top: 1.5rem; // Odsunięcie od poprzedniej karty na zewnątrz
+            }
+        }
+    }
+}
+</style>

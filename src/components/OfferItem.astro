@@ -1,126 +1,153 @@
 ---
-const { title, description, imageSrc, linkHref, linkText } = Astro.props;
+interface Props {
+        title?: string;
+        description?: string;
+        imageSrc: string;
+        linkHref: string;
+        linkText?: string;
+        class?: string;
+    }
+
+    const { title, description, imageSrc, linkHref, linkText, class: className } = Astro.props;
 ---
 
-<article class="offer-item">
+<article class:list={["offer-item", className]}>
     <a href={linkHref} class="offer-item__link-wrapper">
         
-        <div class="offer-item__image-wrapper">
-            <img src={imageSrc} alt={title} />
+        <div class="offer-item__background">
+            <img src={imageSrc} alt={title || "Oferta"} />
+            <div class="offer-item__overlay"></div>
         </div>
         
         <div class="offer-item__content">
             {title && (
                 <h3 class="offer-item__title">{title}</h3>
             )}
-            {description && (
-                <p class="offer-item__text">{description}</p>
+
+            {linkText && (
+                <div class="offer-item__fake-link">
+                    <span class="fake-link-text">{linkText}</span>
+                    <span class="material-symbols-outlined fake-link-icon">chevron_right</span>
+                </div>
             )}
             
-            <div class="offer-item__fake-link">
-                <span class="fake-link-text">{linkText}</span>
-                <span class="material-symbols-outlined fake-link-icon">chevron_right</span>
-            </div>
+            {description && (
+                <p class="offer-item__text small-p">{description}</p>
+            )}
         </div>
 
     </a>
 </article>
 
 <style lang="scss">
+@use "../styles/variables" as *;
+@use "../styles/mixins" as *;
 .offer-item {
-    // Karta jest kontenerem na 100% wysokości grida
     height: 100%;
+    // Tutaj nadajemy kształt całej karcie. Usunąłem aspect-ratio z samego obrazka i przeniosłem wyżej
+    aspect-ratio: 4 / 3;
+    overflow: hidden;   // Upewnia się, że obrazek nie wystaje poza kartę
+    position: relative; // Konieczne do pozycjonowania warstw wewnątrz
 
     &__link-wrapper {
-        display: flex;
-        flex-direction: column;
+        display: block;
         height: 100%;
-        text-decoration: none; // Usuwamy domyślne podkreślenie linku
-        color: inherit;        // Dziedziczymy kolor tekstu
+        width: 100%;
+        text-decoration: none;
+        color: #ffffff; // Tekst musi być jasny, by kontrastował z gradientem!
 
         // ==========================================
-        // HOVER NA CAŁEJ KARCIE (MAGIA DZIEJE SIĘ TU)
+        // HOVER NA CAŁEJ KARCIE
         // ==========================================
         &:hover {
-            // 1. Zoom zdjęcia
-            .offer-item__image-wrapper img {
-                transform: scale(1.1); 
+            .offer-item__background img {
+                transform: scale(1.08); // Delikatny zoom (1.1 bywa czasem zbyt agresywne, 1.08 jest płynniejsze)
             }
             
-            // 2. Podkreślenie tekstu w "fake linku"
-            .fake-link-text::after {
-                left: 0;
-                right: auto;
-                width: 100%;
-            }
-
-            // 3. Odsunięcie chevrona
             .fake-link-icon {
                 transform: translateX(6px);
             }
         }
     }
 
-    &__image-wrapper {
+    // --- WARSTWA TŁA ---
+    &__background {
+        position: absolute;
+        top: 0;
+        left: 0;
         width: 100%;
-        aspect-ratio: 4 / 3;
-        overflow: hidden; // Przycina powiększone zdjęcie do rogów wrappera
-        // margin-bottom: 1.5rem; // Odstęp od tekstu
-        margin-bottom: 1rem; // Odstęp od tekstu
-        
+        height: 100%;
+        z-index: 1;
+
         img {
             width: 100%;
             height: 100%;
             object-fit: cover;
-            transition: transform 0.4s ease-out; // Gładkie przejście
+            transition: transform 0.5s ease-out; 
         }
     }
 
+    // --- WARSTWA GRADIENTU ---
+    &__overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 2;
+        // Gradient: Z góry (przezroczysty) do dołu (ciemny czarny/szary na 80%)
+        background: linear-gradient(
+            to top, 
+            rgba(0, 0, 0, 0.85) 0%, 
+            rgba(0, 0, 0, 0.4) 40%, 
+            transparent 100%
+        );
+    }
+
+    // --- WARSTWA TREŚCI ---
     &__content {
+        position: relative; // Dźwiga treść nad absolute
+        z-index: 3;
         display: flex;
         flex-direction: column;
-        flex-grow: 1; // Rozciąga się, by wypchnąć link na dół
+        justify-content: flex-end; // MAGIA: Wypycha wszystko do dołu!
+        height: 100%;
+        
+        // Stała odległość od krawędzi (możesz użyć zmiennej np. 2rem)
+        padding: 2rem;
+
+        @include respond-to("tablet") {
+            padding: 1rem;
+        }
+        
     }
 
     &__title {
         font-size: 1.5rem;
-        margin-bottom: 4px;
+        margin-bottom: 0.5rem;
+        color: #ffffff; // Wymuszamy biel na nagłówku
     }
 
-    &__text {
-        color: #555;
-        margin: 0 0 1rem 0;
-        flex-grow: 1; // Wypycha fake-link na sam dół karty
-    }
-
-    // STYLOWANIE NASZEGO WIZUALNEGO LINKU
     &__fake-link {
         display: inline-flex;
         align-items: center;
+        margin-bottom: 0.5rem;
         gap: 4px;
-        font-weight: 500;
-        margin-top: auto; // Gwarantuje, że przyklei się do dołu
-
-        // .fake-link-text {
-        //     position: relative;
-            
-        //     // Pasek podkreślenia
-        //     &::after {
-        //         content: '';
-        //         position: absolute;
-        //         height: 1px;
-        //         background-color: currentColor;
-        //         bottom: -2px;
-        //         width: 0;
-        //         right: 0;
-        //         transition: width 0.3s ease-out;
-        //     }
-        // }
+        font-weight: 600;
+        color: var(--text-color);
 
         .fake-link-icon {
             font-size: 1.25rem;
             transition: transform 0.3s ease-out;
         }
+    }
+
+    &__text {
+        color: rgba(255, 255, 255, 0.85); // Lekko przygaszony biały dla opisu
+        display: -webkit-box;
+        -webkit-line-clamp: 3; // Opcjonalny trick: ucina tekst po 2 linijkach dodając "..."
+        -webkit-box-orient: vertical;
+        overflow: hidden;
     }
 }
 </style>

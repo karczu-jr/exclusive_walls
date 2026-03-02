@@ -1,0 +1,98 @@
+---
+interface Props {
+    stepNumber?: string;
+    title?: string;
+    class?: string;
+}
+
+const { stepNumber, title, class: className, ...rest } = Astro.props;
+---
+
+{/* Wyświetlamy tylko, gdy którykolwiek z propsów jest wypełniony */}
+{(stepNumber || title ) && (
+    <li class="step-item-wrapper" data-aos="fade-in">
+        <div class:list={["step-item", "grid", className]} {...rest}>
+            
+            {/* Lewa strona: Numer kroku */}
+            <div class="step-item__number col-4 col-tablet-8">
+                {stepNumber && <span>{stepNumber}</span>}
+            </div>
+
+            {/* Prawa strona: Treść */}
+            <div class="step-item__content col-8 col-tablet-8">
+                {title && <h3 class="step-item__title">{title}</h3>}
+                
+                {/* OWIJAMY SLOT: Dzięki temu treść zawsze trzyma się układu */}
+                <div class="step-item__desc">
+                    <slot/>
+                </div>
+            </div>
+            
+        </div>
+    </li>
+)}
+
+<style lang="scss">
+@use "../styles/mixins" as *;
+
+// Resetujemy style dla listy, żeby nie pojawiały się kropki
+.step-item-wrapper {
+    list-style: none; 
+    margin: 0;
+    padding: 0;
+}
+
+.step-item {
+    border-bottom: 1px solid var(--line);
+    padding-top: 3rem;
+    padding-bottom: 3rem;
+    align-items: flex-start;
+
+    &__number {
+        font-family: var(--font-inter);
+        font-size: 8rem; 
+        font-weight: 300;
+        line-height: 1;
+        color: var(--text-muted);
+    }
+
+    &__content {
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start; // Zapewnia, że treść trzyma się góry (h3)
+    }
+
+    &__title {
+        // Zwiększyłem delikatnie margin, by oddzielić slot od nagłówka
+        margin-bottom: 1rem; 
+    }
+
+    // Nowa klasa dla zawartości slota
+    &__desc {
+        max-width: 600px; 
+        
+        // Stylizujemy paragrafy, które wpadają do slota
+        :global(p) {
+            font-size: var(--fs-md); // Twoja zmienna dla tekstu
+            color: var(--text-muted); // Kolor szary, jak w projekcie
+            line-height: 1.6;
+            margin-bottom: 0; // Usuwamy margines na dole, bo padding trzyma komponent
+        }
+    }
+
+    // --- RESPANSYWNOŚĆ ---
+    @include respond-to("tablet") {
+        padding-top: 2rem;
+        padding-bottom: 2rem;
+        
+        &__number {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+        }
+
+        &__title {
+            font-size: 1.5rem;
+        }
+    }
+}
+</style>

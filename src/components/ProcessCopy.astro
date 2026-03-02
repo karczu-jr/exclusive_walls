@@ -1,5 +1,6 @@
 ---
 import ProcessItem from './ProcessItem.astro';
+import StepsItem from './StepsItem.astro';
 ---
 
 <section class="process wrapper">
@@ -14,28 +15,31 @@ import ProcessItem from './ProcessItem.astro';
     </div>
 
     <ol class="process__grid grid">
-        <ProcessItem number="01" title="Twoja wizja i wycena">
-            <p>Prześlij nam zdjęcie ściany i&nbsp;wymiary. Masz własną grafikę? Świetnie. Szukasz inspiracji? Pomożemy Ci wybrać wzór z&nbsp;bazy milionów zdjęć w&nbsp;jakości 8K. Darmową wycenę otrzymasz od nas w&nbsp;24&nbsp;godziny.</p>
+        <ProcessItem number="01" title="Voucher na druk ścienny za punkty z Twojej kafeterii benefitowej. ">
+            <p>Teraz środki od pracodawcy możesz wydać na unikalny design. Wymień swoje punkty w kafeterii na voucher do Exclusive Walls – dokładnie tak samo, jak kupujesz bony do marketów czy karty sportowe. Wykorzystaj go, by sfinansować wymarzony druk na ścianie w swoim domu lub biurze.</p>
         </ProcessItem>
 
-        <ProcessItem number="02" title="Przygotowanie powierzchni">
-            <p>Nie musisz specjalnie przygotowywać ściany. Drukujemy na:
-                <ul>
-                    <li><p>standardowych tynkach i&nbsp;gładziach,</p></li>
-                    <li><p>surowym betonie i&nbsp;cegle,</p></li>
-                    <li><p>szkle, drewnie i&nbsp;metalu,</p></li>
-                    <li><p>elewacji zewnętrznej.</p></li>
-                </ul>
-            </p>
+        <ProcessItem number="02" title="Jak zrealizować voucher? Prześlij nam szczegóły swojego projektu. ">
+            <p>Masz już kod? Napisz do nas lub zadzwoń. Podaj adres realizacji, wymiary ściany oraz pomysł na grafikę (np. logo lub motyw do sypialni). Daj znać, czy masz już wzór, czy potrzebujesz inspiracji. Na tej podstawie przygotujemy wycenę, którą opłacisz swoim voucherem. To proste!</p>
         </ProcessItem>
         
-        <ProcessItem number="03" title="Realizacja czyli magia druku"> 
-            <p>Nasz ekipa robot przyjeżdża do Ciebie. Ustawiamy maszynę i&nbsp;rozpoczynamy druk. Laserowe czujniki dopasowują głowicę do nierówności ściany, gwarantując idealną ostrość. Ty pijesz kawę, a my tworzymy dzieło sztuki.</p>
+        <ProcessItem number="03" title="Płać kodem z kafeterii i ciesz się nowym wnętrzem w jeden dzień."> 
+            <p>Po akceptacji wyceny rozliczasz się za pomocą swojego kodu – bez zbędnych formalności. Ustalimy termin, a druk wykonamy w kilka godzin, bez brudu i remontu. Na każde zgłoszenie odpowiadamy najszybciej jak to możliwe, zazwyczaj już w kolejnym dniu roboczym. Czysto, szybko i konkretnie!</p>
         </ProcessItem> 
 
-        <ProcessItem number="04" title="Gotowe">
-            <p>Dzięki utwardzaniu światłem UV, grafika jest sucha i&nbsp;odporna na dotyk natychmiast po nałożeniu. Możesz dotykać ściany i&nbsp;cieszyć się nowym wnętrzem od razu po naszym wyjściu.</p>
-        </ProcessItem>
+        
+    </ol>
+    <ol>
+        <StepsItem data-aos="fade-up"
+            stepNumber="01"
+            title="Voucher na druk ścienny za punkty z Twojej kafeterii benefitowej."
+            description="Teraz środki od pracodawcy możesz wydać na unikalny design. Wymień swoje punkty w kafeterii na voucher do Exclusive Walls – dokładnie tak samo, jak kupujesz bony do marketów czy karty sportowe. Wykorzystaj go, by sfinansować wymarzony druk na ścianie w swoim domu lub biurze."
+        />
+        <StepsItem data-aos="fade-up"
+            stepNumber="02"
+            title="Twoja wizja i wycena"
+            description="Prześlij nam zdjęcie ściany i wymiary. Masz własną grafikę? Świetnie. Szukasz inspiracji? Pomożemy Ci wybrać wzór z bazy milionów zdjęć w jakości 8K. Darmową wycenę otrzymasz od nas w 24 godziny."
+        />
     </ol>
 </section>
 
@@ -80,7 +84,7 @@ import ProcessItem from './ProcessItem.astro';
         // 1. DESKTOP (12 kolumn -> 4 kroki po 3 kolumny)
         // ==========================================
         > :global(.process-item) {
-            grid-column: span 3; 
+            grid-column: span 4; 
         }
 
         > :global(.process-item:nth-of-type(2)) {

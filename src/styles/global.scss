@@ -11,9 +11,14 @@
 
 :root {
     --bg-color: #{$clr-black};
+    --bg-color-2: #{$clr-grey-light};
     --text-color: #{$clr-white};
     --text-muted: #{$clr-grey};
     --line: #2b2b2b;
+}
+
+.bg-color-2 {
+    background-color: var(--bg-color-2);
 }
 
 
@@ -43,13 +48,9 @@ body {
     -webkit-font-smoothing: antialiased; // Wygładzanie dla lepszego UX
 }
 
-section {
-    margin-bottom: 10rem;
-}
-
 // TYPOGRAFIA (Logika o którą pytałeś)
 h1, h2, h3 {
-    font-family: $font-inter;;
+    font-family: $font-inter;
     font-weight: 700;
     line-height: 1.2;
 }
@@ -59,17 +60,22 @@ h2 {
     font-size: 3rem;
     margin-bottom: 2rem;
 
-    @include respond-to("large-desktop") {
+    @include respond-to("xlarge-desktop") {
         font-size: 2.5rem;
+        margin-bottom: 1.5rem;
     }
 
-    @include respond-to("tablet") {
+    @include respond-to("large-desktop") {
         font-size: 2.25rem;
     }
 
-    @include respond-to("mobile") {
+    @include respond-to("tablet") {
         font-size: 2rem;
     }
+
+    // @include respond-to("mobile") {
+    //     font-size: 2rem;
+    // }
 }
 
 h3 {
@@ -87,8 +93,18 @@ p {
     line-height: 150%;
     color: $clr-grey;
 
-    @include respond-to("mobile") {
+    @include respond-to("desktop") {
         font-size: $fs-base;
+    }
+}
+
+.small-p {
+    font-size: $fs-base;
+    line-height: 150%;
+    color: $clr-grey;
+
+    @include respond-to("tablet") {
+        font-size: $fs-sm;
     }
 }
 
@@ -96,7 +112,11 @@ p {
     font-size: $fs-lg;
     font-weight: 400;
     line-height: 150%;
-    color: var(--text-muted)
+    color: var(--text-muted);
+
+    // @include respond-to("desktop") {
+    //     font-size: $fs-md;
+    // }
 }
 
 
@@ -190,6 +210,24 @@ a {
 }
 
 // ==========================================
+// PADDINGI
+// ==========================================
+.p-left-2 { padding-left: 2rem; }
+
+@include respond-to("xlarge-desktop") {
+    // Klasa nadpisująca na tablecie
+    .p-left-l-dekstop-0 { padding-left: 0; } 
+}
+
+.p-right-2 { padding-right: 2rem; }
+
+@include respond-to("xlarge-desktop") {
+    // Klasa nadpisująca na tablecie
+    .p-right-l-dekstop-0 { padding-right: 0; } 
+}
+
+
+// ==========================================
 // 1. KLASY BAZOWE (Domyślnie Full HD i powyżej)
 // Generuje klasy: .col-1 do .col-12
 // ==========================================
@@ -241,6 +279,10 @@ a {
             grid-column: span $i;
         }
     }
+}
+
+.wrapper-small {
+    @include make-container-small
 }
 
 .wrapper {

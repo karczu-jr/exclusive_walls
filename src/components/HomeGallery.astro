@@ -3,9 +3,13 @@ import img1 from '../assets/img/about_photo_1.jpg';
 import img2 from '../assets/img/about_photo_2.jpg';
 import img3 from '../assets/img/about_photo_3.jpg';
 import { Image } from 'astro:assets';
+
+import SectionIntro from './SectionIntro.astro';
+
+const { class: className, ...rest } = Astro.props;
 ---
 
-<section class="gallery-text wrapper">
+<section class:list={["gallery-text", "wrapper", "base-section", className]} {...rest}>
     <div class="gallery-text__container grid">
         
         <div class="gallery-text__images col-8">
@@ -14,13 +18,13 @@ import { Image } from 'astro:assets';
             <Image src={img3} alt="Opis 3" />
         </div>
 
-        <div class="gallery-text__content col-4">
-            <span class="caption">O firmie</span>
-            <h2>Dlaczego Exclusive Walls to nowa definicja dekoracji ścian?</h2>
-            <p>
-                Stawiamy na bezkompromisową jakość druku UV na każdym podłożu – od surowego betonu po gładkie szkło. Nasza technologia to gwarancja ekologicznych tuszy i trwałości, której nie dają tradycyjne metody. Zyskujesz idealnie gładki obraz bez widocznych łączeń, w pełni zintegrowany z architekturą Twojego wnętrza.
-            </p>
-        </div>
+        <SectionIntro
+            caption="O firmie"
+            title="Dlaczego Exclusive Walls to nowa definicja dekoracji ścian?"
+            class="col-4 col-desktop-12 col-tablet-8 p-left-2 p-left-l-dekstop-0 gallery__intro"
+        >
+            <p>Stawiamy na bezkompromisową jakość druku UV na każdym podłożu – od surowego betonu po gładkie szkło. Nasza technologia to gwarancja ekologicznych tuszy i trwałości, której nie dają tradycyjne metody. Zyskujesz idealnie gładki obraz bez widocznych łączeń, w pełni zintegrowany z architekturą Twojego wnętrza.</p>
+        </SectionIntro>
 
     </div>
 </section>
@@ -30,7 +34,6 @@ import { Image } from 'astro:assets';
 @use "../styles/mixins" as *;
 
     .gallery-text {
-        margin-top: 9rem;
 
         &__container {
             // Klasa .grid w HTML robi tu 12 kolumn i gap

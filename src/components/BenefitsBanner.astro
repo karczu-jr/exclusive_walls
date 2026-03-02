@@ -1,0 +1,97 @@
+---
+import SectionIntro from './SectionIntro.astro';
+import ArrowLink from './ArrowLink.astro';
+
+import img from '../assets/img/about_photo_2.jpg';
+import { Image } from 'astro:assets';
+---
+
+<section class="benefits wrapper" data-aos="fade-up">
+    <div class="benefits__grid grid">
+        
+        <div class="benefits__text col-7 col-tablet-12">
+            <SectionIntro 
+                caption="Vouchery i Benefity"
+                title="Zamień punkty od pracodawcy na unikalny design 8K"
+                class="benefits__intro"
+            >
+                <p>Wykorzystaj voucher ze swojej kafeterii benefitowej, aby sfinansować wymarzony druk ścienny. Odmień swój dom lub biuro bez wydawania gotówki – szybko, czysto i profesjonalnie.</p>
+            </SectionIntro>
+            
+            <ArrowLink
+                linkHref="/benefit" 
+                text="Dowiedz się więcej"
+            />
+        </div>
+
+        <div class="benefits__img col-5 col-tablet-12">
+            <Image src={img} alt="Druk ścienny w biurze" />
+        </div>
+        
+    </div>
+</section>
+
+<style lang="scss">
+@use "../styles/variables" as *;
+@use "../styles/mixins" as *;
+
+.benefits {
+    // Tło nałożone na cały kontener
+    background-color: var(--bg-color-2); 
+    margin-top: 5rem;
+    margin-bottom: 5rem;
+    // ZERO border-radius
+    // ZERO globalnego paddingu
+
+    &__grid {
+        // To jest kluczowe: rozciąga obie kolumny do równej wysokości
+        align-items: stretch; 
+    }
+
+    &__text {
+        display: flex;
+        flex-direction: column;
+        justify-content: center; // Wyśrodkowuje tekst w pionie na dużym ekranie
+        align-items: flex-start;
+        // Padding nakładamy TYLKO na tekst: góra, prawo, dół, lewo
+        padding: 4rem 2rem 4rem 4rem; 
+    }
+
+    :global(.benefits__intro) {
+        margin-bottom: 2.5rem;
+    }
+
+    &__img {
+        width: 100%;
+        height: 100%;
+        min-height: 400px;
+        // Obrazek nie ma żadnych marginesów ani paddingów - dotyka krawędzi grida
+
+        img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover; 
+            display: block; // Usuwa domyślny, kilkupikselowy odstęp pod obrazkiem w HTML
+        }
+    }
+
+    // --- RESPANSYWNOŚĆ ---
+    @include respond-to("tablet") {
+        &__grid {
+            // Usuwamy lukę z grida, żeby na telefonie obrazek dotykał tekstu
+            gap: 0; 
+        }
+
+        &__text {
+            // Mniejszy odstęp dla tekstu na mobile
+            padding: 3rem 2rem; 
+            order: 2; 
+        }
+
+        &__img {
+            min-height: 300px;
+            order: 1; 
+        }
+    }
+}
+</style>

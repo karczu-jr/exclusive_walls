@@ -1,0 +1,59 @@
+---
+const { title, caption, class: className } = Astro.props;
+---
+
+<div class:list={["section-intro", className]}>
+    {caption && <span class="caption">{caption}</span>}
+    <div class="section-intro__text">
+        <h2>{title}</h2>
+        <slot />
+    </div>
+</div>
+
+<style lang="scss">
+@use "../styles/variables" as *;
+@use "../styles/mixins" as *;
+
+    .section-intro {
+        display: flex;
+        flex-direction: column;
+
+        // === STYLOWANIE LISTY W SLOCIE ===
+
+        // 1. Cała lista
+        :global(ol) {
+            list-style: none; // Wyłączamy domyślne numery (1., 2., 3.)
+            padding-left: 0;  // Usuwamy domyślne wcięcie przeglądarki
+            margin-top: 1.5rem;
+            margin-bottom: 1.5rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem; // Odstęp między kolejnymi punktami
+        }
+
+        // 2. Pojedynczy punkt (szary tekst)
+        :global(ol li) {
+            display: flex;
+            align-items: baseline; // Numer i tekst wyrównane do góry
+            gap: 0.25rem; // Odstęp między białym numerem a szarym tekstem
+            
+            // Szary kolor treści (użyj swojej zmiennej, np. var(--text-muted) lub $color-grey)
+            color: var(--text-muted); 
+            line-height: 1.6;
+            font-size: 1rem;
+            font-weight: 500;
+        }
+
+        // 3. Numer wewnątrz punktu (biały nagłówek)
+        :global(ol li span) {
+            font-family: $font-header; // Twój font nagłówkowy
+            color: var(--text-color);            // Czysta biel
+            font-size: 1.375rem;         // Możesz lekko powiększyć numer dla lepszego efektu
+            font-weight: 600;          // Opcjonalnie: pogrubienie
+            line-height: 1;            // Zapobiega rozjeżdżaniu się z tekstem
+            min-width: 1rem;           // Trzyma stałą szerokość, żeby tekst pod spodem równo się łamał
+        }
+    }
+    
+</style>
+

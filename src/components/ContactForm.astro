@@ -1,0 +1,159 @@
+<div class="contact-form-wrapper col-5">
+    <form id="contact-form" class="contact-form">
+        
+        <input type="hidden" name="access_key" value="TWÓJ_KLUCZ_WEB3FORMS_TUTAJ">
+        
+        <input type="checkbox" name="botcheck" class="hidden" style="display: none;">
+
+        <div class="form-group">
+            <label for="name">Imię i nazwisko</label>
+            <input type="text" name="name" id="name" required placeholder="Jan Kowalski">
+        </div>
+
+        <div class="form-group">
+            <label for="email">Adres e-mail</label>
+            <input type="email" name="email" id="email" required placeholder="kontakt@twojastrona.pl">
+        </div>
+
+        <div class="form-group">
+            <label for="message">Wiadomość</label>
+            <textarea name="message" id="message" rows="5" required placeholder="W czym możemy pomóc?"></textarea>
+        </div>
+
+        <button type="submit" class="btn-submit">Wyślij wiadomość</button>
+        
+        <p id="form-result" class="form-result"></p>
+    </form>
+</div>
+
+<script>
+    // Pobieramy formularz i pole na komunikat z HTML-a
+    const form = document.getElementById('contact-form');
+    const result = document.getElementById('form-result');
+
+    // Nasłuchujemy na moment kliknięcia "Wyślij"
+    form.addEventListener('submit', function(e) {
+        e.preventDefault(); // Zatrzymuje domyślne przeładowanie strony!
+
+        // Zbieramy dane z formularza
+        const formData = new FormData(form);
+        const object = Object.fromEntries(formData);
+        const json = JSON.stringify(object);
+        
+        // Wyświetlamy status oczekiwania
+        result.innerHTML = "Wysyłanie...";
+        result.style.display = "block";
+
+        // Wysyłamy zapytanie do serwerów Web3Forms
+        fetch('https://api.web3forms.com/submit', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json'
+            },
+            body: json
+        })
+        .then(async (response) => {
+            let json = await response.json();
+            if (response.status == 200) {
+                // Sukces!
+                result.innerHTML = "Wiadomość została wysłana pomyślnie!";
+                result.style.color = "green";
+            } else {
+                // Błąd z serwera Web3Forms
+                console.log(response);
+                result.innerHTML = json.message;
+                result.style.color = "red";
+            }
+        })
+        .catch(error => {
+            // Błąd połączenia (np. brak internetu)
+            console.log(error);
+            result.innerHTML = "Coś poszło nie tak. Spróbuj ponownie później.";
+            result.style.color = "red";
+        })
+        .then(function() {
+            // Na samym końcu, niezależnie od wyniku:
+            form.reset(); // Czyścimy pola formularza
+            
+            // Ukrywamy komunikat po 5 sekundach (5000 milisekund)
+            setTimeout(() => {
+                result.style.display = "none";
+            }, 5000);
+        });
+    });
+</script>
+
+<style lang="scss">
+@use "../styles/mixins" as *;
+@use "../styles/variables" as *;
+
+.contact-form-wrapper {
+    max-width: 600px; // Ograniczamy szerokość formularza
+    
+    .form-group {
+        margin-bottom: 1.5rem;
+        display: flex;
+        flex-direction: column; // Układamy etykietę nad polem
+
+        label {
+            color: var(--text-color);
+            font-size: $fs-md;
+
+            @include respond-to("desktop") {
+                font-size: $fs-base;
+            }
+        }
+
+        input, textarea {
+            -webkit-appearance: none; /* Safari/Chrome */
+            -moz-appearance: none;    /* Firefox */
+            appearance: none;         /* Standard */
+
+            border: none;
+            background-image: none;
+            background-color: transparent;
+            box-shadow: none;
+            outline: none; /* Usuwa również niebieski obrys przy kliknięciu */
+            padding: 0;
+
+            font-size: $fs-base;
+            color: var(--text-color);
+
+            @include respond-to("desktop") {
+                font-size: $fs-sm;
+            }
+
+            padding: 0.75rem 0;
+            border-bottom: 1px solid #ccc;
+            font-family: inherit; // Dziedziczy czcionkę ze strony
+            
+            &:focus {
+                outline: none;
+                border-color: var(--text-color); // Używam Twojej zmiennej
+            }
+        }
+    }
+
+    .btn-submit {
+        padding: 1rem 2rem;
+        background-color: var(--text-color);
+        color: #000;
+        font-size: $fs-base;
+        border: none;
+        cursor: pointer;
+        opacity: 0.85;
+        transition: opacity 0.3s;
+
+        &:hover {
+            opacity: 1.0;
+        }
+    }
+
+    .form-result {
+        margin-top: 1rem;
+        font-weight: bold;
+        display: none; // Domyślnie ukryte, JavaScript to pokaże
+    }
+}
+</style>

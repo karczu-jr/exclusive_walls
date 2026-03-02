@@ -1,0 +1,24 @@
+---
+// Odbieramy klasy przekazane z zewnątrz, aby móc zmieniać tła
+const { class: className, ...rest } = Astro.props;
+---
+
+<section class:list={["base-section", className]} {...rest}>
+
+    <slot />
+    
+</section>
+
+<style lang="scss">
+@use "../styles/variables" as *;
+@use "../styles/mixins" as *;
+
+    // Style wspólne dla KAŻDEJ sekcji na stronie
+    .base-section {
+        width: 100%;
+        margin-top: 9rem; 
+        padding-top: 4rem;
+        padding-bottom: 6rem;
+        margin-bottom: 5rem;
+    }
+</style>

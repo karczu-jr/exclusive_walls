@@ -1,0 +1,22 @@
+---
+const { title, caption, class: className } = Astro.props;
+---
+
+<div class:list={["section-intro-center", className]}>
+    {caption && <span class="caption">{caption}</span>}
+    <div class="section-intro-center__text">
+        <h2>{title}</h2>
+        <slot />
+    </div>
+</div>
+
+<style lang="scss">
+    .section-intro-center {
+        display: flex;
+        max-width: 720px;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+    }
+</style>
+

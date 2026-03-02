@@ -3,16 +3,45 @@ import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import Layout from '../layouts/Layout.astro';
 import HomeGallery from '../components/HomeGallery.astro';
-import Offer from '../components/Offer.astro'
-import Process from '../components/Process.astro'
+import Offer from '../components/Offer.astro';
+import ProcessResume from '../components/ProcessResume.astro';
+import Process from '../components/Process.astro';
+import Steps from '../components/Steps.astro';
+import Contact from '../components/Contact.astro';
+import SectionLayout from '../components/SectionLayout.astro';
+
+import SectionIntroCenter from '../components/SectionIntroCenter.astro';
+
+import GradientDividerInner from '../components/GradientDividerInner.astro';
+import GradientDividerOutter from '../components/GradientDividerOutter.astro';
+
+import BenefitsBanner from '../components/BenefitsBanner.astro';
+
 ---
 
 <Layout title="Exclusive Walls">
+	
 	<Header />
 	<main>
-		<HomeGallery />
-		<Offer />
-		<Process />
+		<GradientDividerInner />
+		<SectionLayout class="bg-color-2">
+			<HomeGallery data-aos="fade-up" />
+		</SectionLayout>
+
+		<GradientDividerOutter />
+		<Offer data-aos="fade-up" />
+
+		<SectionLayout>
+			<ProcessResume data-aos="fade-up" />
+		</SectionLayout>
+		<!-- <Process /> -->
+		<!-- <Steps /> -->
+		<BenefitsBanner data-aos="fade-up"  />
+
+		<SectionLayout>
+			<Contact data-aos="fade-up" />
+		</SectionLayout>
+		
 	</main>
 	<Footer />
 </Layout>
