@@ -17,9 +17,13 @@ const listId = `list-label-${cleanTitle}`;
     <ul aria-labelledby={listId}>
     {items.map((item) => (
         <li>
-        <a href={item.href}>
-            {item.text}
-        </a>
+            <a 
+                href={item.href} 
+                target={item.href.startsWith('http') ? "_blank" : "_self"} 
+                rel={item.href.startsWith('http') ? "noopener noreferrer" : ""}
+            >
+                {item.text}
+            </a>
         </li>
     ))}
     </ul>
@@ -31,6 +35,9 @@ const listId = `list-label-${cleanTitle}`;
 
     .smart-list {
         // width: 180px;
+        .caption {
+            margin-bottom: 1rem;
+        }
     
         ul {
             list-style-type: none;
@@ -39,10 +46,14 @@ const listId = `list-label-${cleanTitle}`;
                 margin-top: 1rem;
 
                 a {
-                    font-size: $fs-base;
+                    font-size: $fs-md;
+
+                    @include respond-to("desktop") {
+                        font-size: $fs-base;
+                    }
                 }
             }
         }
     }
-  /* Style */
+
 </style>

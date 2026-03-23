@@ -1,159 +1,328 @@
-<div class="contact-form-wrapper col-5">
-    <form id="contact-form" class="contact-form">
-        
-        <input type="hidden" name="access_key" value="TWÓJ_KLUCZ_WEB3FORMS_TUTAJ">
-        
-        <input type="checkbox" name="botcheck" class="hidden" style="display: none;">
+---
+interface Props {
+    class?: string;
+}
 
-        <div class="form-group">
-            <label for="name">Imię i nazwisko</label>
-            <input type="text" name="name" id="name" required placeholder="Jan Kowalski">
+const { class: className, ...rest } = Astro.props;
+---
+
+<form 
+    action="https://forminit.com/f/83et5oz4cfi"  
+    method="POST" 
+    enctype="multipart/form-data" 
+    class:list={["contact-form", className]} 
+    id="exclusive-contact-form"
+    {...rest}
+>
+    <div class="contact-form__row">
+        <div class="contact-form__group">
+            <label for="name">Imię i nazwisko <span>(wymagane)</span></label>
+            <input type="text" id="name" name="fi-sender-fullName" required placeholder="np. Jan Kowalski">
         </div>
-
-        <div class="form-group">
-            <label for="email">Adres e-mail</label>
-            <input type="email" name="email" id="email" required placeholder="kontakt@twojastrona.pl">
-        </div>
-
-        <div class="form-group">
-            <label for="message">Wiadomość</label>
-            <textarea name="message" id="message" rows="5" required placeholder="W czym możemy pomóc?"></textarea>
-        </div>
-
-        <button type="submit" class="btn-submit">Wyślij wiadomość</button>
         
-        <p id="form-result" class="form-result"></p>
-    </form>
-</div>
+        <div class="contact-form__group">
+            <label for="email">Adres e-mail <span>(wymagane)</span></label>
+            <input type="email" id="email" name="fi-sender-email" required placeholder="np. jan@kowalski.pl">
+        </div>
+    </div>
 
-<script>
-    // Pobieramy formularz i pole na komunikat z HTML-a
-    const form = document.getElementById('contact-form');
-    const result = document.getElementById('form-result');
-
-    // Nasłuchujemy na moment kliknięcia "Wyślij"
-    form.addEventListener('submit', function(e) {
-        e.preventDefault(); // Zatrzymuje domyślne przeładowanie strony!
-
-        // Zbieramy dane z formularza
-        const formData = new FormData(form);
-        const object = Object.fromEntries(formData);
-        const json = JSON.stringify(object);
+    <div class="contact-form__row">
+        <div class="contact-form__group">
+            <label for="phone">Numer telefonu</label>
+            <input type="tel" id="phone" name="fi-text-telefon" placeholder="+48 000 000 000">
+        </div>
         
-        // Wyświetlamy status oczekiwania
-        result.innerHTML = "Wysyłanie...";
-        result.style.display = "block";
+        <div class="contact-form__group">
+            <label for="dimensions">Wymiary ściany</label>
+            <input type="text" id="dimensions" name="fi-text-wymiary" placeholder="np. 3m x 2.5m">
+        </div>
+    </div>
 
-        // Wysyłamy zapytanie do serwerów Web3Forms
-        fetch('https://api.web3forms.com/submit', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'Accept': 'application/json'
-            },
-            body: json
-        })
-        .then(async (response) => {
-            let json = await response.json();
-            if (response.status == 200) {
-                // Sukces!
-                result.innerHTML = "Wiadomość została wysłana pomyślnie!";
-                result.style.color = "green";
-            } else {
-                // Błąd z serwera Web3Forms
-                console.log(response);
-                result.innerHTML = json.message;
-                result.style.color = "red";
-            }
-        })
-        .catch(error => {
-            // Błąd połączenia (np. brak internetu)
-            console.log(error);
-            result.innerHTML = "Coś poszło nie tak. Spróbuj ponownie później.";
-            result.style.color = "red";
-        })
-        .then(function() {
-            // Na samym końcu, niezależnie od wyniku:
-            form.reset(); // Czyścimy pola formularza
-            
-            // Ukrywamy komunikat po 5 sekundach (5000 milisekund)
-            setTimeout(() => {
-                result.style.display = "none";
-            }, 5000);
-        });
-    });
-</script>
+    <!-- <div class="contact-form__group">
+        <label for="attachment">Zdjęcie ściany (opcjonalnie, max 5MB)</label>
+        <input type="file" id="attachment" name="fi-file-zdjecie" accept="image/*">
+    </div> -->
+
+    <div class="contact-form__group">
+        <label for="attachment">Zdjęcie ściany (opcjonalnie, max 5MB)</label>
+        <div class="file-input-wrapper">
+            <input type="file" id="attachment" name="fi-file-zdjecie" accept="image/*">
+            <button type="button" class="clear-file-btn" id="clear-attachment" style="display: none;" aria-label="Usuń załączony plik">Usuń plik ✕</button>
+        </div>
+    </div>
+
+    <div class="contact-form__group">
+        <label for="message">Wiadomość <span>(wymagane)</span></label>
+        <textarea id="message" name="fi-text-wiadomosc" required rows="4" placeholder="Napisz, na jakim podłożu drukujemy i jaki masz pomysł..."></textarea>
+    </div>
+
+    <input type="text" name="website_url" class="bot-trap" style="display: none !important;" tabindex="-1" autocomplete="off">
+
+    <div id="form-message" class="form-message"></div>
+
+    <button type="submit" class="contact-form__submit">Wyślij zapytanie</button>
+
+</form>
 
 <style lang="scss">
-@use "../styles/mixins" as *;
 @use "../styles/variables" as *;
+@use "../styles/mixins" as *;
 
-.contact-form-wrapper {
-    max-width: 600px; // Ograniczamy szerokość formularza
-    
-    .form-group {
-        margin-bottom: 1.5rem;
+.contact-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    width: 100%; 
+
+    &__row {
         display: flex;
-        flex-direction: column; // Układamy etykietę nad polem
+        gap: 1.5rem;
+        flex-wrap: wrap;
+        
+        > * {
+            flex: 1;
+            min-width: 200px;
+        }
+
+        @include respond-to("tablet") {
+            flex-direction: column;
+        }
+    }
+
+    &__group {
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
 
         label {
+            font-size: 0.9rem;
             color: var(--text-color);
-            font-size: $fs-md;
+            font-weight: 500;
 
-            @include respond-to("desktop") {
-                font-size: $fs-base;
+            span {
+                color: var(--text-muted);
             }
         }
 
-        input, textarea {
-            -webkit-appearance: none; /* Safari/Chrome */
-            -moz-appearance: none;    /* Firefox */
-            appearance: none;         /* Standard */
-
-            border: none;
-            background-image: none;
-            background-color: transparent;
-            box-shadow: none;
-            outline: none; /* Usuwa również niebieski obrys przy kliknięciu */
-            padding: 0;
-
-            font-size: $fs-base;
+        input[type="text"],
+        input[type="email"],
+        input[type="tel"],
+        textarea,
+        input[type="file"] {
+            width: 100%;
+            padding: 1rem;
+            border: 1px solid var(--line);
+            background: transparent; 
             color: var(--text-color);
+            font-family: inherit;
+            font-size: 1rem;
+            transition: border-color 0.3s ease;
+            border-radius: 0;
 
-            @include respond-to("desktop") {
-                font-size: $fs-sm;
-            }
-
-            padding: 0.75rem 0;
-            border-bottom: 1px solid #ccc;
-            font-family: inherit; // Dziedziczy czcionkę ze strony
-            
             &:focus {
                 outline: none;
-                border-color: var(--text-color); // Używam Twojej zmiennej
+                border-color: #ffffff; 
+            }
+        }
+
+        input[type="file"] {
+            padding: 0.8rem;
+            cursor: pointer;
+            
+            &::file-selector-button {
+                background: transparent;
+                border: 1px solid var(--line);
+                color: var(--text-color);
+                padding: 0.5rem 1rem;
+                margin-right: 1rem;
+                cursor: pointer;
+                transition: all 0.3s ease;
+                border-radius: 0;
+
+                &:hover {
+                    background: #ffffff;
+                    color: #000000;
+                }
+            }
+        }
+
+        textarea {
+            resize: vertical; 
+            min-height: 120px;
+        }
+
+        // NOWE STYLE Z PRZYCISKU X
+
+        // --- NOWE: Układ dla pola pliku i przycisku Usuń ---
+        .file-input-wrapper {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            flex-wrap: wrap; 
+        }
+
+        .clear-file-btn {
+            background: transparent;
+            border: 1px solid #F44336; // Czerwony kolor (błędu/usuwania)
+            color: #F44336;
+            padding: 0.5rem 1rem;
+            cursor: pointer;
+            font-size: 0.85rem;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            border-radius: 0;
+
+            &:hover {
+                background: #F44336;
+                color: #ffffff;
             }
         }
     }
 
-    .btn-submit {
-        padding: 1rem 2rem;
-        background-color: var(--text-color);
-        color: #000;
-        font-size: $fs-base;
+    &__submit {
+        margin-top: 1rem;
+        padding: 1rem 2.5rem;
+        background: #ffffff; 
+        color: #000000;
         border: none;
+        font-family: inherit;
+        font-weight: 600;
+        font-size: 1rem;
         cursor: pointer;
-        opacity: 0.85;
-        transition: opacity 0.3s;
+        transition: opacity 0.3s ease;
+        border-radius: 0; 
+        align-self: flex-start; 
 
         &:hover {
-            opacity: 1.0;
+            opacity: 0.8;
+        }
+
+        @include respond-to("tablet") {
+            width: 100%;
         }
     }
 
-    .form-result {
-        margin-top: 1rem;
-        font-weight: bold;
-        display: none; // Domyślnie ukryte, JavaScript to pokaże
+    // --- NOWE STYLE KOMUNIKATU ---
+    .form-message {
+        display: none; // Ukryte domyślnie, JS to zmieni na 'flex'
+        align-items: center;
+        gap: 1rem;
+        background-color: #ffffff;
+        color: #000000;
+        padding: 1rem 1.5rem;
+        margin-top: 0.5rem;
+        margin-bottom: 0.5rem;
+        border-left: 4px solid transparent; // Baza pod kolorowy pasek
+        font-weight: 500;
+        font-size: 0.95rem;
+        
+        // Delikatny cień, żeby biały box ładnie "odciął się" od reszty formularza
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2); 
+
+        svg {
+            flex-shrink: 0; // Zapobiega ściskaniu ikony przy długich tekstach
+        }
+
+        &--success {
+            border-left-color: #4CAF50; // Zielony pasek
+            // Wymuszamy stylowanie na wstrzykniętym przez JS elemencie
+            :global(svg) { 
+                color: #4CAF50; 
+            }
+        }
+
+        &--error {
+            border-left-color: #F44336; // Czerwony pasek
+            :global(svg) { 
+                color: #F44336; 
+            }
+        }
     }
 }
 </style>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const form = document.getElementById('exclusive-contact-form') as HTMLFormElement;
+        const submitButton = document.querySelector('.contact-form__submit') as HTMLButtonElement;
+        const resultMessage = document.getElementById('form-message') as HTMLDivElement;
+        
+        const fileInput = document.getElementById('attachment') as HTMLInputElement;
+        const clearFileBtn = document.getElementById('clear-attachment') as HTMLButtonElement;
+
+        // IKONY SVG
+        const iconSuccess = `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>`;
+        const iconError = `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>`;
+
+        // FUNKCJA DO POKAZYWANIA ALERTÓW
+        const showMessage = (type: 'success' | 'error', text: string) => {
+            if (!resultMessage) return;
+            resultMessage.className = `form-message form-message--${type}`;
+            resultMessage.innerHTML = `${type === 'success' ? iconSuccess : iconError} <span>${text}</span>`;
+            resultMessage.style.display = 'flex';
+        };
+
+        // Pokazywanie/ukrywanie przycisku "Usuń plik"
+        if (fileInput && clearFileBtn) {
+            fileInput.addEventListener('change', () => {
+                clearFileBtn.style.display = fileInput.value ? 'inline-block' : 'none';
+            });
+
+            clearFileBtn.addEventListener('click', () => {
+                fileInput.value = ''; 
+                clearFileBtn.style.display = 'none';
+            });
+        }
+
+        if (form && submitButton && resultMessage) {
+            form.addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                // ANTYSPAM
+                const botTrap = form.querySelector('.bot-trap') as HTMLInputElement;
+                if (botTrap && botTrap.value !== '') {
+                    showMessage('success', 'Wiadomość została wysłana! Odezwiemy się wkrótce.');
+                    form.reset();
+                    if (clearFileBtn) clearFileBtn.style.display = 'none';
+                    return; 
+                }
+                
+                const originalButtonText = submitButton.innerText;
+                submitButton.innerText = 'Wysyłanie...';
+                submitButton.disabled = true;
+                resultMessage.style.display = 'none';
+
+                const formData = new FormData(form);
+
+                fetch(form.action, {
+                    method: 'POST',
+                    body: formData,
+                    headers: { 'Accept': 'application/json' }
+                })
+                .then(response => {
+                    if (response.ok) {
+                        showMessage('success', 'Wiadomość została wysłana! Odezwiemy się wkrótce.');
+                        form.reset(); 
+                        if (clearFileBtn) clearFileBtn.style.display = 'none';
+                    } else {
+                        showMessage('error', 'Błąd wysyłania. Spróbuj ponownie później.');
+                    }
+                })
+                .catch(error => {
+                    console.error(error);
+                    showMessage('error', 'Brak internetu. Sprawdź połączenie.');
+                })
+                .finally(() => {
+                    submitButton.innerText = originalButtonText;
+                    submitButton.disabled = false;
+                    
+                    // Schowanie powiadomienia po 6 sekundach
+                    setTimeout(() => {
+                        resultMessage.style.display = 'none';
+                    }, 12000);
+                });
+            });
+        }
+    });
+</script>
+

@@ -3,20 +3,22 @@ import SmartList from "./SmartList.astro";
 
 const linki = [
   { text: "Home", href: "/" },
-  { text: "Technologia", href: "/" },
-  { text: "Kontakt", href: "/" }
+  { text: "Realizacja", href: "/process" },
+  { text: "Benefity", href: "/benefits" },
+  { text: "Kontakt", href: "/contact" }
 ];
 
 const oferta = [
-  { text: "Firm", href: "/" },
-  { text: "Domu", href: "/" },
-  { text: "Hoteli i gastronomii", href: "/" },
-  { text: "Podmiotów publicznych", href: "/" }
+  { text: "Bieznes", href: "/biznes" },
+  { text: "Domu", href: "/home" },
+  { text: "Hoteli i gastronomii", href: "/horeca" },
+  { text: "Placówki Medyczne", href: "/medical" },
+  { text: "Szkoły i przedszkola", href: "/public" }
 ];
 
 const socials = [
-  { text: "Facebook", href: "/" },
-  { text: "Instagram", href: "/" }
+  { text: "Facebook", href: "https://www.facebook.com/profile.php?id=61576204082739" },
+  { text: "Instagram", href: "https://www.instagram.com/exclusivewallspl" }
 ];
 ---
 
@@ -24,20 +26,20 @@ const socials = [
         
 
       <nav class="footer__nav grid">
-          <a class="footer__logo" href="./index.html">
-            <img src="/src/assets/img/Logo_EW.svg" alt="">
+          <a class="footer__logo" href="/">
+            <img src="../../img/Logo_EW.svg" alt="Logo firmy Exclussive Walls">
           </a>
 
-          <SmartList title="Oferta" items={linki} />
-          <SmartList title="Usługi druku dla" items={oferta} />
+          <SmartList title="Strony" items={linki} />
+          <SmartList title="Oferta druku" items={oferta} />
           <SmartList title="Obserwuj nas" items={socials} />
       </nav>
 
-    <img src="/src/assets/img/Exclusive_Walls.svg" alt="">
+    <img src="../../img/Exclusive_Walls.svg" alt="Exclusive_Walls">
     
     <div class="footer__details">
-        <p class="text-md">Copyright &copy; Exclusive Walls All&nbsp;rights&nbsp;reserved</p>
-        <p class="text-md">Projekt i wykonanie: <a style="color: var(--text-color)" href="mailto:mateuszkarcz88@gmail.com">Mateusz Karcz</a></p>
+        <p class="copy">Copyright &copy; Exclusive Walls All&nbsp;rights&nbsp;reserved</p>
+        <p class="prod">Projekt i wykonanie: <a style="color: var(--text-color)" href="mailto:mateuszkarcz88@gmail.com">Mateusz Karcz</a></p>
     </div>
 </footer>
 
@@ -46,7 +48,8 @@ const socials = [
 @use "../styles/mixins" as *;
 
 .footer {
-    padding-top: 300px; 
+    border-top: 1px solid var(--line);
+    padding-top: 3rem; 
 
     &__nav {
         align-items: start; // Wyrównanie do góry
@@ -144,7 +147,7 @@ const socials = [
             // LOGO: Połowa (6 kolumn), reset wysokości do 1 rzędu
             .footer__logo {
                  grid-column: span 4;
-                 grid-row: auto; 
+                 grid-row: auto;
             }
 
             // LISTA 1: Połowa (6 kolumn) -> ląduje obok logo
@@ -185,6 +188,10 @@ const socials = [
                 text-align: center;
             }
         }
+    
+        @include respond-to("tablet") {
+            row-gap: 3rem;
+        }
     } 
 
     // Reszta stylów bez zmian...
@@ -197,13 +204,30 @@ const socials = [
     }
 
     &__details {
-        grid-column: 1 / -1;
         display: flex;
+        flex-direction: row;
+        gap: 1.5rem;
         justify-content: space-between;
         border-top: 1px solid var(--line);
         padding: 3rem 0;
-        
-        // ...
+
+        .prod {
+            text-align: end;
+        }
+
+        p {
+            flex: 1;
+        }
+
+        @include respond-to("desktop") {
+            font-size: $fs-base;;
+        }
+
+        @include respond-to("mobile") {
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
     }
 }
 </style>

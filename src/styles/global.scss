@@ -10,6 +10,18 @@
 // }
 
 :root {
+    // NAV MARGIN
+    --nav-height: 136px; 
+
+    @include respond-to("desktop") {
+        --nav-height: 100px; 
+    }
+    
+    @include respond-to("tablet") {
+        --nav-height: 80px; 
+    }
+
+    // COLORS
     --bg-color: #{$clr-black};
     --bg-color-2: #{$clr-grey-light};
     --text-color: #{$clr-white};
@@ -39,7 +51,7 @@ body {
 
     /* Fonts */
     font-size: $fs-md;
-    font-weight: 400;
+    font-weight: 500;
     line-height: 150%;
     color: var(--text-color);
 
@@ -57,8 +69,8 @@ h1, h2, h3 {
 
 h2 {
     font-family: $font-inter;
-    font-size: 3rem;
-    margin-bottom: 2rem;
+    font-size: 4rem;
+    margin-bottom: 3.5rem;
 
     @include respond-to("xlarge-desktop") {
         font-size: 2.5rem;
@@ -71,6 +83,7 @@ h2 {
 
     @include respond-to("tablet") {
         font-size: 2rem;
+        margin-bottom: 2rem;
     }
 
     // @include respond-to("mobile") {
@@ -79,7 +92,11 @@ h2 {
 }
 
 h3 {
-    font-size: 1.5rem;
+    font-size: $fs-lg;
+
+    @include respond-to("desktop") {
+        font-size: $fs-md;
+    }
 }
 
 // Mniejsze nagłówki mogą wrócić do Switzera dla czytelności (tak jak chciałeś)
@@ -100,7 +117,7 @@ p {
 
 .small-p {
     font-size: $fs-base;
-    line-height: 150%;
+    line-height: 140%;
     color: $clr-grey;
 
     @include respond-to("tablet") {
@@ -110,8 +127,8 @@ p {
 
 .large-p {
     font-size: $fs-lg;
-    font-weight: 400;
-    line-height: 150%;
+    font-weight: 500;
+    line-height: 140%;
     color: var(--text-muted);
 
     // @include respond-to("desktop") {
@@ -137,10 +154,14 @@ p {
     font-size: $fs-md;
     // text-transform: uppercase;
     font-weight: 800;
-    margin-bottom: 2.5rem;
+    margin-bottom: 1.25rem;
 
     @include respond-to("large-desktop") {
         font-size: $fs-base;
+    }
+
+    @include respond-to("tablet") {
+        margin-bottom: 1rem;
     }
 }
 
@@ -219,11 +240,20 @@ a {
     .p-left-l-dekstop-0 { padding-left: 0; } 
 }
 
+
 .p-right-2 { padding-right: 2rem; }
 
 @include respond-to("xlarge-desktop") {
     // Klasa nadpisująca na tablecie
     .p-right-l-dekstop-0 { padding-right: 0; } 
+}
+
+
+.form-top-margin { margin-top: 4.5rem; }
+
+@include respond-to("desktop") {
+    // Klasa nadpisująca na tablecie
+    .form-top-margin-desktop { margin-top: 2rem; } 
 }
 
 
@@ -234,6 +264,15 @@ a {
 @for $i from 1 through $columns-full-hd-desktop {
     .col-#{$i} {
         grid-column: span $i;
+    }
+}
+
+
+@include respond-to("xlarge-desktop") {
+    @for $i from 1 through $columns-xlarge-desktop {
+        .col-xlarge-desktop-#{$i} {
+            grid-column: span $i;
+        }
     }
 }
 
@@ -283,6 +322,10 @@ a {
 
 .wrapper-small {
     @include make-container-small
+}
+
+.wrapper-medium {
+    @include make-container-medium
 }
 
 .wrapper {

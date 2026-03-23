@@ -1,0 +1,97 @@
+---
+import Layout from '../layouts/Layout.astro';
+
+import HeaderIntro from '../components/HeaderIntro.astro'
+import SectionIntroCenter from '../components/SectionIntroCenter.astro';
+import ImageText from '../components/ImageText.astro';
+
+import SectionLayout from '../components/SectionLayout.astro';
+import SectionGradientInner from '../components/SectionGradientInner.astro';
+import SectionGradientOutter from '../components/SectionGradientOutter.astro';
+---
+
+<Layout
+    title="Druk dla domu - Exclusive Walls"
+	description="Unikalna dekoracja ściany w salonie i sypialni. Oferujemy druk ścienny dowolnej fotografii z głębią kolorów 8K. Trwałość UV i bezpieczne tusze dla dzieci. Wyraź siebie!">
+
+    <header>
+        <HeaderIntro 
+            head='Artystyczna personalizacja wnętrz'
+            subHead ='Home & Design'
+            imageSrc="../../img/home1.jpg"
+            imageAlt="Salon jako galeria sztuki"
+            data-aos="fade-in">
+        </HeaderIntro>
+    </header>
+
+    <main>
+        <SectionIntroCenter
+            title="Personalizacja wnętrz domowych –&nbsp;fotorealistyczna grafika na&nbsp;ścianę zamiast tapety."
+            class="wrapper-medium custom-margin-top custom-margin-bottom max-width"
+            data-aos="fade-up">
+
+            <p>Twój dom zasługuje na coś więcej niż powtarzalne wzory. Oferujemy druk ścienny dowolnej fotografii lub grafiki z&nbsp; zachowaniem głębi kolorów. Tworzymy unikalne dekoracje ścian w&nbsp;sypialniach i&nbsp;salonach, które są odporne na promienie&nbsp;UV i&nbsp;upływ czasu. Wyraź siebie bez kompromisów.</p>
+        </SectionIntroCenter>
+
+        <SectionGradientInner/>
+            <SectionLayout class="bg-color-2">
+                <ImageText
+                    imageSrc="../../img/home2.jpg"
+                    imageAlt="Bajkowy i bezpieczny pokój dziecka"
+                    title="Bezpieczny druk ścienny do pokoju dziecka – certyfikowane tusze odporne na szorowanie."
+                    data-aos="fade-up">
+
+                    <p>Stwórz bajkowy świat przyjazny Twojemu dziecku. Grafiki na ścianę są ekologiczne i&nbsp;zmywalne, co ułatwia utrzymanie czystości. Drukarka ścienna nanosi farbę, która nie pęka i&nbsp;nie odkleja się jak tradycyjne naklejki. To inwestycja w piękno i&nbsp;higienę na&nbsp;lata.</p>
+
+                </ImageText>       
+            </SectionLayout>
+        <SectionGradientOutter/> 
+
+        <ImageText
+            imageSrc="../../img/home4_2.jpg"
+            imageAlt="Sypialnia – oaza zdrowia i spokoju"
+            title="Bez zapachu i&nbsp;toksyn –&nbsp;pełen komfort użytkowania zaraz po&nbsp;druku."
+            reversed={true}
+            class="custom-margin-bottom"
+            data-aos="fade-up">
+
+            <p>Dbamy o&nbsp;Twoje zdrowie, dlatego stosujemy wyłącznie ekologiczne, certyfikowane tusze&nbsp;UV. Nie wydzielają one żadnych szkodliwych substancji, więc po zakończeniu druku i&nbsp;krótkim przewietrzeniu możesz od&nbsp;razu korzystać z&nbsp;pokoju, a&nbsp;nawet w&nbsp;nim spać. Działamy szybko i&nbsp;czysto: zaczynamy rano, kończymy wieczorem. Bez brudu, bez zapachu i&nbsp;bez konieczności wyprowadzki domowników.</p>
+
+        </ImageText> 
+    </main>
+</Layout>
+
+<style lang="scss">
+@use "../styles/variables" as *;
+@use "../styles/mixins" as *;
+    main {
+        :global(.custom-margin-top) {
+            margin-top: 10rem;
+
+            @include respond-to("desktop") { margin-top: 8rem; }
+            @include respond-to("tablet") { margin-top: 6rem; }
+            @include respond-to("mobile") { margin-top: 4rem; }
+        }
+
+        :global(.custom-margin-bottom) {
+            margin-bottom: 12rem;
+
+            @include respond-to("desktop") { margin-bottom: 10rem; }
+            @include respond-to("tablet") { margin-bottom: 8rem; }
+            @include respond-to("mobile") { margin-bottom: 6rem; }
+        }
+
+        :global(.image-text.custom-margin-bottom) {
+            margin-bottom: 12rem;
+
+            @include respond-to("desktop") { margin-bottom: 10rem; }
+            @include respond-to("tablet") { margin-bottom: 8rem; }
+            @include respond-to("mobile") { margin-bottom: 6rem; }
+        }
+
+        :global(.max-width) {
+            max-width: 1024px;
+        }
+    }
+    
+</style>

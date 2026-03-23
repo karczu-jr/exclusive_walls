@@ -1,0 +1,234 @@
+---
+interface Props {
+    class?: string;
+}
+
+const { class: className, ...rest } = Astro.props;
+
+// TUTAJ WPISZESZ SWÓJ KLUCZ Z WEB3FORMS (widzę, że już go masz!)
+const accessKey = "f33d1885-3da8-4c07-99e4-8dc0c87cf307"; 
+---
+
+<form 
+    action="https://api.web3forms.com/submit" 
+    method="POST" 
+    enctype="multipart/form-data" 
+    class:list={["contact-form", className]} 
+    id="exclusive-contact-form"
+    {...rest}
+>
+    <input type="hidden" name="access_key" value={accessKey}>
+    
+    <input type="checkbox" name="botcheck" class="hidden" style="display: none;">
+    
+    <input type="hidden" name="subject" value="Nowe zapytanie o wycenę druku (ze zdjęciem!)">
+
+    <div class="contact-form__row">
+        <div class="contact-form__group">
+            <label for="name">Imię i nazwisko</label>
+            <input type="text" id="name" name="Imię" required placeholder="np. Jan Kowalski">
+        </div>
+        
+        <div class="contact-form__group">
+            <label for="email">Adres e-mail</label>
+            <input type="email" id="email" name="Email" required placeholder="np. jan@kowalski.pl">
+        </div>
+    </div>
+
+    <div class="contact-form__row">
+        <div class="contact-form__group">
+            <label for="phone">Numer telefonu</label>
+            <input type="tel" id="phone" name="Telefon" placeholder="+48 000 000 000">
+        </div>
+        
+        <div class="contact-form__group">
+            <label for="dimensions">Wymiary ściany</label>
+            <input type="text" id="dimensions" name="Wymiary_ściany" placeholder="np. 3m x 2.5m">
+        </div>
+    </div>
+
+    <div class="contact-form__group">
+        <label for="attachment">Zdjęcie ściany (opcjonalnie, max 5MB)</label>
+        <input type="file" id="attachment" name="Zdjęcie_ściany" accept="image/*">
+    </div>
+
+    <div class="contact-form__group">
+        <label for="message">Wiadomość</label>
+        <textarea id="message" name="Wiadomość" required rows="4" placeholder="Napisz, na jakim podłożu drukujemy i jaki masz pomysł..."></textarea>
+    </div>
+
+    <button type="submit" class="contact-form__submit">Wyślij zapytanie</button>
+
+</form>
+
+<style lang="scss">
+@use "../styles/variables" as *;
+@use "../styles/mixins" as *;
+
+.contact-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    width: 100%; 
+
+    &__row {
+        display: flex;
+        gap: 1.5rem;
+        flex-wrap: wrap;
+        
+        > * {
+            flex: 1;
+            min-width: 200px;
+        }
+
+        @include respond-to("tablet") {
+            flex-direction: column;
+        }
+    }
+
+    &__group {
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+
+        label {
+            font-size: 0.9rem;
+            color: var(--text-color);
+            font-weight: 500;
+        }
+
+        input[type="text"],
+        input[type="email"],
+        input[type="tel"],
+        textarea,
+        input[type="file"] {
+            width: 100%;
+            padding: 1rem;
+            border: 1px solid var(--line);
+            background: transparent; 
+            color: var(--text-color);
+            font-family: inherit;
+            font-size: 1rem;
+            transition: border-color 0.3s ease;
+            border-radius: 0;
+
+            &:focus {
+                outline: none;
+                border-color: #ffffff; 
+            }
+        }
+
+        input[type="file"] {
+            padding: 0.8rem;
+            cursor: pointer;
+            
+            &::file-selector-button {
+                background: transparent;
+                border: 1px solid var(--line);
+                color: var(--text-color);
+                padding: 0.5rem 1rem;
+                margin-right: 1rem;
+                cursor: pointer;
+                transition: all 0.3s ease;
+                border-radius: 0;
+
+                &:hover {
+                    background: #ffffff;
+                    color: #000000;
+                }
+            }
+        }
+
+        textarea {
+            resize: vertical; 
+            min-height: 120px;
+        }
+    }
+
+    &__submit {
+        margin-top: 1rem;
+        padding: 1rem 2.5rem;
+        background: #ffffff; 
+        color: #000000;
+        border: none;
+        font-family: inherit;
+        font-weight: 600;
+        font-size: 1rem;
+        cursor: pointer;
+        transition: opacity 0.3s ease;
+        border-radius: 0; 
+        align-self: flex-start; 
+
+        &:hover {
+            opacity: 0.8;
+        }
+
+        @include respond-to("tablet") {
+            width: 100%;
+        }
+    }
+}
+</style>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const form = document.getElementById('exclusive-contact-form') as HTMLFormElement;
+        const submitButton = document.querySelector('.contact-form__submit') as HTMLButtonElement;
+
+        if (form && submitButton) {
+            // Tworzymy pole na komunikat i doklejamy pod formularzem
+            const resultMessage = document.createElement('div');
+            resultMessage.style.marginTop = '1rem';
+            resultMessage.style.fontWeight = '500';
+            form.appendChild(resultMessage);
+
+            form.addEventListener('submit', function(e) {
+                // To jest najważniejsza linijka - blokuje przeładowanie strony!
+                e.preventDefault();
+                
+                const originalButtonText = submitButton.innerText;
+                submitButton.innerText = 'Wysyłanie...';
+                submitButton.disabled = true;
+                resultMessage.innerText = '';
+
+                // Pobieramy dane z inputów oraz z załączonego pliku
+                const formData = new FormData(form);
+
+                fetch('https://api.web3forms.com/submit', {
+                    method: 'POST',
+                    body: formData // Wysyłamy paczkę ze zdjęciami
+                })
+                .then(async (response) => {
+                    let json = await response.json();
+                    if (response.status == 200) {
+                        // SUKCES
+                        resultMessage.innerText = "Wiadomość została wysłana! Odezwiemy się wkrótce.";
+                        resultMessage.style.color = "#4CAF50"; // Zielony dla sukcesu
+                        form.reset(); // Czyścimy pola
+                    } else {
+                        // BŁĄD Z SERWERA
+                        console.log(response);
+                        resultMessage.innerText = "Błąd: " + json.message;
+                        resultMessage.style.color = "#F44336"; // Czerwony dla błędu
+                    }
+                })
+                .catch(error => {
+                    // BŁĄD SIECI
+                    console.log(error);
+                    resultMessage.innerText = "Coś poszło nie tak. Sprawdź połączenie z internetem.";
+                    resultMessage.style.color = "#F44336";
+                })
+                .finally(() => {
+                    // Odblokowujemy przycisk na sam koniec
+                    submitButton.innerText = originalButtonText;
+                    submitButton.disabled = false;
+                    
+                    // Chowamy powiadomienie po 6 sekundach
+                    setTimeout(() => {
+                        resultMessage.innerText = '';
+                    }, 6000);
+                });
+            });
+        }
+    });
+</script>

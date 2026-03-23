@@ -1,14 +1,27 @@
 ---
 import img from '../assets/img/header.jpg';
-import { Image } from 'astro:assets';
-
-import Navigation from "./Navigation.astro";
+// import { Image } from 'astro:assets';
+// <Image src={img} alt="" loading="eager"/>
 ---
 
 <header data-aos="fade-in" class="wrapper">
-    <Navigation />
     <!-- <h1><span><img src="/img/header.jpg"></span>Druk ścienny dla firm i&nbsp;domów - nowoczesna dekoracja wnętrz dla wymagających</h1> -->
-    <h1><span><Image src={img} alt="" loading="eager" /></span>Druk ścienny dla firm i&nbsp;domów - nowoczesna dekoracja wnętrz dla wymagających</h1>
+    <h1><span>
+            <video 
+                autoplay 
+                muted 
+                loop 
+                playsinline 
+                preload="auto"
+                class="site-hero__video"
+                poster="/img/ZieloneSkrzaty.jpeg"
+            >
+                <source src="/video/ZieloneSkrzaty.MP4" type="video/mp4">
+                Twoja przeglądarka nie obsługuje formatu wideo.
+            </video>
+        </span>
+        Druk ścienny dla firm i&nbsp;domów - nowoczesna dekoracja wnętrz dla wymagających
+    </h1>
     <div class="grid">
         <p class="large-p col-7 col-large-desktop-9 col-desktop-12">Odkryj nową erę dekoracji wnętrz dzięki pionowemu drukowi cyfrowemu. Ta&nbsp;technologia pozwala nanieść dowolną grafikę bezpośrednio na Twoją ścianę z&nbsp;fotograficzną precyzją 8K. Tworzymy trwałe, odporne na UV i&nbsp;zmywanie realizacje, które zmieniają charakter biur i&nbsp;apartamentów w jeden dzień. Czysto, szybko i&nbsp;bez remontu.</p>
     </div>
@@ -23,9 +36,9 @@ header {
 
     h1 {
         font-family: "Inter",sans-serif;
-        font-weight: 500;
+        font-weight: 600;
         font-size: 7rem;
-        letter-spacing: -.05em;
+        letter-spacing: -.04em;
         line-height: 1;
 
         
@@ -40,7 +53,7 @@ header {
             display: inline-block; // Ważne, żeby margin działał poprawnie
             width: 240px;
 
-            img {
+            video {
                 width: 240px;
                 height: auto;
                 display: block; // Usuwa "dolny odstęp" pod obrazkami
@@ -76,7 +89,8 @@ header {
         }
 
         .grid {
-            margin-top: 56px;
+            display: flex;
+            margin-top: 2.5rem;
         }
         
     }
@@ -93,7 +107,7 @@ header {
                 margin-bottom: 16px;
 
                 img {
-                    width: max-content;
+                    width: 65vw;
                     height: auto;
                     aspect-ratio: 1 / 1.5;
                 }

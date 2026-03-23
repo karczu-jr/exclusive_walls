@@ -1,0 +1,61 @@
+---
+interface Props {
+    title: string;
+    caption?: string;
+    class?: string;
+}
+
+const { title, caption, class: className, ...rest } = Astro.props;
+---
+
+<div class:list={["section-intro-horizontal", "grid", className]} {...rest}>
+    
+    <div class="col-3 col-tablet-8 col-mobile-4">
+        {caption && <span class="caption">{caption}</span>}
+    </div>
+
+    <div class="section-intro-horizontal__content col-9 col-tablet-8 col-mobile-4">
+        <h2>{title}</h2>
+        
+        <div class="section-intro-horizontal__desc">
+            <slot />
+        </div>
+    </div>
+    
+</div>
+
+<style lang="scss">
+@use "../styles/variables" as *;
+@use "../styles/mixins" as *;
+
+.section-intro-horizontal {
+    margin-bottom: 5rem;
+    align-items: flex-start; // Wyrównuje zawartość do góry, żeby caption i h2 zaczynały się w tej samej linii
+
+    &__content {
+        display: flex;
+        flex-direction: column;
+
+        h2 {
+            margin-bottom: 1rem;
+        }
+    }
+
+    // Bezpieczne stylowanie paragrafów wrzucanych przez slot
+    &__desc {
+        :global(p) {
+            margin-bottom: 1.5rem;
+            
+            &:last-child {
+                margin-bottom: 0;
+            }
+        }
+    }
+
+    // Odstęp między caption a tytułem na mniejszych ekranach
+    @include respond-to("tablet") {
+        row-gap: 2rem; 
+        margin-bottom: 4rem;
+    }
+}
+</style>

@@ -1,0 +1,105 @@
+---
+import SectionIntro from './SectionIntro.astro';
+
+interface Props {
+    imageSrc: string;
+    imageAlt?: string; 
+    title: string;     
+    caption?: string;  
+    class?: string;
+    // --- NOWE: Opcjonalny parametr do zamiany układu ---
+    reversed?: boolean;
+}
+
+// Przypisujemy domyślnie false, jeśli nie podano
+const { imageSrc, imageAlt = "Dekoracja ścienna", title, caption, class: className, reversed = false, ...rest } = Astro.props;
+---
+
+<section class:list={["image-text wrapper", className]} {...rest}>
+    <div class:list={["image-text__container grid", { "image-text__container--reversed": reversed }]}>
+        
+        <div class="image-text__image col-7 col-desktop-12">
+            <img src={imageSrc} alt={imageAlt} />
+        </div>
+
+        <SectionIntro
+            caption={caption}
+            title={title}
+            class="col-5 col-desktop-12 col-tablet-8 image-text__intro"
+        >
+            <slot />
+        </SectionIntro>
+
+    </div>
+</section>
+
+<style lang="scss">
+@use "../styles/variables" as *;
+@use "../styles/mixins" as *;
+
+    .image-text {
+        &__container {
+            align-items: flex-start;
+            column-gap: 5rem; 
+
+            @include respond-to("large-desktop") {
+                column-gap: 4rem;
+            }
+
+            // ==========================================
+            // MAGIA ZAMIANY KOLEJNOŚCI (Tylko na Desktopie)
+            // ==========================================
+            &--reversed {
+                .image-text__image {
+                    order: 2; // Obrazek idzie na prawo
+                }
+                .image-text__intro {
+                    order: 1; // Tekst przeskakuje na lewo
+                }
+            }
+        }
+
+        &__image {
+            width: 100%;
+            img {
+                width: 100%;
+                height: auto;
+                aspect-ratio: 1.5 / 1; 
+                object-fit: cover; 
+                display: block; 
+            }
+        }
+
+        &__intro {
+            display: flex;
+            flex-direction: column;
+        }
+    
+        // ==========================================
+        // WERSJA MOBILNA (Resetujemy kolejność!)
+        // ==========================================
+        @include respond-to("desktop") {
+            &__container {
+                display: flex;
+                flex-direction: column;
+                gap: 4rem; 
+                column-gap: 0; 
+
+                &--reversed {
+                    .image-text__image {
+                        order: 0; // Reset! Obrazek znów na górze
+                    }
+                    .image-text__intro {
+                        order: 0; // Reset! Tekst pod obrazkiem
+                    }
+                }
+
+                @include respond-to("tablet") {
+                    gap: 3rem;
+                }
+            }
+        }
+
+
+    }
+</style>

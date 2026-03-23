@@ -1,0 +1,184 @@
+---
+import SectionIntro from "./SectionIntro.astro";
+import ContactForm from "./ContactForm.astro";
+import List from "./List.astro";
+---
+
+<div class="contact-page wrapper-medium">
+    <div class="grid">
+        
+        <div class="contact-page__intro col-9 col-desktop-12 col-tablet-8">
+            <SectionIntro
+                caption="Kontakt"
+                title="Ile kosztuje druk na ścianie? Zamów bezpłatną wycenę projektu w Exclusive Walls.">
+                <p>Masz pomysł na nadruk, ale nie wiesz, od czego zacząć?Prześlij nam wymiary ściany i&nbsp;zdjęcie wnętrza, a&nbsp;my&nbsp;w&nbsp;jeden dzień roboczy przygotujemy bezpłatną kalkulację. Bez zobowiązań doradzimy w wyborze grafiki i&nbsp;technologii. Działamy w całej Polsce – szybko, czysto i&nbsp;profesjonalnie. Napisz do nas!</p>
+            </SectionIntro>
+        </div>
+
+        <div class="contact-page__content col-12">
+            <div class="contact-page__content-grid grid">
+
+                <div class="contact-page__section col-6 col-tablet-8 col-mobile-4">
+                    <h3 class="contact-page__heading">Dane teleadresowe</h3>
+                    
+                    <div class="contact-page__info">
+                        <div class="contact-page__phone">
+                            <List title="Numer telefonu">
+                                <a href="tel:+48660915534">+48 660 915 534</a>
+                            </List>
+                            <List title="Adres e-mail">
+                                <a href="mailto:kontakt@exclusivewalls.pl">kontakt@exclusivewalls.pl</a>
+                            </List>
+                        </div>
+
+                        <div class="contact-page__address">
+                            <List title="Dane firmowe">
+                                <p>EXCLUSIVE WALLS Adrian Warchoł</p>
+                                <p>NIP: 6321979580</p>
+                                <p>REGON: 242963751</p>
+                            </List>
+                            <List title="Adres rejestrowy">
+                                <p>ul. Boczna 7k lok. 7 <br>43-600 Jaworzno</p>
+                            </List>
+                        </div>
+                    </div>
+                </div> 
+
+                <div class="contact-page__section col-6 col-tablet-8 col-mobile-4">
+                    <h3 class="contact-page__heading">Formularz kontaktowy</h3>
+                    <ContactForm class="contact-page__form" />
+                </div>
+                
+            </div>
+        </div>
+        
+    </div>
+</div>
+
+<style lang="scss">
+@use "../styles/variables" as *;
+@use "../styles/mixins" as *;
+
+.contact-page {
+    margin-top: 8rem;
+    margin-bottom: 8rem;
+
+    &__intro {
+        margin-bottom: 2rem;
+    }
+
+    &__content {
+        border-top: 1px solid var(--line);
+        padding-top: 3rem;
+    }
+
+    &__section {
+        
+        .contact-page__heading {
+            font-size: 1.5rem;
+            margin-bottom: 3rem;
+            letter-spacing: 1px;
+        }
+    }
+    
+    &__content-grid {
+        // Tu uderzamy do drugiej kolumny (tej z nagłówkiem i formularzem)
+        > .contact-page__section:nth-child(2) {
+            margin-left: 1.5rem;
+           
+                @include respond-to("large-desktop") {
+                margin-left: 0; // Zerujemy na dużym ekranie
+            }
+        }   
+    }
+
+
+    &__info {
+        display: flex;
+        flex-direction: row; // Układ poziomy
+        flex-wrap: wrap;     // Pozwalamy na spadek do nowej linii
+        width: 100%;
+        
+        // Zamiast rozbijać, użyj zapisu skróconego: gap: [row] [column]
+        gap: 4rem 1.5rem; 
+
+        > :global(*) {
+            // Flex-basis ustawiamy na 0, żeby flex: 1 mógł sprawiedliwie podzielić miejsce
+            // flex: 1 1 calc(50% - 4rem); 
+            min-width: 290px; // Zwiększyłem z 200px, bo przy 200px na małych ekranach 
+                             // dwa bloki obok siebie będą wyglądać bardzo ciasno.
+        }
+
+        @include respond-to("tablet") {
+            gap: 3.4rem 1.5rem; 
+
+            > :global(*) {
+                // Flex-basis ustawiamy na 0, żeby flex: 1 mógł sprawiedliwie podzielić miejsce
+                flex: 1 1 calc(50% - 4rem); 
+                min-width: 280px; // Zwiększyłem z 200px, bo przy 200px na małych ekranach 
+                                // dwa bloki obok siebie będą wyglądać bardzo ciasno.
+            }
+        }
+    }
+
+    // &__info {
+    //     display: flex;
+    //     flex-direction: row;
+
+    //     flex-wrap: wrap;
+    //     column-gap: 4rem;
+    //     row-gap: 1rem;
+    //     row
+
+    //     > :global(*) {
+    //         flex: 1;
+    //         min-width: 200px;
+    //     }
+    // }
+
+    &__phone {
+        display: flex;
+        flex-direction: column; // Telefony obok siebie na desktopie
+        gap: 1.5rem;
+
+        @include respond-to("tablet") {
+            gap: 1rem;
+        }
+
+        // > :global(*) {
+        //     flex: 1;
+        //     min-width: 200px;
+        // }
+    }
+
+    &__address {
+        display: flex;
+        flex-direction: column;
+        gap: 1.5rem;
+
+        @include respond-to("tablet") {
+            gap: 1rem;
+        }
+    }
+
+    // Dopasowanie do tabletów i mobile
+    @include respond-to("tablet") {
+        &__content-grid {
+            row-gap: 5rem; // Odstęp między danymi a formularzem
+        }
+
+        &__heading {
+            margin-bottom: 2rem;
+        }
+    }
+
+    @include respond-to("mobile") {
+        margin-top: 6rem;
+
+        &__phone {
+            flex-direction: column;
+            gap: 2rem;
+        }
+    }
+}
+</style>

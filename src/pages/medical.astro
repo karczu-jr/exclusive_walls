@@ -1,0 +1,71 @@
+---
+import Layout from '../layouts/Layout.astro';
+
+import HeaderIntro from '../components/HeaderIntro.astro'
+import SectionIntroCenter from '../components/SectionIntroCenter.astro';
+import ImageText from '../components/ImageText.astro';
+
+import SectionLayout from '../components/SectionLayout.astro';
+import SectionGradientInner from '../components/SectionGradientInner.astro';
+import SectionGradientOutter from '../components/SectionGradientOutter.astro';
+---
+
+<Layout
+    title="Druk dla placówek medycznych i gabinetów - Exclusive Walls"
+	description="Higieniczny i bezwonny druk ścienny do gabinetów oraz klinik. Certyfikowane tusze UV, bezpieczne dla pacjentów i personelu. Profesjonalny branding w jakości 8K. Sprawdź ofertę!">
+
+    <header>
+        <HeaderIntro 
+            head='Standard higieniczny inbsp;profesjonalny wizerunek kliniki'
+            data-aos="fade-in">
+        </HeaderIntro>
+    </header>
+
+    <main>
+        <SectionGradientInner/>
+            <SectionLayout class="bg-color-2">
+                <ImageText
+                    imageSrc="../../img/about_photo_2.jpg"
+                    imageAlt="Trwałość i bezpieczeństwo w pokoju dziecka"
+                    title="Druk ścienny dla placówek medycznych i&nbsp;gabinetów –&nbsp;higiena, trwałość i&nbsp;prestiż. "
+                    reversed={true}
+                    data-aos="fade-up">
+
+                    <p>Zadbaj o&nbsp;komfort pacjentów i&nbsp;profesjonalny wygląd swojej placówki. Druk ścienny&nbsp;UV jest całkowicie bezwonny i&nbsp;idealnie sprawdza się w&nbsp;gabinetach, poczekalniach i&nbsp;korytarzach, łącząc estetykę z&nbsp;surowymi normami higienicznymi. Postaw na&nbsp;trwały branding w&nbsp;jakości&nbsp;8K.</p>
+
+                </ImageText>       
+            </SectionLayout>
+        <SectionGradientOutter/> 
+    </main>
+</Layout>
+
+<style lang="scss">
+@use "../styles/variables" as *;
+@use "../styles/mixins" as *;
+    main {
+        :global(.custom-margin-top) {
+            margin-top: 10rem;
+
+            @include respond-to("desktop") { margin-top: 8rem; }
+            @include respond-to("tablet") { margin-top: 6rem; }
+            @include respond-to("mobile") { margin-top: 4rem; }
+        }
+
+        :global(.custom-margin-bottom) {
+            margin-bottom: 12rem;
+
+            @include respond-to("desktop") { margin-bottom: 10rem; }
+            @include respond-to("tablet") { margin-bottom: 8rem; }
+            @include respond-to("mobile") { margin-bottom: 6rem; }
+        }
+
+        :global(.image-text.custom-margin-bottom) {
+            margin-bottom: 12rem;
+
+            @include respond-to("desktop") { margin-bottom: 10rem; }
+            @include respond-to("tablet") { margin-bottom: 8rem; }
+            @include respond-to("mobile") { margin-bottom: 6rem; }
+        }
+    }
+    
+</style>

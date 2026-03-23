@@ -1,0 +1,68 @@
+---
+import Layout from '../layouts/Layout.astro';
+
+import HeaderIntro from '../components/HeaderIntro.astro'
+import SectionIntroCenter from '../components/SectionIntroCenter.astro';
+import ImageText from '../components/ImageText.astro';
+
+import SectionLayout from '../components/SectionLayout.astro';
+import SectionGradientInner from '../components/SectionGradientInner.astro';
+import SectionGradientOutter from '../components/SectionGradientOutter.astro';
+---
+
+<Layout
+    title="Druk dla hoteli i gastronomii - Exclusive Walls"
+	description="Wyróżnij lokal unikalnym klimatem. Realizujemy odporne na wilgoć murale UV w lobby i pokojach hotelowych. Podnieś standard obiektu grafiką premium. Darmowa wycena!">
+
+    <header>
+        <HeaderIntro 
+            head='Druk dla Hoteli i Gastronomii'
+            subHead='Horeca'
+            class:list="header-margin-bottom"
+            data-aos="fade-in">
+        </HeaderIntro>
+    </header>
+
+    <main>
+
+        <SectionGradientInner/>
+            <SectionLayout class="bg-color-2">
+                <ImageText
+                    imageSrc="../../img/about_photo_2.jpg"
+                    imageAlt="Trwałość i bezpieczeństwo w pokoju dziecka"
+                    title="Bezpieczny druk ścienny do pokoju dziecka – certyfikowane tusze odporne na szorowanie."
+                    data-aos="fade-up">
+
+                    <p>Stwórz bajkowy świat przyjazny Twojemu dziecku. Grafiki na ścianę są ekologiczne i&nbsp;zmywalne, co ułatwia utrzymanie czystości. Drukarka ścienna nanosi farbę, która nie pęka i&nbsp;nie odkleja się jak tradycyjne naklejki. To inwestycja w piękno i&nbsp;higienę na&nbsp;lata.</p>
+
+                </ImageText>       
+            </SectionLayout>
+        <SectionGradientOutter/> 
+
+    </main>
+</Layout>
+
+<style lang="scss">
+@use "../styles/variables" as *;
+@use "../styles/mixins" as *;
+
+    header {
+        :global(.header-margin-bottom) {
+            margin-bottom: -43vh;
+
+            @include respond-to("tablet") {
+                margin-bottom: -33vh;
+            }
+        }
+    }
+
+    main {
+        :global(.custom-margin) {
+        margin-top: 12rem;
+        margin-bottom: 12rem;
+        }
+
+    margin-top: -20vh
+    }
+    
+</style>

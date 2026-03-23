@@ -1,60 +1,144 @@
 ---
 const navLinks = [
-    {label: "Home", href: "./"},
-    {label: "Druk dla Firm", href: "./"},
-    {label: "Druk dla Domu", href: "./"},
-    {label: "Jak to działa?", href: "./"},
-    {label: "Vouchery i Benefity", href: "./"},
-    {label: "Kontakt", href: "./"},
+    {label: "Home", href: "/"},
+    {
+        label: "Oferta druku", 
+        href: "#",
+        subLinks: [
+            {label: "Biznes", href: "/biznes"},
+            {label: "Dom", href: "/home"},
+            {label: "Hotele i Gastronomia", href: "/horeca"},
+            {label: "Placówki medyczne", href: "/medical"},
+            {label: "Szkoły i przedszkola", href: "/public"}
+        ]
+    },
+    {label: "Jak to działa?", href: "/process"},
+    {label: "Vouchery i Benefity", href: "/benefits"},
+    {label: "Kontakt", href: "/contact"},
 ]
+
+const { class: className, ...rest } = Astro.props;
 ---
 
-<div aria-label="Nawigacja główna" class="nav-bar">
-    <a class="nav-bar__logo" href="./index.html">
-        <img src="/src/assets/img/Logo_EW.svg" alt="">
-    </a>
-    <nav class="nav-bar__desktop" aria-label="Nawigacja główna">
-        <ul class="nav-bar__desktop-list">
-            {navLinks.map(link => (
-                <li>
-                <a href={link.href}>{link.label}</a>
-                </li>
-            ))}
-        </ul>
-    </nav>
+<div class="site-header">
+    <div aria-label="Nawigacja główna" class:list={["nav-bar", "wrapper", className]} {...rest}>
+        
+        <a class="nav-bar__logo" href="/">
+            <img src="../../img/Logo_EW.svg" alt="Logo firmy Exclussive Walls">
+        </a>
+        
+        <nav class="nav-bar__desktop" aria-label="Nawigacja główna">
+            <ul class="nav-bar__desktop-list">
+                {navLinks.map(link => (
+                    <li class={link.subLinks ? "has-dropdown" : ""}>
+                        {link.subLinks ? (
+                            <>
+                                <a href={link.href} class="dropdown-trigger" aria-haspopup="true" aria-expanded="false">
+                                    {link.label}
+                                    <svg class="chevron" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                                </a>
+                                <ul class="dropdown-menu">
+                                    {link.subLinks.map(subLink => (
+                                        <li><a href={subLink.href}>{subLink.label}</a></li>
+                                    ))}
+                                </ul>
+                            </>
+                        ) : (
+                            <a href={link.href}>{link.label}</a>
+                        )}
+                    </li>
+                ))}
+            </ul>
+        </nav>
 
-    <button class="nav-bar__hamburger" aria-label="Otwórz menu" aria-expanded="false">
-        <span></span>
-        <span></span>
-        <span></span>
-    </button>
+        <button class="nav-bar__hamburger" aria-label="Otwórz menu" aria-expanded="false">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
 
-    <nav aria-label="Nawigacja mobilna" class="nav-bar__mobile">
-        <ul class="nav-bar__mobile-list">
-            {navLinks.map(link => (
-                <li>
-                <a href={link.href}>{link.label}</a>
-                </li>
-            ))}
-        </ul>
-    </nav>
+        <nav aria-label="Nawigacja mobilna" class="nav-bar__mobile">
+            <ul class="nav-bar__mobile-list">
+                {navLinks.map(link => (
+                    <li>
+                        <a href={link.href} class={link.subLinks ? "mobile-main-link" : ""}>{link.label}</a>
+                        {link.subLinks && (
+                            <ul class="mobile-sub-list">
+                                {link.subLinks.map(subLink => (
+                                    <li><a href={subLink.href}>{subLink.label}</a></li>
+                                ))}
+                            </ul>
+                        )}
+                    </li>
+                ))}
+            </ul>
+        </nav>
+
+    </div>
 </div>
 
 <style lang="scss">
 @use "../styles/variables" as *;
 @use "../styles/mixins" as *;
 
+    // --- NOWE: STYLOWANIE ZEWNĘTRZNEGO HEADERA (EFEKT SZKŁA) ---
+    .site-header {
+        position: fixed; 
+        top: 0;
+        left: 0;
+        width: 100%;
+        z-index: 999; 
+        
+        // --- NOWE: Płynna animacja wysuwania/chowania ---
+        transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+
+        // --- NOWE: Klasa dodawana przez JS ukrywająca header ---
+        &.is-hidden {
+            transform: translateY(-100%);
+        }
+        
+        &::before {
+            // ... Twój cały efekt liquid glass zostaje tutaj bez ZMIAN!
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 140%; 
+            background: linear-gradient(to bottom, rgba(0,0,0, 0.9) 0%, rgba(0,0,0, 0) 100%);
+            backdrop-filter: blur(12px); 
+            -webkit-backdrop-filter: blur(12px);
+            mask-image: linear-gradient(to bottom, black 50%, transparent 100%);
+            -webkit-mask-image: linear-gradient(to bottom, black 50%, transparent 100%);
+            z-index: -1; 
+            pointer-events: none; 
+        }
+    }
+
     .nav-bar {
         // --- 1. GLÓWNY LAYOUT (DESKTOP DEFAULT) ---
         display: flex;
         justify-content: space-between;
         align-items: center;
-        margin: 32px auto;
+        // Zmieniliśmy marginesy, żeby pasowały do przyklejonego headera
+        padding-top: 1.5rem; 
+        padding-bottom: 2rem; 
+
+        @include respond-to("desktop") {
+            padding-top: 1.25rem; 
+            padding-bottom: 1.75rem; 
+
+        }
+
+        @include respond-to("tablet") {
+            padding-top: 0.875rem; 
+            padding-bottom: 1.25rem; 
+
+        }
 
         &__logo {
             display: flex;
             align-items: center;
-            // gap: 12px;
             text-decoration: none;
             color: inherit;
 
@@ -62,30 +146,35 @@ const navLinks = [
                 height: 48px;
                 width: auto;
             }
-
-            h3 {
-                font-family: $font-header;
-                margin: 0;
-            }
         }
 
-        // --- 2. MENU DESKTOPOWE (WIDOCZNE DOMYŚLNIE) ---
+        // --- 2. MENU DESKTOPOWE (aktualizacja) ---
         &__desktop {
-            display: flex; // Domyślnie włączone
+            display: flex; 
 
             &-list {
                 list-style: none;
                 display: flex;
                 gap: 40px;
+                margin: 0; 
+                padding: 0; 
+                align-items: center; // Wyrównanie w pionie z logo
             }
 
-            // Tutaj wklejamy animację kreski (o którą pytałeś)
+            li {
+                position: relative; // Konieczne dla pozycjonowania dropdownu
+            }
+
             a {
                 text-decoration: none;
-                color: $clr-white; // Używamy zmiennej
+                color: $clr-white; 
                 position: relative;
                 padding: 4px 0;
                 transition: color 0.3s ease;
+                font-weight: 500;
+                display: flex;
+                align-items: center;
+                gap: 6px;
 
                 &::after {
                     content: '';
@@ -94,35 +183,89 @@ const navLinks = [
                     right: 0; 
                     width: 100%;
                     height: 1px;
-                    background-color: $clr-white; // Lub inna zmienna koloru
-                    transform: scaleX(0); // Ukryta (ściśnięta)
+                    background-color: $clr-white; 
+                    transform: scaleX(0); 
                     transform-origin: bottom right;
                     transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
                 }
 
-                &:hover {
-                    color: $clr-white; // Opcjonalne rozjaśnienie
+                &:hover::after {
+                    transform: scaleX(1); 
+                    transform-origin: bottom left;
+                }
+            }
+
+            // --- STYLIZACJA DROPDOWNU (APPLE STYLE) ---
+            .has-dropdown {
+                position: relative; // 1. TO JEST KLUCZ: Trzyma dropdown równo z krawędzią tego <li>
+
+                .chevron {
+                    transition: transform 0.3s ease;
+                }
+
+                // Zawartość rozwijana (Stan początkowy - ukryty)
+                .dropdown-menu {
+                    position: absolute;
+                    top: calc(100% + 0.25rem); 
                     
-                    &::after {
-                        transform: scaleX(1); // Pokazana
-                        transform-origin: bottom left;
+                    left: 0; // 2. Zaczynamy idealnie od lewej krawędzi (literki O)
+                    transform: translateY(-10px); // 3. Czyste przesunięcie w pionie, ŻADNEGO translateX!
+                    
+                    background-color: #101010; 
+                    border-radius: 0; 
+                    min-width: 240px;
+                    padding: 1rem 0;
+                    list-style: none;
+                    opacity: 0;
+                    visibility: hidden;
+                    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+                    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+
+                    li {
+                        padding: 0;
                     }
+
+                    a {
+                        padding: 0.75rem 1.5rem;
+                        font-weight: 400;
+                        font-size: $fs-base;
+                        
+                        &::after {
+                            display: none; 
+                        }
+
+                        &:hover {
+                            background-color: rgba(255,255,255,0.1); 
+                        }
+                    }
+                }
+
+                // Animacja HOVER lub JS (klawiatura) - Stan widoczny
+                &:hover .dropdown-menu,
+                &.is-open .dropdown-menu {
+                    opacity: 1;
+                    visibility: visible;
+                    
+                    transform: translateY(0); // 4. Tu też ŻADNEGO translateX! Tylko zjazd w dół.
+                }
+
+                &:hover .chevron,
+                &.is-open .chevron {
+                    transform: rotate(180deg);
                 }
             }
         }
 
-        // --- 3. HAMBURGER (UKRYTY DOMYŚLNIE) ---
+        // --- 3. HAMBURGER ---
         &__hamburger {
-            display: none; // Ukrywamy na Desktopie!
-            
-            // Definiujemy wygląd, żeby był gotowy do pokazania na mobile
+            display: none; 
             background: none;
             border: none;
             padding: 8px;
             cursor: pointer;
             flex-direction: column;
             gap: 6px;
-            z-index: 110;
+            z-index: 110; // Musi być nad mobilnym menu
 
             span {
                 display: block;
@@ -133,30 +276,23 @@ const navLinks = [
                 transform-origin: center;
             }
 
-            // Animacja Hamburger -> X
             &.active {
-                span:nth-child(1) {
-                    transform: translateY(8px) rotate(45deg);
-                }
-                span:nth-child(2) {
-                    opacity: 0;
-                    transform: translateX(-10px);
-                }
-                span:nth-child(3) {
-                    transform: translateY(-8px) rotate(-45deg);
-                }
+                span:nth-child(1) { transform: translateY(8px) rotate(45deg); }
+                span:nth-child(2) { opacity: 0; transform: translateX(-10px); }
+                span:nth-child(3) { transform: translateY(-8px) rotate(-45deg); }
             }
         }
 
-        // --- 4. MENU MOBILNE (UKRYTE DOMYŚLNIE) ---
+        // --- 4. MENU MOBILNE ---
         &__mobile {
-            display: none; // Ukrywamy na Desktopie, żeby nie przeszkadzało
-            
+            display: none; 
             position: fixed;
             inset: 0;
             height: 100vh;
             width: 100%;
-            background: $clr-black;
+            background: rgba(0, 0, 0, 0.85); // Lekko przezroczyste czarne tło na mobile
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
             flex-direction: column;
             align-items: center;
             justify-content: center;
@@ -168,50 +304,53 @@ const navLinks = [
             ul {
                 display: flex;
                 flex-direction: column;
-                gap: 2rem;
+                align-items: flex-start;
+                gap: 1rem;
                 list-style: none;
                 padding: 0;
                 margin: 0;
+                text-align: left;
             }
 
             a {
-                font-size: 2rem;
+                font-size: 1.75rem;
                 font-weight: 600;
                 color: $clr-white;
                 text-decoration: none;
-                transition: color 0.3s ease;
             }
 
             &.active {
                 transform: translateX(0);
             }
+
+            // Stylizacja pod-menu na mobile (płaska lista)
+            .mobile-sub-list {
+                display: flex;
+                flex-direction: column;
+                gap: 1rem; // Mniejszy odstęp między elementami podmenu
+                margin-top: 1rem;
+                margin-bottom: 0.5rem;
+                padding-left: 0.75rem;
+                // border-left: 1px solid rgba(255,255,255,0.2);
+
+                a {
+                    font-size: 1.25rem; // Mniejszy font niż w głównych linkach
+                    font-weight: 500;
+                    color: #ffffff95; // Delikatnie wyszarzone
+                }
+            }
         }
 
-        // --- 5. BREAKPOINT (ZMIANA NA MOBILE) ---
-        // "Jeśli ekran jest mniejszy niż Tablet (768px)..."
+        // --- 5. BREAKPOINT ---
         @include respond-to("desktop") {
-            
-            // 1. Ukrywamy Desktop
-            &__desktop {
-                display: none;
-            }
-
-            // 2. Pokazujemy Hamburgera
-            &__hamburger {
-                display: flex;
-            }
-
-            // 3. Aktywujemy kontener Mobile (nadal schowany przez translate, ale obecny w DOM)
-            &__mobile {
-                display: flex;
-            }
+            &__desktop { display: none; }
+            &__hamburger { display: flex; }
+            &__mobile { display: flex; }
         }       
     }
 </style>
 
-
 <script>
-    // Używamy funkcji, aby upewnić się, że DOM jest gotowy (ważne przy przejściach stron)
     const initMenu = () => {
         const toggle = document.querySelector('.nav-bar__hamburger');
         const mobileNav = document.querySelector('.nav-bar__mobile');
@@ -223,7 +362,6 @@ const navLinks = [
             toggle.classList.toggle('active');
             mobileNav.classList.toggle('active');
             
-            // UX: Blokada przewijania strony pod menu
             if (mobileNav.classList.contains('active')) {
                 document.body.style.overflow = 'hidden';
             } else {
@@ -231,7 +369,6 @@ const navLinks = [
             }
         });
 
-        // Zamykanie po kliknięciu w link (np. kotwicę)
         links.forEach(link => {
             link.addEventListener('click', () => {
                 toggle.classList.remove('active');
@@ -241,8 +378,47 @@ const navLinks = [
         });
     };
 
-    // Uruchom przy ładowaniu
+    // --- NOWE: Logika chowającego się Menu ---
+    const initScrollHeader = () => {
+        const header = document.querySelector('.site-header');
+        const hamburger = document.querySelector('.nav-bar__hamburger');
+        let lastScroll = 0;
+
+        if (!header || !hamburger) return;
+
+        window.addEventListener('scroll', () => {
+            // 1. Sprawdzamy, czy jesteśmy na mobile (czy hamburger jest widoczny)
+            const isMobile = window.getComputedStyle(hamburger).display !== 'none';
+
+            // Jeśli to mobile - natychmiast przerywamy, menu ma być zawsze widoczne
+            if (isMobile) {
+                header.classList.remove('is-hidden');
+                return;
+            }
+
+            // 2. Logika dla Desktopu
+            const currentScroll = window.pageYOffset || document.documentElement.scrollTop;
+
+            // Na samej górze strony zawsze pokazujemy menu
+            if (currentScroll <= 80) {
+                header.classList.remove('is-hidden');
+                return;
+            }
+
+            // Jeśli scrollujemy w dół (i zjechaliśmy już kawałek) -> Chowamy
+            if (currentScroll > lastScroll) {
+                header.classList.add('is-hidden');
+            } 
+            // Jeśli scrollujemy w górę -> Pokazujemy
+            else {
+                header.classList.remove('is-hidden');
+            }
+
+            lastScroll = currentScroll;
+        });
+    };
+
+    // Odpalamy obie funkcje
     initMenu();
-    // Jeśli używasz Astro View Transitions, odkomentuj poniższą linię:
-    // document.addEventListener('astro:after-swap', initMenu);
+    initScrollHeader();
 </script>

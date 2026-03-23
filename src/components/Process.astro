@@ -1,42 +1,48 @@
 ---
-import ProcessItem from './ProcessItem.astro';
+import SectionIntro from './SectionIntro.astro';
+
+import StepItem from './StepItem.astro';
 ---
 
-<section class="process wrapper">
-    <div class="process__intro grid">
-        <span class="caption col-3 col-tablet-8 col-mobile-4">Realizacja</span>
-        <div class="content col-9 col-tablet-8 col-mobile-4">
-            <h2>Jak przebiega realizacja?</h2>
-            <p class="large-p">
-                Boisz się remontu, kurzu i&nbsp;wielodniowego bałaganu? Niepotrzebnie. Druk ścienny to najnowocześniejsza i&nbsp;najczystsza forma dekoracji ścian. W&nbsp;Exclusive Walls cały proces zaprojektowaliśmy tak, aby był dla Ciebie maksymalnie komfortowy. Zobacz, jak działamy:
-            </p>
+<section class="process wrapper-medium" data-aos="fade-up">
+    <div class="process__layout grid">
+        
+        <div class="process__sticky-col col-4 col-desktop-12">
+            <SectionIntro
+                caption="Realizacja"
+                title="Druk ścienny czyli jak to działa?">
+                <p>Poznaj proces druku ściennego Exclusive Walls. Od darmowej wyceny&nbsp;w&nbsp;24h po gotową grafikęUV&nbsp;8K na&nbsp;betonie, szkle czy elewacji. Sprawdź, jak działamy&nbsp;w&nbsp;4&nbsp;krokach!</p>
+            </SectionIntro>
+        </div>
+
+        <div class="process__scroll-col col-8 col-desktop-12">
+            <ol class="process__list">
+
+                <StepItem number="01" title="Twoja wizja i wycena" class="col-4 col-tablet-4 col-mobile-4">
+                    <p>Prześlij nam zdjęcie ściany i jej wymiary. Jeśli masz jakąś inspirację i pomysł na druk, napisz nam o tym. </p>
+                </StepItem>
+
+                <StepItem number="02" title="Przygotowanie powierzchni" class="col-4 col-tablet-4 col-mobile-4">
+                    <p>Nie musisz specjalnie przygotowywać ściany. Drukujemy na:
+                        <ul>
+                            <li><p>standardowych tynkach i&nbsp;gładziach,</p></li>
+                            <li><p>surowym betonie i&nbsp;cegle,</p></li>
+                            <li><p>szkle, drewnie i&nbsp;metalu,</p></li>
+                            <li><p>elewacji zewnętrznej.</p></li>
+                        </ul>
+                    </p>
+                </StepItem>
+                
+                <StepItem number="03" title="Realizacja czyli magia druku" class="col-4 col-tablet-4 col-mobile-4"> 
+                    <p>Nasz ekipa robot przyjeżdża do Ciebie. Ustawiamy maszynę i&nbsp;rozpoczynamy druk. Laserowe czujniki dopasowują głowicę do nierówności ściany, gwarantując idealną ostrość. Ty pijesz kawę, a&nbsp;my tworzymy dzieło sztuki.</p>
+                </StepItem> 
+
+                <StepItem number="04" title="Gotowe" class="col-4 col-tablet-4 col-mobile-4">
+                    <p>Dzięki utwardzaniu światłem UV, grafika jest sucha i&nbsp;odporna na dotyk natychmiast po nałożeniu. Możesz dotykać ściany i&nbsp;cieszyć się nowym wnętrzem od razu po naszym wyjściu.</p>
+                </StepItem>
+            </ol>
         </div>
     </div>
-
-    <ol class="process__grid grid">
-        <ProcessItem number="01" title="Twoja wizja i wycena">
-            <p>Prześlij nam zdjęcie ściany i&nbsp;wymiary. Masz własną grafikę? Świetnie. Szukasz inspiracji? Pomożemy Ci wybrać wzór z&nbsp;bazy milionów zdjęć w&nbsp;jakości 8K. Darmową wycenę otrzymasz od nas w&nbsp;24&nbsp;godziny.</p>
-        </ProcessItem>
-
-        <ProcessItem number="02" title="Przygotowanie powierzchni">
-            <p>Nie musisz specjalnie przygotowywać ściany. Drukujemy na:
-                <ul>
-                    <li><p>standardowych tynkach i&nbsp;gładziach,</p></li>
-                    <li><p>surowym betonie i&nbsp;cegle,</p></li>
-                    <li><p>szkle, drewnie i&nbsp;metalu,</p></li>
-                    <li><p>elewacji zewnętrznej.</p></li>
-                </ul>
-            </p>
-        </ProcessItem>
-        
-        <ProcessItem number="03" title="Realizacja czyli magia druku"> 
-            <p>Nasz ekipa robot przyjeżdża do Ciebie. Ustawiamy maszynę i&nbsp;rozpoczynamy druk. Laserowe czujniki dopasowują głowicę do nierówności ściany, gwarantując idealną ostrość. Ty pijesz kawę, a my tworzymy dzieło sztuki.</p>
-        </ProcessItem> 
-
-        <ProcessItem number="04" title="Gotowe">
-            <p>Dzięki utwardzaniu światłem UV, grafika jest sucha i&nbsp;odporna na dotyk natychmiast po nałożeniu. Możesz dotykać ściany i&nbsp;cieszyć się nowym wnętrzem od razu po naszym wyjściu.</p>
-        </ProcessItem>
-    </ol>
 </section>
 
 <style lang="scss">
@@ -44,71 +50,55 @@ import ProcessItem from './ProcessItem.astro';
 @use "../styles/mixins" as *;
 
 .process {
+    margin-top: 8rem;
     margin-bottom: 8rem;
 
-    &__intro {
-        margin-bottom: 5rem;
+    &__layout {
+        align-items: start; // WAŻNE: Bez tego lewa kolumna rozciągnie się do wysokości prawej i sticky nie zadziała!
+    }
 
-        // .caption {
-        //     grid-column: span 3;
-        // }
-
-        // .content {
-        //     grid-column: span 9;
-        // }
-
-        h2 {
-            margin-bottom: 1rem;
+    &__sticky-col {
+        // Magia dzieje się tutaj
+        position: sticky;
+        top: 100px; // Odsunięcie od góry (żeby menu nie zasłaniało nagłówka)
+        
+        @include respond-to("desktop") {
+            position: relative;
+            top: 0;
+            margin-bottom: 4rem; // Na mniejszych ekranach odklejamy i dajemy odstęp
         }
     }
 
-    &__grid {
+    &__scroll-col {
+        // Domyślnie (na dużych ekranach) dajemy padding
+        padding-left: 2rem; 
+
+        // Na mniejszych ekranach (tablet i mobile) go usuwamy, bo kolumny spadają pod siebie
+        @include respond-to("desktop") {
+           padding-left: 0; 
+        }
+    }
+
+    &__list {
+        display: flex;
+        flex-direction: column;
+
         list-style: none;
         padding: 0;
         margin: 0;
+        row-gap: 4rem; // Odstęp pionowy między krokami
+
+        > :global(*:last-child) {
+            border-bottom: none !important;
+        }
         
         ul {
             list-style: disc;
+            margin-left: 1.5rem;
+            margin-top: 1rem;
             
             li::marker {
-                // Zmieniamy kolor samej kropki.
                 color: var(--text-color);
-            }
-        }
-
-        // ==========================================
-        // 1. DESKTOP (12 kolumn -> 4 kroki po 3 kolumny)
-        // ==========================================
-        > :global(.process-item) {
-            grid-column: span 3; 
-        }
-
-        > :global(.process-item:nth-of-type(2)) {
-            ul {
-                margin-left: 1.5rem;
-            }
-        }
-
-        // ==========================================
-        // 2. TABLET (8 kolumn -> 2 kroki w rzędzie po 4 kolumny)
-        // ==========================================
-        @include respond-to("tablet") {
-            // Dodajemy gap w pionie, żeby kroki ładnie się odsunęły, gdy spadną do 2 rzędu
-            row-gap: 3rem;
-
-            > :global(.process-item) {
-                grid-column: span 4; 
-            }
-        }
-
-        // ==========================================
-        // 3. MOBILE (4 kolumny -> 1 krok w rzędzie)
-        // ==========================================
-        @include respond-to("mobile") {
-            row-gap: 2.5rem;
-
-            > :global(.process-item) {
-                grid-column: span 4; 
             }
         }
     }

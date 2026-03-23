@@ -1,7 +1,7 @@
 ---
-import img1 from '../assets/img/about_photo_1.jpg';
-import img2 from '../assets/img/about_photo_2.jpg';
-import img3 from '../assets/img/about_photo_3.jpg';
+import img1 from '../assets/img/home4_2.jpg';
+import img2 from '../assets/img/home2_1.jpg';
+import img3 from '../assets/img/company5.jpg';
 import { Image } from 'astro:assets';
 
 import SectionIntro from './SectionIntro.astro';
@@ -9,7 +9,7 @@ import SectionIntro from './SectionIntro.astro';
 const { class: className, ...rest } = Astro.props;
 ---
 
-<section class:list={["gallery-text", "wrapper", "base-section", className]} {...rest}>
+<section class:list={["gallery-text", "wrapper", className]} {...rest}>
     <div class="gallery-text__container grid">
         
         <div class="gallery-text__images col-8">
@@ -23,7 +23,7 @@ const { class: className, ...rest } = Astro.props;
             title="Dlaczego Exclusive Walls to nowa definicja dekoracji ścian?"
             class="col-4 col-desktop-12 col-tablet-8 p-left-2 p-left-l-dekstop-0 gallery__intro"
         >
-            <p>Stawiamy na bezkompromisową jakość druku UV na każdym podłożu – od surowego betonu po gładkie szkło. Nasza technologia to gwarancja ekologicznych tuszy i trwałości, której nie dają tradycyjne metody. Zyskujesz idealnie gładki obraz bez widocznych łączeń, w pełni zintegrowany z architekturą Twojego wnętrza.</p>
+            <p>Stawiamy na bezkompromisową jakość druku UV na&nbsp;każdym podłożu –&nbsp;od surowego betonu po&nbsp;gładkie szkło. Nasza technologia to&nbsp;gwarancja ekologicznych tuszy i&nbsp;trwałości, której nie dają tradycyjne metody. Zyskujesz idealnie gładki obraz bez widocznych łączeń, w&nbsp;pełni zintegrowany z&nbsp;architekturą Twojego wnętrza.</p>
         </SectionIntro>
 
     </div>
@@ -115,6 +115,13 @@ const { class: className, ...rest } = Astro.props;
             &__content {
             width: 100%;
             order: 1; // Order: 1, żeby tekst wskoczył na samą górę
+            }
+        }
+
+        @include respond-to("desktop") {
+
+            &__container {
+                gap: 2.5rem;
             }
         }
     }

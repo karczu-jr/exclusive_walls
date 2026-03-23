@@ -1,0 +1,434 @@
+---
+const navLinks = [
+    {label: "Home", href: "/"},
+    {
+        label: "Oferta druku", 
+        href: "#",
+        subLinks: [
+            {label: "Biznes", href: "/biznes"},
+            {label: "Dom", href: "/home"},
+            {label: "Hotele i Gastronomia", href: "/horeca"},
+            {label: "Placówki medyczne", href: "/medical"},
+            {label: "Szkoły i przedszkola", href: "/public"}
+        ]
+    },
+    {label: "Jak to działa?", href: "/process"},
+    {label: "Vouchery i Benefity", href: "/benefits"},
+    {label: "Kontakt", href: "/contact"},
+]
+
+const { class: className, ...rest } = Astro.props;
+---
+
+<div class="site-header">
+    <div aria-label="Nawigacja główna" class:list={["nav-bar", "wrapper", className]} {...rest}>
+        
+        <a class="nav-bar__logo" href="/">
+            <img src="../../img/Logo_EW.svg" alt="Logo firmy Exclussive Walls">
+        </a>
+        
+        <nav class="nav-bar__desktop" aria-label="Nawigacja główna">
+            <ul class="nav-bar__desktop-list">
+                {navLinks.map(link => (
+                    <li class={link.subLinks ? "has-dropdown" : ""}>
+                        {link.subLinks ? (
+                            <>
+                                <a href={link.href} class="dropdown-trigger" aria-haspopup="true" aria-expanded="false">
+                                    {link.label}
+                                    <svg class="chevron" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                                </a>
+                                <ul class="dropdown-menu">
+                                    {link.subLinks.map(subLink => (
+                                        <li><a href={subLink.href}>{subLink.label}</a></li>
+                                    ))}
+                                </ul>
+                            </>
+                        ) : (
+                            <a href={link.href}>{link.label}</a>
+                        )}
+                    </li>
+                ))}
+            </ul>
+        </nav>
+
+        <button class="nav-bar__hamburger" aria-label="Otwórz menu" aria-expanded="false">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
+
+        <nav aria-label="Nawigacja mobilna" class="nav-bar__mobile">
+            <ul class="nav-bar__mobile-list">
+                {navLinks.map(link => (
+                    <li>
+                        <a href={link.href} class={link.subLinks ? "mobile-main-link" : ""}>{link.label}</a>
+                        {link.subLinks && (
+                            <ul class="mobile-sub-list">
+                                {link.subLinks.map(subLink => (
+                                    <li><a href={subLink.href}>{subLink.label}</a></li>
+                                ))}
+                            </ul>
+                        )}
+                    </li>
+                ))}
+            </ul>
+        </nav>
+
+    </div>
+</div>
+
+<style lang="scss">
+@use "../styles/variables" as *;
+@use "../styles/mixins" as *;
+
+    // --- NOWE: STYLOWANIE ZEWNĘTRZNEGO HEADERA (EFEKT SZKŁA) ---
+    .site-header {
+        position: fixed; 
+        top: 0;
+        left: 0;
+        width: 100%;
+        z-index: 999; 
+        
+        // --- NOWE: Płynna animacja wysuwania/chowania ---
+        transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+
+        // --- NOWE: Klasa dodawana przez JS ukrywająca header ---
+        &.is-hidden {
+            transform: translateY(-100%);
+        }
+        
+        &::before {
+            // ... Twój cały efekt liquid glass zostaje tutaj bez ZMIAN!
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 140%; 
+            background: linear-gradient(to bottom, rgba(0,0,0, 0.9) 0%, rgba(0,0,0, 0) 100%);
+            backdrop-filter: blur(12px); 
+            -webkit-backdrop-filter: blur(12px);
+            mask-image: linear-gradient(to bottom, black 50%, transparent 100%);
+            -webkit-mask-image: linear-gradient(to bottom, black 50%, transparent 100%);
+            z-index: -1; 
+            pointer-events: none; 
+        }
+    }
+
+    .nav-bar {
+        // --- 1. GLÓWNY LAYOUT (DESKTOP DEFAULT) ---
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        // Zmieniliśmy marginesy, żeby pasowały do przyklejonego headera
+        padding-top: 1.5rem; 
+        padding-bottom: 2rem; 
+
+        @include respond-to("desktop") {
+            padding-top: 1.25rem; 
+            padding-bottom: 1.75rem; 
+
+        }
+
+        @include respond-to("tablet") {
+            padding-top: 0.875rem; 
+            padding-bottom: 1.25rem; 
+
+        }
+
+        &__logo {
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+            color: inherit;
+
+            img {
+                height: 48px;
+                width: auto;
+            }
+        }
+
+        // --- 2. MENU DESKTOPOWE (aktualizacja) ---
+        &__desktop {
+            display: flex; 
+
+            &-list {
+                list-style: none;
+                display: flex;
+                gap: 40px;
+                margin: 0; 
+                padding: 0; 
+                align-items: center; // Wyrównanie w pionie z logo
+            }
+
+            li {
+                position: relative; // Konieczne dla pozycjonowania dropdownu
+            }
+
+            a {
+                text-decoration: none;
+                color: $clr-white; 
+                position: relative;
+                padding: 4px 0;
+                transition: color 0.3s ease;
+                font-weight: 500;
+                display: flex;
+                align-items: center;
+                gap: 6px;
+
+                &::after {
+                    content: '';
+                    position: absolute;
+                    bottom: 0;
+                    right: 0; 
+                    width: 100%;
+                    height: 1px;
+                    background-color: $clr-white; 
+                    transform: scaleX(0); 
+                    transform-origin: bottom right;
+                    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+                }
+
+                &:hover::after {
+                    transform: scaleX(1); 
+                    transform-origin: bottom left;
+                }
+            }
+
+            // --- STYLIZACJA DROPDOWNU (APPLE STYLE) ---
+            .has-dropdown {
+                position: relative; // 1. TO JEST KLUCZ: Trzyma dropdown równo z krawędzią tego <li>
+
+                .chevron {
+                    transition: transform 0.3s ease;
+                }
+
+                // Zawartość rozwijana (Stan początkowy - ukryty)
+                .dropdown-menu {
+                    position: absolute;
+                    top: calc(100% + 0.25rem); 
+                    
+                    left: 0; // 2. Zaczynamy idealnie od lewej krawędzi (literki O)
+                    transform: translateY(-10px); // 3. Czyste przesunięcie w pionie, ŻADNEGO translateX!
+                    
+                    background-color: #101010; 
+                    border-radius: 0; 
+                    min-width: 240px;
+                    padding: 1rem 0;
+                    list-style: none;
+                    opacity: 0;
+                    visibility: hidden;
+                    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+                    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+
+                    li {
+                        padding: 0;
+                    }
+
+                    a {
+                        padding: 0.75rem 1.5rem;
+                        font-weight: 400;
+                        font-size: $fs-base;
+                        
+                        &::after {
+                            display: none; 
+                        }
+
+                        &:hover {
+                            background-color: rgba(255,255,255,0.1); 
+                        }
+                    }
+                }
+
+                // Animacja HOVER lub JS (klawiatura) - Stan widoczny
+                &:hover .dropdown-menu,
+                &.is-open .dropdown-menu {
+                    opacity: 1;
+                    visibility: visible;
+                    
+                    transform: translateY(0); // 4. Tu też ŻADNEGO translateX! Tylko zjazd w dół.
+                }
+
+                &:hover .chevron,
+                &.is-open .chevron {
+                    transform: rotate(180deg);
+                }
+            }
+        }
+
+        // --- 3. HAMBURGER ---
+        &__hamburger {
+            display: none; 
+            background: none;
+            border: none;
+            padding: 8px;
+            cursor: pointer;
+            flex-direction: column;
+            gap: 6px;
+            z-index: 110; // Musi być nad mobilnym menu
+
+            span {
+                display: block;
+                width: 32px;
+                height: 2px;
+                background: $clr-white;
+                transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+                transform-origin: center;
+            }
+
+            &.active {
+                span:nth-child(1) { transform: translateY(8px) rotate(45deg); }
+                span:nth-child(2) { opacity: 0; transform: translateX(-10px); }
+                span:nth-child(3) { transform: translateY(-8px) rotate(-45deg); }
+            }
+        }
+
+        // --- 4. MENU MOBILNE ---
+        &__mobile {
+            display: none; 
+            position: fixed;
+            inset: 0;
+            height: 100vh;
+            width: 100%;
+            background: rgba(0, 0, 0, 0.85); // Lekko przezroczyste czarne tło na mobile
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 100;
+            
+            transform: translateX(100%);
+            transition: transform 0.5s ease-in-out;
+
+            ul {
+                display: flex;
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 1rem;
+                list-style: none;
+                padding: 0;
+                margin: 0;
+                text-align: left;
+            }
+
+            a {
+                font-size: 1.75rem;
+                font-weight: 600;
+                color: $clr-white;
+                text-decoration: none;
+            }
+
+            &.active {
+                transform: translateX(0);
+            }
+
+            // Stylizacja pod-menu na mobile (płaska lista)
+            .mobile-sub-list {
+                display: flex;
+                flex-direction: column;
+                gap: 1rem; // Mniejszy odstęp między elementami podmenu
+                margin-top: 1rem;
+                margin-bottom: 0.5rem;
+                padding-left: 0.75rem;
+                // border-left: 1px solid rgba(255,255,255,0.2);
+
+                a {
+                    font-size: 1.25rem; // Mniejszy font niż w głównych linkach
+                    font-weight: 500;
+                    color: #ffffff95; // Delikatnie wyszarzone
+                }
+            }
+        }
+
+        // --- 5. BREAKPOINT ---
+        @include respond-to("desktop") {
+            &__desktop { display: none; }
+            &__hamburger { display: flex; }
+            &__mobile { display: flex; }
+        }       
+    }
+</style>
+
+<script>
+    const initMenu = () => {
+        const toggle = document.querySelector('.nav-bar__hamburger');
+        const mobileNav = document.querySelector('.nav-bar__mobile');
+        const links = document.querySelectorAll('.nav-bar__mobile a');
+        const desktopDropdowns = document.querySelectorAll('.dropdown-trigger'); // --- ZMIANA: Pobieramy trigger z desktopu ---
+
+        if (!toggle || !mobileNav) return;
+
+        toggle.addEventListener('click', () => {
+            toggle.classList.toggle('active');
+            mobileNav.classList.toggle('active');
+            
+            if (mobileNav.classList.contains('active')) {
+                document.body.style.overflow = 'hidden';
+            } else {
+                document.body.style.overflow = '';
+            }
+        });
+
+        // --- ZMIANA: Obsługa linków mobilnych ---
+        links.forEach(link => {
+            link.addEventListener('click', (e) => {
+                // Jeśli kliknięto pusty link (np. "Oferta druku"), blokujemy skok do góry i NIE zamykamy menu
+                if (link.getAttribute('href') === '#') {
+                    e.preventDefault();
+                    return; 
+                }
+                
+                // Normalne zachowanie dla pozostałych linków - zamykamy menu
+                toggle.classList.remove('active');
+                mobileNav.classList.remove('active');
+                document.body.style.overflow = '';
+            });
+        });
+
+        // --- ZMIANA: Obsługa kliknięcia w dropdown na desktopie ---
+        desktopDropdowns.forEach(trigger => {
+            trigger.addEventListener('click', (e) => {
+                // Blokujemy skok strony do góry po kliknięciu w "Oferta druku"
+                if (trigger.getAttribute('href') === '#') {
+                    e.preventDefault();
+                }
+            });
+        });
+    };
+
+    const initScrollHeader = () => {
+        const header = document.querySelector('.site-header');
+        const hamburger = document.querySelector('.nav-bar__hamburger');
+        let lastScroll = 0;
+
+        if (!header || !hamburger) return;
+
+        window.addEventListener('scroll', () => {
+            const isMobile = window.getComputedStyle(hamburger).display !== 'none';
+
+            if (isMobile) {
+                header.classList.remove('is-hidden');
+                return;
+            }
+
+            const currentScroll = window.pageYOffset || document.documentElement.scrollTop;
+
+            if (currentScroll <= 80) {
+                header.classList.remove('is-hidden');
+                return;
+            }
+
+            if (currentScroll > lastScroll) {
+                header.classList.add('is-hidden');
+            } else {
+                header.classList.remove('is-hidden');
+            }
+
+            lastScroll = currentScroll;
+        });
+    };
+
+    initMenu();
+    initScrollHeader();
+</script>

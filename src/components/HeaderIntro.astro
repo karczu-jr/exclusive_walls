@@ -1,0 +1,127 @@
+---
+interface Props {
+    head: string;
+    subHead?: string;
+    imageSrc?: string; // Zdefiniowanie propa jako string
+    imageAlt?: string; 
+    class?: string;
+}
+
+const { head, subHead, imageSrc, imageAlt, class: className, ...rest } = Astro.props;
+---
+
+<div class:list={["header-intro wrapper", className]} {...rest}>
+    <div class="header-intro__grid grid">
+        <div class="header-intro__text col-8 col-desktop-12">
+            <h1 class="header-intro__head">
+                <Fragment set:html={head} />
+                
+                {subHead && <span class="header-intro__subhead">{subHead}</span>}
+            </h1>
+            <slot class="col-10" />
+        </div>
+        <div class="header-intro__image col-12">
+            {imageSrc && <img src={imageSrc} alt={imageAlt || "Oferta"} />}
+        </div>
+    </div>
+</div>
+
+<style lang="scss">
+@use "../styles/variables" as *;
+@use "../styles/mixins" as *;
+
+    .header-intro {
+
+        &__text {
+            // 1. Zamiast sztywnego 100vh, używamy calc(), żeby odjąć Twój górny margines (8rem).
+            // Inaczej sekcja miałaby 100vh + 8rem i zawsze wystawałaby za ekran!
+            min-height: calc(100vh - var(--nav-height));
+
+            // 2. Magia Flexboxa do wyśrodkowania w pionie
+            display: flex;
+            flex-direction: column;
+            justify-content: center; // To ustawia h1 i slota idealnie na środku
+            
+            // Zabezpieczenie: trzymamy tekst warstwę wyżej, żeby obrazek go nie zasłonił
+            position: relative;
+            z-index: 2; 
+
+            // (Opcjonalnie) Skoro obrazek wejdzie od dołu na 20vh, środek ekranu optycznie się przesunie.
+            // Możesz odepchnąć tekst trochę do góry tym paddingiem:
+            padding-bottom: 15vh;
+
+            .header-intro__head {
+                font-size: 5rem;
+                line-height: 1.1;
+
+                @include respond-to("large-desktop") {
+                    font-size: 4.5rem;
+                }
+
+                @include respond-to("desktop") {
+                    font-size: 4rem;
+                }
+
+                @include respond-to("tablet") {
+                    font-size: 3.5rem;
+                }
+
+                @include respond-to("mobile") {
+                    font-size: 2.75rem;
+                }
+            }
+
+            .header-intro__subhead {
+                display: block;
+                font-size: 2.5rem;
+                font-weight: 300;
+                color: var(--text-muted);
+                margin-top: 1.25rem;
+
+                @include respond-to("large-desktop") {
+                    font-size: 2.25rem;
+                }
+                @include respond-to("desktop") {
+                    font-size: 2rem;
+                    margin-top: 1rem;
+                }
+
+                @include respond-to("tablet") {
+                    font-size: 1.75rem;
+                }
+
+                @include respond-to("mobile") {
+                    font-size: 1.5rem;
+                    margin-top: 1rem;
+                }
+            }
+        }
+
+        &__image {
+            width: 100%;
+
+            // 3. Magia wchodzenia obrazka w ekran!
+            margin-top: -20vh; // Ujemny margines podciąga obrazek do góry o 20% wysokości okna
+            
+            position: relative;
+            z-index: 1; // Obrazek ląduje warstwę niżej pod tekstem
+            
+            img {
+                width: 100%;
+                height: auto;
+                aspect-ratio: 2.25 / 1; 
+                object-fit: cover; 
+                display: block; 
+
+                @include respond-to("desktop") {
+                    aspect-ratio: 2 / 1; 
+                }
+
+                @include respond-to("tablet") {
+                    aspect-ratio: 1.75 / 1; 
+                }
+            }
+        }
+    }
+</style>
+

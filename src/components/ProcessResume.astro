@@ -1,5 +1,5 @@
 ---
-import img1 from '../assets/img/about_photo_1.jpg';
+import img1 from '../assets/img/company3.jpg';
 import { Image } from 'astro:assets';
 
 import SectionIntro from './SectionIntro.astro';
@@ -8,7 +8,7 @@ import ArrowLink from './ArrowLink.astro';
 const { class: className, ...rest } = Astro.props;
 ---
 
-<section class:list={["image-text", "wrapper", "base-section", className]} {...rest}>
+<section class:list={["image-text", "wrapper", className]} {...rest}>
     <div class="image-text__container grid">
         
         <div class="image-text__image col-8 col-desktop-12">
@@ -22,15 +22,15 @@ const { class: className, ...rest } = Astro.props;
         >
             <p>Zapomnij o bałaganie i uciążliwym remoncie. Druk ścienny to najczystsza forma dekoracji, którą realizujemy w kilku prostych krokach:</p>
             <ol>
-                <li><span>1</span>Wizja i darmowa wycena w 24h</li>
-                <li><span>2</span>Brak żmudnych przygotowań powierzchni</li>
-                <li><span>3</span>Precyzyjny druk UV i magia technologii</li>
-                <li><span>4</span>Gotowy i trwały efekt natychmiast</li>
+                <li><span>1.</span>Wizja i darmowa wycena w 24h</li>
+                <li><span>2.</span>Brak żmudnych przygotowań powierzchni</li>
+                <li><span>3.</span>Precyzyjny druk UV i magia technologii</li>
+                <li><span>4.</span>Gotowy i trwały efekt natychmiast</li>
                 
             </ol>
 
             <ArrowLink
-                linkHref="/benefit" 
+                linkHref="/process" 
                 text="Dowiedz się więcej"
             />
         </SectionIntro>
@@ -61,7 +61,6 @@ const { class: className, ...rest } = Astro.props;
                 aspect-ratio: 1.5 / 1; // Sztywne proporcje filmowe
                 object-fit: cover; // Zapobiega rozciąganiu zdjęcia
                 display: block; // Usuwa pustą przestrzeń pod obrazkiem
-                // ZERO BORDER-RADIUS - tak jak prosiłeś!
             }
         }
 
@@ -79,7 +78,7 @@ const { class: className, ...rest } = Astro.props;
             &__container {
                 display: flex;
                 flex-direction: column;
-                gap: 4rem; // Odstęp między zdjęciem a tekstem w ułożeniu pionowym
+                gap: 2.5rem;
             }
         }
     }

@@ -1,0 +1,163 @@
+---
+interface Props {
+    title?: string;
+    description?: string;
+    imageSrc: string;
+    linkHref: string;
+    linkText?: string;
+    class?: string;
+    // Dodajemy informację, że przyjmujemy też inne atrybuty (jak data-aos)
+    [key: string]: any;
+}
+
+const { title, description, imageSrc, linkHref, linkText, class: className, ...rest } = Astro.props;
+---
+
+<article class:list={["offer-item", className]} {...rest}>
+    <a href={linkHref} class="offer-item__link-wrapper">
+        
+        <div class="offer-item__background">
+            <img src={imageSrc} alt={title || "Oferta"} />
+            <div class="offer-item__overlay"></div>
+        </div>
+        
+        <div class="offer-item__content">
+            {title && (
+                <h3 class="offer-item__title">{title}</h3>
+            )}
+
+            {linkText && (
+                <h3 class="offer-item__fake-link">
+                    <span class="fake-link-text">{linkText}</span>
+                    <span class="material-symbols-outlined fake-link-icon">chevron_right</span>
+                </h3>
+            )}
+            
+            {description && (
+                <p class="offer-item__text">{description}</p>
+            )}
+        </div>
+
+    </a>
+</article>
+
+<style lang="scss">
+@use "../styles/variables" as *;
+@use "../styles/mixins" as *;
+
+.offer-item {
+    // 1. NOWE WYMIARY PANORAMICZNE
+    width: 100%;
+    max-width: 1240px;
+    height: 440px; // Sztywna wysokość (banerowa)
+    max-height: 440px; 
+    margin: 0 auto 5rem auto; // Wyśrodkowanie banera, jeśli kontener jest szerszy
+    
+    // Brak border-radius!
+    overflow: hidden;   
+    position: relative; 
+
+    @include respond-to("tablet") {
+        height: 360px;
+        margin: 0 auto 3rem auto;
+    }
+
+    @include respond-to("mobile") {
+        height: 320px;
+        margin: 0 auto 2rem auto;
+    }
+
+    &__link-wrapper {
+        display: block;
+        height: 100%;
+        width: 100%;
+        text-decoration: none;
+        color: #ffffff; 
+
+        &:hover {
+            .offer-item__background img {
+                transform: scale(1.05); // Zmniejszyłem lekko zoom, na szerokich banerach 1.08 bywa za szybkie
+            }
+            
+            .fake-link-icon {
+                transform: translateX(6px);
+            }
+        }
+    }
+
+    // --- WARSTWA TŁA ---
+    &__background {
+        position: absolute;
+        inset: 0; // Skrót od top:0, left:0, right:0, bottom:0
+        z-index: 1;
+
+        img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.6s ease-out; 
+        }
+    }
+
+    // --- WARSTWA GRADIENTU ---
+    &__overlay {
+        position: absolute;
+        inset: 0;
+        z-index: 2;
+        background: linear-gradient(
+            to top, 
+            rgba(0, 0, 0, 0.85) 0%, 
+            rgba(0, 0, 0, 0.3) 50%, 
+            transparent 100%
+        );
+    }
+
+    // --- WARSTWA TREŚCI ---
+    &__content {
+        position: relative; 
+        z-index: 3;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-end; 
+        height: 100%;
+        padding: 2.5rem; // Trochę większy margines wewnętrzny dla szerokiego banera
+
+        @include respond-to("tablet") {
+            padding: 1.5rem;
+        }
+    }
+
+    &__title {
+        font-size: 2rem; // Powiększyłem tytuł, na szerokim banerze wygląda lepiej
+        margin-bottom: 0.5rem;
+        color: #ffffff; 
+        
+        @include respond-to("tablet") {
+            font-size: 1.5rem;
+        }
+    }
+
+    &__fake-link {
+        display: inline-flex;
+        align-items: center;
+        margin-bottom: 0.5rem;
+        gap: 4px;
+        font-weight: 600;
+        color: var(--text-color);
+
+        .fake-link-icon {
+            font-size: 1.25rem;
+            transition: transform 0.3s ease-out;
+        }
+    }
+
+    &__text {
+        color: rgba(255, 255, 255, 0.85); 
+        max-width: 640px; // Ograniczamy szerokość tekstu, żeby nie ciągnął się przez całe 1240px
+        display: -webkit-box;
+        -webkit-line-clamp: 4; // Dla banera 2 linijki to max, żeby nie przysłonić grafiki
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+    }
+}
+</style>

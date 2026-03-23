@@ -1,0 +1,53 @@
+---
+import SectionIntro from './SectionIntro.astro';
+import StepItem from './StepItem.astro';
+---
+
+<section class="steps wrapper-small" data-aos="fade-up">
+    <SectionIntro
+        caption="Systemy benefitowe i vouchery"
+        title=" Voucher na druk ścienny za punkty z Twojej kafeterii benefitowej"
+        class="col-4 col-desktop-12 col-tablet-8 gallery__intro">
+        <p></p>
+    </SectionIntro>
+
+    <ol class="steps__list">
+        <StepItem
+            number="01"
+            title="Voucher na druk ścienny za punkty z Twojej kafeterii benefitowej"
+            data-aos="fade-in">
+            <p>
+                Teraz środki od pracodawcy możesz wydać na unikalny design. Wymień swoje punkty w&nbsp;kafeterii na voucher do Exclusive Walls – dokładnie tak samo, jak kupujesz bony do marketów czy karty sportowe. Wykorzystaj go, by sfinansować wymarzony druk na ścianie w&nbsp;swoim domu lub biurze.
+            </p>
+        </StepItem>
+        
+        <StepItem
+            number="02"
+            title="Jak zrealizować voucher? Prześlij nam szczegóły swojego projektu."
+            data-aos="fade-in">
+            <p>
+                Masz już kod? Napisz do nas lub zadzwoń. Podaj adres realizacji, wymiary ściany oraz pomysł na grafikę (np. logo lub motyw do sypialni). Daj znać, czy masz już wzór, czy potrzebujesz inspiracji. Na tej podstawie przygotujemy wycenę, którą opłacisz swoim voucherem. To proste!
+            </p>
+        </StepItem>
+
+        <StepItem
+            number="03"
+            title="Płać kodem z kafeterii i ciesz się nowym wnętrzem w jeden dzień"
+            data-aos="fade-in">
+            <p>
+                Po akceptacji wyceny rozliczasz się za pomocą swojego kodu – bez zbędnych formalności. Ustalimy termin, a&nbsp;druk wykonamy w&nbsp;kilka godzin, bez brudu i&nbsp;remontu. Na każde zgłoszenie odpowiadamy najszybciej jak to możliwe, zazwyczaj już w&nbsp;kolejnym dniu roboczym. Czysto, szybko i&nbsp;konkretnie!
+            </p>
+        </StepItem>     
+    </ol>
+</section>
+
+<style lang="scss">
+@use "../styles/variables" as *;
+@use "../styles/mixins" as *;
+
+.steps {
+    margin-top: 8rem;
+    margin-bottom: 8rem;
+}
+
+</style>

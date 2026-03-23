@@ -1,23 +1,24 @@
 ---
 import SectionIntroCenter from './SectionIntroCenter.astro';
 import OfferItem from './OfferItem.astro';
+import SpacesItem from './SpacesItem.astro';
 import ArrowLink from './ArrowLink.astro';
 
 const { class: className, ...rest } = Astro.props;
 ---
 
-<section class="offer wrapper-small" class:list={["base-section", className]} {...rest}>
+<section class="offer wrapper-medium" class:list={["base-section", className]} {...rest}>
     <div class="offer__flex">
          <SectionIntroCenter 
             caption="Oferta"
             title="Dla kogo tworzymy?"
-            class="col-12 col-desktop-12 col-tablet-8">
+            class="col-12 col-desktop-12 col-tablet-8"  data-aos="fade-up">
             <p>Tworzymy dla tych, którzy cenią bezkompromisową jakość&nbsp;i szybką realizację bez remontu. Budujemy prestiż firm&nbsp;i unikalny klimat domów. Wybierz swoją przestrzeń.</p>
         </SectionIntroCenter>
-        <div class="grid">
+        <!-- <div class="grid">
             <OfferItem
                 imageSrc="/img/company.jpg"
-                linkHref="/oferta/firmy"
+                linkHref="/spaces-bussines"
                 linkText="Bizens"
                 description="Nowoczesne murale i logotypy 8K. Szybka metamorfoza biura bez przerywania pracy."
                 class="col-6 col-tablet-8 col-mobile-4"
@@ -29,10 +30,53 @@ const { class: className, ...rest } = Astro.props;
                 description="Odmień swoje wnętrze fotorealistyczną grafiką 8K. Ekologiczny, bezwonny druk bezpieczny dla dzieci."
                 class="col-6 col-tablet-8 col-mobile-4"
             />
+        </div> -->
+
+        <div class="offer__spaces">
+            <SpacesItem 
+                imageSrc="/img/company4.jpg"
+                linkHref="/biznes"
+                linkText="Bizens"
+                description="Nowoczesne murale i logotypy 8K. Szybka metamorfoza biura bez przerywania pracy."
+                data-aos="fade-in"
+            />
+
+            <SpacesItem 
+                imageSrc="/img/home.jpg"
+                linkHref="/home"
+                linkText="Dom"
+                description="Odmień swoje wnętrze fotorealistyczną grafiką 8K. Ekologiczny, bezwonny druk bezpieczny dla dzieci."
+                data-aos="fade-in"
+            />
+
+            <SpacesItem 
+                imageSrc="/img/company.jpg"
+                linkHref="/horeca"
+                linkText="Hotele i Gastronomia (HoReCa)"
+                description="Klimatyczny wystrój Twojego lokalu. Trwałe murale premium, całkowicie odporne na wilgoć i zabrudzenia."
+                data-aos="fade-in"
+            />
+
+            <SpacesItem 
+                imageSrc="/img/home.jpg"
+                linkHref="/medical"
+                linkText="Placówki Medyczne"
+                description="Profesjonalny wizerunek i sterylność. Bezzapachowy, certyfikowany druk ścienny, w pełni bezpieczny przy dezynfekcji."
+                data-aos="fade-in"
+            />
+
+            <SpacesItem 
+                imageSrc="/img/home.jpg"
+                linkHref="/public"
+                linkText="Szkoły i Przedszkola"
+                description="Inspirujące, kolorowe murale edukacyjne. Ekologiczny, zmywalny druk, gwarantujący 100% bezpieczeństwa dla najmłodszych."
+                data-aos="fade-in"
+            />
         </div>
-        <ArrowLink
+
+        <!-- <ArrowLink
             linkHref="/OfferCopy"
-            text="Zobacz całą ofertę" />
+            text="Zobacz całą ofertę" /> -->
     </div>
 </section>
 
@@ -47,13 +91,16 @@ const { class: className, ...rest } = Astro.props;
         flex-direction: column;
         align-items: center;
         gap: 4rem;
-        margin-top: 3rem;
-        margin-bottom: 6rem;
+        margin-top: 9rem;
+        margin-bottom: 9rem;
 
         // ==========================================
         // 2. MOBILE (4 kolumny)
         // ==========================================
         @include respond-to("tablet") {
+
+            margin-top: 7rem;
+            margin-bottom: 7rem;
 
             // Karty na 100%
             > :global(.offer-item) {
@@ -64,6 +111,13 @@ const { class: className, ...rest } = Astro.props;
                 margin-top: 1.5rem; // Odsunięcie od poprzedniej karty na zewnątrz
             }
         }
+    }
+
+    &__spaces {
+
+        display: flex;
+        flex-direction: column;
+        width: 100%;
     }
 }
 </style>

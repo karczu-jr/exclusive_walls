@@ -1,0 +1,67 @@
+---
+import Layout from '../layouts/Layout.astro';
+
+import HeaderIntro from '../components/HeaderIntro.astro'
+import SectionIntroCenter from '../components/SectionIntroCenter.astro';
+import ImageText from '../components/ImageText.astro';
+
+import SectionLayout from '../components/SectionLayout.astro';
+import SectionGradientInner from '../components/SectionGradientInner.astro';
+import SectionGradientOutter from '../components/SectionGradientOutter.astro';
+---
+
+<Layout
+    title="Druk dla przedszkoli, szkół i żłobków - Exclusive Walls"
+	description="Kreatywny druk ścienny dla przedszkoli i szkół. Bezpieczne, ekologiczne murale edukacyjne 8K. Odporność na szorowanie i radosne barwy. Zamów darmową wycenę!">
+
+    <header>
+        <HeaderIntro 
+            head='Inspirująca przestrzeń bezpieczna dla dzieci'
+            class:list="header-margin-bottom"
+            data-aos="fade-in">
+        </HeaderIntro>
+    </header>
+
+    <main>
+
+        <SectionGradientInner/>
+            <SectionLayout class="bg-color-2">
+                <ImageText
+                    imageSrc="../../img/about_photo_2.jpg"
+                    imageAlt="Trwałość i bezpieczeństwo w pokoju dziecka"
+                    title="Druk ścienny dla przedszkoli i&nbsp;szkół –&nbsp;edukacyjne murale w&nbsp;bezpiecznej technologii."
+                    data-aos="fade-up">
+
+                    <p>Zmień szkolne korytarze i&nbsp;sale w&nbsp;miejsca, które pobudzają wyobraźnię. Nasze ekologiczne tusze są w&nbsp;100% bezpieczne dla dzieci, a&nbsp;wydruki charakteryzują się najwyższą odpornością na szorowanie i&nbsp;codzienne zabawy. Tworzymy trwałe dekoracje i&nbsp;pomoce dydaktyczne, które nadają placówce radosny i&nbsp;nowoczesny charakter.</p>
+
+                </ImageText>       
+            </SectionLayout>
+        <SectionGradientOutter/> 
+
+    </main>
+</Layout>
+
+<style lang="scss">
+@use "../styles/variables" as *;
+@use "../styles/mixins" as *;
+
+    header {
+        :global(.header-margin-bottom) {
+            margin-bottom: -43vh;
+
+            @include respond-to("tablet") {
+                margin-bottom: -33vh;
+            }
+        }
+    }
+
+    main {
+        :global(.custom-margin) {
+        margin-top: 12rem;
+        margin-bottom: 12rem;
+        }
+
+    margin-top: -20vh
+    }
+    
+</style>

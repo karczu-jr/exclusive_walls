@@ -1,7 +1,9 @@
 ---
+import Layout from '../layouts/Layout.astro';
+
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
-import Layout from '../layouts/Layout.astro';
+
 import HomeGallery from '../components/HomeGallery.astro';
 import Offer from '../components/Offer.astro';
 import ProcessResume from '../components/ProcessResume.astro';
@@ -12,30 +14,37 @@ import SectionLayout from '../components/SectionLayout.astro';
 
 import SectionIntroCenter from '../components/SectionIntroCenter.astro';
 
-import GradientDividerInner from '../components/GradientDividerInner.astro';
-import GradientDividerOutter from '../components/GradientDividerOutter.astro';
+import SectionGradientInner from '../components/SectionGradientInner.astro';
+import SectionGradientOutter from '../components/SectionGradientOutter.astro';
 
 import BenefitsBanner from '../components/BenefitsBanner.astro';
 
 ---
 
-<Layout title="Exclusive Walls">
+<Layout 
+	title="Exclusive Walls"
+	description="Druk ścienny UV 8K dla biur, hoteli, gabinetów, placówek medycznych i przedszkoli. Fotorealistyczna grafika bez spoin. Trwała aranżacja wnętrz i branding. Zapytaj o darmową wycenę!">
 	
 	<Header />
 	<main>
-		<GradientDividerInner />
-		<SectionLayout class="bg-color-2">
-			<HomeGallery data-aos="fade-up" />
-		</SectionLayout>
+		<SectionGradientInner />
+			<SectionLayout class="bg-color-2">
+				<HomeGallery data-aos="fade-up" />
+			</SectionLayout>
 
-		<GradientDividerOutter />
-		<Offer data-aos="fade-up" />
+		<Offer/>
 
-		<SectionLayout>
-			<ProcessResume data-aos="fade-up" />
-		</SectionLayout>
+		<SectionGradientInner />
+			<SectionLayout class="bg-color-2">
+				<ProcessResume data-aos="fade-up" />
+			</SectionLayout>
+		<SectionGradientOutter />
+
+		
+
 		<!-- <Process /> -->
 		<!-- <Steps /> -->
+
 		<BenefitsBanner data-aos="fade-up"  />
 
 		<SectionLayout>
@@ -43,6 +52,5 @@ import BenefitsBanner from '../components/BenefitsBanner.astro';
 		</SectionLayout>
 		
 	</main>
-	<Footer />
 </Layout>
 

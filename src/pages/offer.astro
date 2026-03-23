@@ -1,0 +1,59 @@
+---
+import Layout from '../layouts/Layout.astro';
+
+import Navigation from '../components/Navigation.astro';
+
+import Footer from '../components/Footer.astro';
+import SpacesItem from '../components/SpacesItem.astro';
+
+---
+
+<Layout
+    title="Oferta dla Biznesu - Exclusive Walls"
+	description="Druk ścienny UV 8K dla biur, hoteli, gabinetów, placówek medycznych i przedszkoli. Fotorealistyczna grafika bez spoin. Trwała aranżacja wnętrz i branding. Zapytaj o darmową wycenę!">
+    <Navigation
+        class="wrapper" />
+    <main>
+        <SpacesItem 
+                imageSrc="/img/company.jpg"
+                linkHref="/biznes"
+                linkText="Bizens"
+                description="Nowoczesne murale i logotypy 8K. Szybka metamorfoza biura bez przerywania pracy."
+                data-aos="fade-in"
+            />
+
+            <SpacesItem 
+                imageSrc="/img/home.jpg"
+                linkHref="/home"
+                linkText="Dom"
+                description="Odmień swoje wnętrze fotorealistyczną grafiką 8K. Ekologiczny, bezwonny druk bezpieczny dla dzieci."
+                data-aos="fade-in"
+            />
+
+            <SpacesItem 
+                imageSrc="/img/company.jpg"
+                linkHref="/horeca"
+                linkText="Hotele i Gastronomia (HoReCa)"
+                description="Klimatyczny wystrój Twojego lokalu. Trwałe murale premium, całkowicie odporne na wilgoć i zabrudzenia."
+                data-aos="fade-in"
+            />
+
+            <SpacesItem 
+                imageSrc="/img/home.jpg"
+                linkHref="/medical"
+                linkText="Placówki Medyczne"
+                description="Profesjonalny wizerunek i sterylność. Bezzapachowy, certyfikowany druk ścienny, w pełni bezpieczny przy dezynfekcji."
+                data-aos="fade-in"
+            />
+
+            <SpacesItem 
+                imageSrc="/img/home.jpg"
+                linkHref="/public"
+                linkText="Szkoły i Przedszkola"
+                description="Inspirujące, kolorowe murale edukacyjne. Ekologiczny, zmywalny druk, gwarantujący 100% bezpieczeństwa dla najmłodszych."
+                data-aos="fade-in"
+            />
+
+    </main>
+    
+</Layout>

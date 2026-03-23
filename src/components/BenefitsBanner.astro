@@ -2,7 +2,7 @@
 import SectionIntro from './SectionIntro.astro';
 import ArrowLink from './ArrowLink.astro';
 
-import img from '../assets/img/about_photo_2.jpg';
+import img from '../assets/img/home4.jpg';
 import { Image } from 'astro:assets';
 ---
 
@@ -12,19 +12,19 @@ import { Image } from 'astro:assets';
         <div class="benefits__text col-7 col-tablet-12">
             <SectionIntro 
                 caption="Vouchery i Benefity"
-                title="Zamień punkty od pracodawcy na unikalny design 8K"
+                title="Zamień punkty od&nbsp;pracodawcy na&nbsp;&nbsp;unikalny design&nbsp;8K"
                 class="benefits__intro"
             >
-                <p>Wykorzystaj voucher ze swojej kafeterii benefitowej, aby sfinansować wymarzony druk ścienny. Odmień swój dom lub biuro bez wydawania gotówki – szybko, czysto i profesjonalnie.</p>
+                <p>Wykorzystaj voucher ze&nbsp;swojej kafeterii benefitowej, aby sfinansować wymarzony druk ścienny. Odmień swój dom lub biuro bez wydawania gotówki – szybko, czysto i&nbsp;profesjonalnie.</p>
             </SectionIntro>
             
             <ArrowLink
-                linkHref="/benefit" 
+                linkHref="/benefits" 
                 text="Dowiedz się więcej"
             />
         </div>
 
-        <div class="benefits__img col-5 col-tablet-12">
+        <div class="benefits__img col-5">
             <Image src={img} alt="Druk ścienny w biurze" />
         </div>
         
@@ -54,7 +54,11 @@ import { Image } from 'astro:assets';
         justify-content: center; // Wyśrodkowuje tekst w pionie na dużym ekranie
         align-items: flex-start;
         // Padding nakładamy TYLKO na tekst: góra, prawo, dół, lewo
-        padding: 4rem 2rem 4rem 4rem; 
+        padding: 4rem 2rem 4rem 4rem;
+
+        :global(h2) {
+            font-size: 3rem;
+        }
     }
 
     :global(.benefits__intro) {
@@ -63,7 +67,7 @@ import { Image } from 'astro:assets';
 
     &__img {
         width: 100%;
-        height: 100%;
+        aspect-ratio: 1 / 1;
         min-height: 400px;
         // Obrazek nie ma żadnych marginesów ani paddingów - dotyka krawędzi grida
 
@@ -75,23 +79,47 @@ import { Image } from 'astro:assets';
         }
     }
 
+    @include respond-to("desktop") {
+        .benefits {
+            &__grid {
+                display: flex;
+                flex-direction: column-reverse;
+                gap: 0;
+            }
+
+            &__img {
+                min-height: 300px;
+                aspect-ratio: 2 / 1;
+                order: 1; 
+            }
+        }
+    }
+
     // --- RESPANSYWNOŚĆ ---
     @include respond-to("tablet") {
-        &__grid {
-            // Usuwamy lukę z grida, żeby na telefonie obrazek dotykał tekstu
-            gap: 0; 
-        }
 
-        &__text {
-            // Mniejszy odstęp dla tekstu na mobile
-            padding: 3rem 2rem; 
-            order: 2; 
-        }
+        .benefits {
+            &__text {
+                // Mniejszy odstęp dla tekstu na mobile
+                padding: 3rem 1.5rem;
+            }
 
-        &__img {
-            min-height: 300px;
-            order: 1; 
-        }
+            &__img {
+                min-height: 360px;
+            }
+
+        } 
+    }
+
+    @include respond-to("mobile") {
+
+        .benefits {
+
+            &__img {
+                aspect-ratio: 1 / 1;
+            }
+
+        } 
     }
 }
 </style>

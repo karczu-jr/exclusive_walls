@@ -1,25 +1,25 @@
 ---
 interface Props {
-    stepNumber?: string;
+    number?: string;
     title?: string;
     class?: string;
 }
 
-const { stepNumber, title, class: className, ...rest } = Astro.props;
+const { number, title, class: className, ...rest } = Astro.props;
 ---
 
 {/* Wyświetlamy tylko, gdy którykolwiek z propsów jest wypełniony */}
-{(stepNumber || title ) && (
+{(number || title ) && (
     <li class="step-item-wrapper" data-aos="fade-in">
         <div class:list={["step-item", "grid", className]} {...rest}>
             
             {/* Lewa strona: Numer kroku */}
-            <div class="step-item__number col-4 col-tablet-8">
-                {stepNumber && <span>{stepNumber}</span>}
+            <div class="step-item__number col-3 col-tablet-8">
+                {number && <span>{number}</span>}
             </div>
 
             {/* Prawa strona: Treść */}
-            <div class="step-item__content col-8 col-tablet-8">
+            <div class="step-item__content col-9 col-tablet-8">
                 {title && <h3 class="step-item__title">{title}</h3>}
                 
                 {/* OWIJAMY SLOT: Dzięki temu treść zawsze trzyma się układu */}
@@ -40,6 +40,13 @@ const { stepNumber, title, class: className, ...rest } = Astro.props;
     list-style: none; 
     margin: 0;
     padding: 0;
+
+    // MAGIA: Jeśli ten <li> jest ostatni w <ol>, modyfikujemy jego wewnętrznego diva!
+    &:last-child {
+        .step-item {
+            border-bottom: none;
+        }
+    }
 }
 
 .step-item {
@@ -69,11 +76,10 @@ const { stepNumber, title, class: className, ...rest } = Astro.props;
 
     // Nowa klasa dla zawartości slota
     &__desc {
-        max-width: 600px; 
+        // max-width: 600px; 
         
         // Stylizujemy paragrafy, które wpadają do slota
         :global(p) {
-            font-size: var(--fs-md); // Twoja zmienna dla tekstu
             color: var(--text-muted); // Kolor szary, jak w projekcie
             line-height: 1.6;
             margin-bottom: 0; // Usuwamy margines na dole, bo padding trzyma komponent

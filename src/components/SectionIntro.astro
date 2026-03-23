@@ -1,11 +1,11 @@
 ---
-const { title, caption, class: className } = Astro.props;
+const { title, caption, class: className, ...rest } = Astro.props;
 ---
 
-<div class:list={["section-intro", className]}>
+<div class:list={["section-intro", className]} {...rest}>
     {caption && <span class="caption">{caption}</span>}
     <div class="section-intro__text">
-        <h2>{title}</h2>
+        <h2 set:html={title}></h2>
         <slot />
     </div>
 </div>
@@ -40,18 +40,18 @@ const { title, caption, class: className } = Astro.props;
             // Szary kolor treści (użyj swojej zmiennej, np. var(--text-muted) lub $color-grey)
             color: var(--text-muted); 
             line-height: 1.6;
-            font-size: 1rem;
+            // font-size: 1rem;
             font-weight: 500;
         }
 
         // 3. Numer wewnątrz punktu (biały nagłówek)
         :global(ol li span) {
-            font-family: $font-header; // Twój font nagłówkowy
+            // font-family: $font-header; // Twój font nagłówkowy
             color: var(--text-color);            // Czysta biel
-            font-size: 1.375rem;         // Możesz lekko powiększyć numer dla lepszego efektu
-            font-weight: 600;          // Opcjonalnie: pogrubienie
+            // font-size: 1.25rem;         // Możesz lekko powiększyć numer dla lepszego efektu
+            // font-weight: 600;          // Opcjonalnie: pogrubienie
             line-height: 1;            // Zapobiega rozjeżdżaniu się z tekstem
-            min-width: 1rem;           // Trzyma stałą szerokość, żeby tekst pod spodem równo się łamał
+            min-width: 1.125rem;           // Trzyma stałą szerokość, żeby tekst pod spodem równo się łamał
         }
     }
     
