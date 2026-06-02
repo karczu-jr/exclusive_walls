@@ -11,28 +11,39 @@ import SectionGradientOutter from '../components/SectionGradientOutter.astro';
 ---
 
 <Layout
-    title="Druk dla przedszkoli, szkół i żłobków - Exclusive Walls"
+    title="Druk ścienny dla przedszkoli i szkół - bezpieczne murale edukacyjne"
 	description="Kreatywny druk ścienny dla przedszkoli i szkół. Bezpieczne, ekologiczne murale edukacyjne 8K. Odporność na szorowanie i radosne barwy. Zamów darmową wycenę!">
 
     <header>
         <HeaderIntro 
-            head='Inspirująca przestrzeń bezpieczna dla dzieci'
-            class:list="header-margin-bottom"
+            head='Druk dla przedszkoli, szkół i&nbsp;żłobków'
+            imageSrc="../../img/public_1.jpg"
+            imageAlt="Wyróżnij przedszkole lub szkołę na tle konkurencji. Murale ścienne UV budują wizerunek nowoczesnej placówki. Trwałe, bezpieczne, bez remontu."
             data-aos="fade-in">
         </HeaderIntro>
     </header>
 
     <main>
 
+        <SectionIntroCenter
+            title="Sala, która uczy przez kolory i wyobraźnię"
+            class="wrapper-medium custom-margin-top custom-margin-bottom max-width"
+            data-aos="fade-up">
+
+            <p>Szkolne korytarze i&nbsp;sale mogą być czymś więcej niż pustymi ścianami. Tusze utwardzane światłem UV nie emitują po zakończeniu druku żadnych szkodliwych substancji - to gwarancja bezpieczeństwa dla najmłodszych. Nasze wydruki wytrzymują codzienne szorowanie i&nbsp;zabawy. Tworzymy murale edukacyjne, pomoce dydaktyczne i&nbsp;dekoracje, które nadają placówce nowoczesny charakter. Dzieci przychodzą z większą chęcią, a&nbsp;rodzice widzą, że placówka inwestuje w&nbsp;przestrzeń.</p>
+
+        </SectionIntroCenter>
+
         <SectionGradientInner/>
             <SectionLayout class="bg-color-2">
                 <ImageText
-                    imageSrc="../../img/public_1.jpg"
-                    imageAlt="Trwałość i bezpieczeństwo w pokoju dziecka"
-                    title="Druk ścienny dla przedszkoli i&nbsp;szkół –&nbsp;edukacyjne murale w&nbsp;bezpiecznej technologii."
+                    imageSrc="../../img/public_2.jpg"
+                    imageAlt="Mural w przedszkolu i szkole jako przewaga wizerunkowa placówki"
+                    title="Placówka, którą rodzice wybierają na pierwszy rzut oka"
+                    reversed={true}
                     data-aos="fade-up">
 
-                    <p>Zmień szkolne korytarze i&nbsp;sale w&nbsp;miejsca, które pobudzają wyobraźnię. Nasze ekologiczne tusze są w&nbsp;100% bezpieczne dla dzieci, a&nbsp;wydruki charakteryzują się najwyższą odpornością na szorowanie i&nbsp;codzienne zabawy. Tworzymy trwałe dekoracje i&nbsp;pomoce dydaktyczne, które nadają placówce radosny i&nbsp;nowoczesny charakter.</p>
+                    <p>Rodzice wybierają placówkę zanim przeczytają program nauczania - wystarczy im jedno zdjęcie na stronie lub wizyta na dniu otwartym. Kolorowy, profesjonalnie wykonany mural w&nbsp;holu czy sali dydaktycznej komunikuje jedno: tu&nbsp;dba się o&nbsp;dzieci. To nie koszt, to&nbsp;inwestycja w&nbsp;wizerunek, która pracuje latami bez odnawiania. Nasze realizacje regularnie trafiają na&nbsp;profile społecznościowe przedszkoli i&nbsp;szkół - bo rodzice sami je&nbsp;fotografują i&nbsp;udostępniają.</p>
 
                 </ImageText>       
             </SectionLayout>
@@ -56,12 +67,29 @@ import SectionGradientOutter from '../components/SectionGradientOutter.astro';
     }
 
     main {
-        :global(.custom-margin) {
-        margin-top: 12rem;
-        margin-bottom: 12rem;
+        :global(.custom-margin-top) {
+            margin-top: 10rem;
+
+            @include respond-to("desktop") { margin-top: 8rem; }
+            @include respond-to("tablet") { margin-top: 6rem; }
+            @include respond-to("mobile") { margin-top: 4rem; }
         }
 
-    margin-top: -20vh
+        :global(.custom-margin-bottom) {
+            margin-bottom: 12rem;
+
+            @include respond-to("desktop") { margin-bottom: 10rem; }
+            @include respond-to("tablet") { margin-bottom: 8rem; }
+            @include respond-to("mobile") { margin-bottom: 6rem; }
+        }
+
+        :global(.image-text.custom-margin-bottom) {
+            margin-bottom: 12rem;
+
+            @include respond-to("desktop") { margin-bottom: 10rem; }
+            @include respond-to("tablet") { margin-bottom: 8rem; }
+            @include respond-to("mobile") { margin-bottom: 6rem; }
+        }
     }
     
 </style>

@@ -11,37 +11,50 @@ import SectionGradientOutter from '../components/SectionGradientOutter.astro';
 ---
 
 <Layout
-    title="Druk dla placówek medycznych i gabinetów - Exclusive Walls"
+    title="Druk ścienny dla gabinetów i klinik - higiena, prestiż i profesjonalizm"
 	description="Higieniczny i bezwonny druk ścienny do gabinetów oraz klinik. Certyfikowane tusze UV, bezpieczne dla pacjentów i personelu. Profesjonalny branding w jakości 8K. Sprawdź ofertę!">
 
     <header>
         <HeaderIntro 
-            head='Standard higieniczny inbsp;profesjonalny wizerunek kliniki'
+            head='Druk dla placówek medycznych i&nbsp;gabinetów'
+            imageSrc="../../img/medical_1.jpg"
+            imageAlt="Aranżacja ścian w szpitalach i klinikach, która redukuje stres pacjentów. Druk UV spełniający normy higieniczne. Trwały, łatwy w dezynfekcji."
             data-aos="fade-in">
         </HeaderIntro>
     </header>
 
     <main>
+
+        <SectionIntroCenter
+            title="Miejsce, które inspiruje zaufanie pacjenta"
+            class="wrapper-medium custom-margin-top custom-margin-bottom max-width"
+            data-aos="fade-up">
+
+            <p>W&nbsp;placówce medycznej każdy szczegół ma znaczenie. Po utwardzeniu lampą&nbsp;UV nadruk jest całkowicie bezwonny i&nbsp;spełnia najsurowsze normy higieniczne. Tworzymy profesjonalny wizerunek gabinetów, poczekalni i&nbsp;korytarzy, łącząc nowoczesny design z&nbsp;wiarygodnością. Logo, grafiki edukacyjne czy&nbsp;delikatne artystyczne akcenty - wszystko w&nbsp;jakości, która trwa latami bez utraty koloru.</p>
+
+        </SectionIntroCenter>
+
         <SectionGradientInner/>
             <SectionLayout class="bg-color-2">
                 <ImageText
-                    imageSrc="../../img/medical_1.jpg"
+                    imageSrc="../../img/medical_2.jpg"
                     imageAlt="Trwałość i bezpieczeństwo w pokoju dziecka"
-                    title="Druk ścienny dla placówek medycznych i&nbsp;gabinetów –&nbsp;higiena, trwałość i&nbsp;prestiż. "
-                    reversed={true}
+                    title="Aranżacja ścian w placówkach medycznych - druk UV wspierający komfort pacjenta"
                     data-aos="fade-up">
 
-                    <p>Zadbaj o&nbsp;komfort pacjentów i&nbsp;profesjonalny wygląd swojej placówki. Druk ścienny&nbsp;UV jest całkowicie bezwonny i&nbsp;idealnie sprawdza się w&nbsp;gabinetach, poczekalniach i&nbsp;korytarzach, łącząc estetykę z&nbsp;surowymi normami higienicznymi. Postaw na&nbsp;trwały branding w&nbsp;jakości&nbsp;8K.</p>
+                    <p>Badania potwierdzają, że&nbsp;otoczenie wizualne wpływa na samopoczucie pacjenta. Sterylna biel korytarzy nie musi oznaczać pustki. Drukujemy na ścianach klinik, szpitali i&nbsp;gabinetów rehabilitacyjnych grafiki, które wyciszają i&nbsp;odwracają uwagę od stresu - delikatne motywy natury, abstrakcje w&nbsp;stonowanych tonach, sceny krajobrazowe. Powierzchnia nadruku jest gładka, łatwa do mycia i&nbsp;odporna na środki dezynfekujące. Po utwardzeniu lampą&nbsp;UV nie emituje żadnych substancji lotnych. To aranżacja, która łączy funkcję terapeutyczną z&nbsp;wymogami sanitarnymi.</p>
 
                 </ImageText>       
             </SectionLayout>
         <SectionGradientOutter/> 
+
     </main>
 </Layout>
 
 <style lang="scss">
 @use "../styles/variables" as *;
 @use "../styles/mixins" as *;
+
     main {
         :global(.custom-margin-top) {
             margin-top: 10rem;

@@ -11,31 +11,42 @@ import SectionGradientOutter from '../components/SectionGradientOutter.astro';
 ---
 
 <Layout
-    title="Druk dla hoteli i gastronomii - Exclusive Walls"
-	description="Wyróżnij lokal unikalnym klimatem. Realizujemy odporne na wilgoć murale UV w lobby i pokojach hotelowych. Podnieś standard obiektu grafiką premium. Darmowa wycena!">
+    title="Aranżacja ścian w gastronomii - trwały druk ścienny UV do hoteli i restauracji."
+	description="Wyróżnij swój lokal unikalnym klimatem. Murale UV odporne na wilgoć i zapachy - do hoteli, restauracji i kawiarni. Podnieś standard w jeden dzień!">
 
     <header>
         <HeaderIntro 
             head='Druk dla Hoteli i Gastronomii'
             subHead='Horeca'
-            class:list="header-margin-bottom"
+            imageSrc="../../img/horeca_1.jpg"
+            imageAlt="Stwórz wnętrze, które goście udostępniają w social media. Mural UV jako narzędzie marketingu dla hoteli, restauracji i kawiarni. Wyróżnij lokal!"
             data-aos="fade-in">
         </HeaderIntro>
     </header>
 
     <main>
 
+        <SectionIntroCenter
+            title="Pierwsze wrażenie buduje się na&nbsp;ścianach"
+            class="wrapper-medium custom-margin-top custom-margin-bottom max-width"
+            data-aos="fade-up">
+
+            <p>Lobby hotelowe, sala restauracyjna, recepcja - to pierwsze miejsca, które widzi gość. Realizujemy murale cyfrowe, które przyciągają wzrok i&nbsp;budują atmosferę na&nbsp;najwyższym poziomie. Nasz druk wytrzymuje wilgoć, zapachy kuchenne i&nbsp;intensywne użytkowanie. To inwestycja, która podnosi standard obiektu i&nbsp;tworzy niezapomniane wrażenie od&nbsp;progu.</p>
+
+        </SectionIntroCenter>
+
         <SectionGradientInner/>
             <SectionLayout class="bg-color-2">
                 <ImageText
-                    imageSrc="../../img/horeca_1.jpg"
-                    imageAlt="Trwałość i bezpieczeństwo w pokoju dziecka"
-                    title="Bezpieczny druk ścienny do pokoju dziecka – certyfikowane tusze odporne na szorowanie."
+                    imageSrc="../../img/horeca_2.jpg"
+                    imageAlt="Mural w restauracji i hotelu jako narzędzie marketingu w social media"
+                    title="Ściana, którą goście fotografują"
+                    reversed={true}
                     data-aos="fade-up">
 
-                    <p>Stwórz bajkowy świat przyjazny Twojemu dziecku. Grafiki na ścianę są ekologiczne i&nbsp;zmywalne, co ułatwia utrzymanie czystości. Drukarka ścienna nanosi farbę, która nie pęka i&nbsp;nie odkleja się jak tradycyjne naklejki. To inwestycja w piękno i&nbsp;higienę na&nbsp;lata.</p>
+                    <p>Goście fotografują wnętrza i&nbsp;wrzucają je na&nbsp;Instagram. To się dzieje niezależnie od tego, czy tego chcesz. Pytanie brzmi: czy Twoje ściany dają im&nbsp;powód, żeby to&nbsp;robić? Dobrze zaprojektowany mural zamienia każdego gościa w&nbsp;ambasadora Twojego lokalu. Autorska grafika, logo wkomponowane w&nbsp;aranżację, motyw przewodni marki - to&nbsp;treść, która pracuje na&nbsp;Twoją rozpoznawalność&nbsp;24/7. Bez&nbsp;budżetu reklamowego, bez&nbsp;agencji. Wystarczy jedna ściana, która przyciąga obiektyw.</p>
 
-                </ImageText>       
+                </ImageText>     
             </SectionLayout>
         <SectionGradientOutter/> 
 
@@ -57,12 +68,33 @@ import SectionGradientOutter from '../components/SectionGradientOutter.astro';
     }
 
     main {
-        :global(.custom-margin) {
-        margin-top: 12rem;
-        margin-bottom: 12rem;
+        :global(.custom-margin-top) {
+            margin-top: 10rem;
+
+            @include respond-to("desktop") { margin-top: 8rem; }
+            @include respond-to("tablet") { margin-top: 6rem; }
+            @include respond-to("mobile") { margin-top: 4rem; }
         }
 
-    margin-top: -20vh
+        :global(.custom-margin-bottom) {
+            margin-bottom: 12rem;
+
+            @include respond-to("desktop") { margin-bottom: 10rem; }
+            @include respond-to("tablet") { margin-bottom: 8rem; }
+            @include respond-to("mobile") { margin-bottom: 6rem; }
+        }
+
+        :global(.image-text.custom-margin-bottom) {
+            margin-bottom: 12rem;
+
+            @include respond-to("desktop") { margin-bottom: 10rem; }
+            @include respond-to("tablet") { margin-bottom: 8rem; }
+            @include respond-to("mobile") { margin-bottom: 6rem; }
+        }
+
+        :global(.max-width) {
+            max-width: 1024px;
+        }
     }
     
 </style>
